@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>iOS和html交互-UIWebView | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="iOS,html,javascript">
+    <meta name="description" content="UIWebView是苹果公司自iOS 2提供的加载html页面的容器，一直到现在还可以继续使用，早期web页面和手机容器并没有太多的交互，在iOS 7发布了JavaScriptCore框架以及html 5成熟之后，iOS的UIWebView对html的加载能力和交互能力得到了显著的提升。 一、web页面调用iOS原生提供的方法方法一、拦截url前端人员需要和iOS开发约定好参数，例如约定jsAct">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS和html交互-UIWebView">
+<meta property="og:url" content="https://andergh.github.io/2018/09/14/iOS%E5%92%8Chtml%E4%BA%A4%E4%BA%92-UIWebView/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="UIWebView是苹果公司自iOS 2提供的加载html页面的容器，一直到现在还可以继续使用，早期web页面和手机容器并没有太多的交互，在iOS 7发布了JavaScriptCore框架以及html 5成熟之后，iOS的UIWebView对html的加载能力和交互能力得到了显著的提升。 一、web页面调用iOS原生提供的方法方法一、拦截url前端人员需要和iOS开发约定好参数，例如约定jsAct">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-14T09:02:24.000Z">
+<meta property="article:modified_time" content="2019-06-24T09:10:20.352Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">iOS和html交互-UIWebView</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">iOS和html交互-UIWebView</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-14T09:02:24.000Z" itemprop="datePublished" class="page-time">
+  2018-09-14
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、web页面调用iOS原生提供的方法"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、web页面调用iOS原生提供的方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法一、拦截url"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">方法一、拦截url</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#方法二、iOS7之后提供的JavaScriptCore"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">方法二、iOS7之后提供的JavaScriptCore</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、原生调用web页面的方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、原生调用web页面的方法</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-iOS和html交互-UIWebView"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">iOS和html交互-UIWebView</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-14 17:02:24" datetime="2018-09-14T09:02:24.000Z"  itemprop="datePublished">2018-09-14</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p><code>UIWebView</code>是苹果公司自<code>iOS 2</code>提供的加载<code>html</code>页面的容器，一直到现在还可以继续使用，早期<code>web</code>页面和手机容器并没有太多的交互，在<code>iOS 7</code>发布了<code>JavaScriptCore</code>框架以及<code>html 5</code>成熟之后，<code>iOS</code>的<code>UIWebView</code>对<code>html</code>的加载能力和交互能力得到了显著的提升。</p>
+<h3 id="一、web页面调用iOS原生提供的方法"><a href="#一、web页面调用iOS原生提供的方法" class="headerlink" title="一、web页面调用iOS原生提供的方法"></a>一、<code>web</code>页面调用<code>iOS</code>原生提供的方法</h3><h4 id="方法一、拦截url"><a href="#方法一、拦截url" class="headerlink" title="方法一、拦截url"></a>方法一、拦截<code>url</code></h4><p>前端人员需要和<code>iOS</code>开发约定好参数，例如约定<code>jsAction://openScan</code>为打开手机摄像头进行扫码，前端通过页面重定向的方式，加载约定好的参数，<code>iOS</code>开发通过代理方法中拦截，进行原生的逻辑调用，如果需要传递参数给原生，那么需要拼接在约定字符串后面，约定格式进行解析</p>
+<pre><code>- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    if ([request.URL.absoluteString hasPrefix:@&quot;jsAction://openScan&quot;]) {
+        //调用原生扫描二维码
+        return NO;
+    }
+    return YES;
+}</code></pre><h4 id="方法二、iOS7之后提供的JavaScriptCore"><a href="#方法二、iOS7之后提供的JavaScriptCore" class="headerlink" title="方法二、iOS7之后提供的JavaScriptCore"></a>方法二、<code>iOS7</code>之后提供的<code>JavaScriptCore</code></h4><p>在工程中引入<code>JavaScriptCore</code>的框架，在<code>UIWebView</code>的代理方法中通过指定的<code>API</code>即可与<code>web</code>页面进行交互，如下</p>
+<pre><code>//js代码
+var codeStr = openScan();</code></pre><pre><code>//iOS代码
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    JSContext *jsContext = [webView valueForKeyPath:@&quot;documentView.webView.mainFrame.javaScriptContext&quot;];
+
+    jsContext[@&quot;openScan&quot;] = ^(){
+        NSArray *args = [JSContext currentArguments];
+        NSString *params1 = ((JSValue *)args[0]).toString;
+        NSString *params2 = ((JSValue *)args[1]).toString;
+        //原生方法
+
+        return @&quot;二维码字符串&quot;;
+    };
+}</code></pre><p>其中<code>documentView.webView.mainFrame.javaScriptContext</code>为获取<code>JSContext</code>类的固定<code>key</code>值，<code>openScan</code>为约定好的方法名称，参数可以通过指定的方法获取，这里的参数获取顺序和<code>web</code>页面传递参数的顺序是一致的，原生在<code>JSContext</code>的回调里面<code>return</code>参数回传给<code>web</code></p>
+<h3 id="二、原生调用web页面的方法"><a href="#二、原生调用web页面的方法" class="headerlink" title="二、原生调用web页面的方法"></a>二、原生调用<code>web</code>页面的方法</h3><p>首先，是通过<code>UIWebView</code>的<code>loadRequest</code>方法来加载页面，可以在<code>url</code>后面拼接参数给<code>web</code>页面获取，页面加载完成后可以使用<code>stringByEvaluatingJavaScriptFromString</code>方法来直接调用<code>web</code>页面中的方法</p>
+<pre><code>//iOS代码
+NSString *jsStr = [NSString stringWithFormat:@&quot;getCodeString(&#39;%@&#39;)&quot;, @&quot;二维码字符串&quot;];
+[self.webView stringByEvaluatingJavaScriptFromString:jsStr];</code></pre><pre><code>//js代码
+window.getCodeString = function(codeStr) {
+    alert(&#39;二维码字符串&#39; + codeStr);
+}
+</code></pre><p>以上介绍的交互方式在安卓上同样有相应的方法，感兴趣的可以自己查询下。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/19/iOS%E5%92%8Chtml%E4%BA%A4%E4%BA%92-WKWebView/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">iOS和html交互-WKWebView</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/09/03/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%86%99%E6%B3%95%E5%92%8C%E6%B3%A8%E9%87%8A/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">单例模式写法和注释</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

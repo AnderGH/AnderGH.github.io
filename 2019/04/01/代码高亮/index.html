@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>代码高亮 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="hexo">
+    <meta name="description" content="我的博客用的是fexo的主题，其中代码部分的显示效果一般，为了解决博文中代码部分高亮的问题，我准备集成highlight.js的开源工具，官网地址：https:&#x2F;&#x2F;highlightjs.org&#x2F;                                                                                              image_1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码高亮">
+<meta property="og:url" content="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="我的博客用的是fexo的主题，其中代码部分的显示效果一般，为了解决博文中代码部分高亮的问题，我准备集成highlight.js的开源工具，官网地址：https:&#x2F;&#x2F;highlightjs.org&#x2F;                                                                                              image_1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_2.png">
+<meta property="og:image" content="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_3.png">
+<meta property="article:published_time" content="2019-04-01T10:47:46.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:31:14.656Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">代码高亮</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">代码高亮</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-01T10:47:46.000Z" itemprop="datePublished" class="page-time">
+  2019-04-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/hexo/">hexo</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、highlight-js集成"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、highlight.js集成</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、方法选择"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、方法选择</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、集成过程"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、集成过程</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、个性化"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、个性化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、行号"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、行号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、其他优化"><span class="post-toc-number">4.</span> <span class="post-toc-text">四、其他优化</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#五、附录"><span class="post-toc-number">5.</span> <span class="post-toc-text">五、附录</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-代码高亮"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">代码高亮</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-01 18:47:46" datetime="2019-04-01T10:47:46.000Z"  itemprop="datePublished">2019-04-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/hexo/">hexo</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>我的博客用的是<a href="http://forsigner.com/2016/03/10/fexo-doc-zh-cn/" target="_blank" rel="noopener"><code>fexo</code></a>的主题，其中代码部分的显示效果一般，为了解决博文中代码部分高亮的问题，我准备集成<a href="https://highlightjs.org/" target="_blank" rel="noopener"><code>highlight.js</code></a>的开源工具，官网地址：<a href="https://highlightjs.org/" target="_blank" rel="noopener">https://highlightjs.org/</a></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_1.png" alt="image_1" title>
+                </div>
+                <div class="image-caption">image_1</div>
+            </figure>
+
+<h3 id="一、highlight-js集成"><a href="#一、highlight-js集成" class="headerlink" title="一、highlight.js集成"></a>一、<code>highlight.js</code>集成</h3><p><code>highlight.js</code>的集成非常简单，而且目前已经支持了非常多的语言支持和样式。</p>
+<h4 id="1、方法选择"><a href="#1、方法选择" class="headerlink" title="1、方法选择"></a>1、方法选择</h4><p>点击首页的<code>Get Version</code>按钮，可以看大官网提供了很多集成方式</p>
+<ul>
+<li>Hosted：直接集成官网提供的网络版本，有cdnjs、jsdelivr两种缓存模式</li>
+<li>Custom package：选择所需要支持的语言对应的版本，下载后使用源码集成，一般我们直接下载Common的即可满足大部分面向对象的语言</li>
+<li>Node.js：使用Node.js的npm工具集成</li>
+<li>Source：github下载源码集成</li>
+</ul>
+<p>我采用了第二种，选中我需要的语言支持，下载<code>package</code>压缩包集成</p>
+<h4 id="2、集成过程"><a href="#2、集成过程" class="headerlink" title="2、集成过程"></a>2、集成过程</h4><ol>
+<li>首先关闭<code>hexo</code>博客自带的代码高亮，修改博客根目录下<code>_config.yml</code>配置文件，设置<code>highlight</code>选项为<code>false</code></li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_2.png" alt="image_2" title>
+                </div>
+                <div class="image-caption">image_2</div>
+            </figure>
+
+<p>由于是修改的<code>hexo</code>的配置文件，所以需要执行<code>clean</code>命令行方法</p>
+<pre><code>$ hexo clean</code></pre><ol start="2">
+<li><p>将压缩包解压后得到的<code>highlight</code>文件夹放入<code>fexo</code>的主题的目录下，我是和其他<code>css</code>、<code>js</code>资源文件放在了一起</p>
+</li>
+<li><p>找到<code>fexo</code>主题注入<code>js</code>和<code>css</code>文件的地方，将官网提供的源码写入即可</p>
+</li>
+</ol>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/highlight/styles/xcode.css&quot;&gt;
+&lt;script src=&quot;/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre><p>此处我使用的是官网提供的<code>xcode.css</code>的样式，此时调试即可查看到代码高亮以及背景的效果了。</p>
+<h3 id="二、个性化"><a href="#二、个性化" class="headerlink" title="二、个性化"></a>二、个性化</h3><p>在下载的所有的<code>css</code>样式中，我所有的样式都试过了一遍，没有什么特别喜欢的，所以我准备仿照提供的样式文件，自己写一个样式。</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/highlight/custom/xcode.css&quot;&gt;
+&lt;script src=&quot;/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre><p>我拷贝一份<code>xcode.css</code>文件，另外存放一个目录，通过浏览器不断调试样式，修改到了最终的结果，集成后感到比较满意</p>
+<h3 id="三、行号"><a href="#三、行号" class="headerlink" title="三、行号"></a>三、行号</h3><p><code>highlight.js</code>使用起来非常简单，但是有个问题，不支持行号显示，网上有一些人在<code>highlight.js</code>基础上个性化了一些版本，可以支持行号，由于我本身不喜欢行号，所以没有集成，感兴趣的推荐进一步集成<a href="https://github.com/wcoder/highlightjs-line-numbers.js" target="_blank" rel="noopener"><code>highlightjs-line-numbers.js</code></a>框架，地址：<a href="https://github.com/wcoder/highlightjs-line-numbers.js" target="_blank" rel="noopener">https://github.com/wcoder/highlightjs-line-numbers.js</a></p>
+<h3 id="四、其他优化"><a href="#四、其他优化" class="headerlink" title="四、其他优化"></a>四、其他优化</h3><p>在完成<code>highlight.js</code>的集成后，我对<code>fexo</code>自带的<code>&lt;code&gt;</code>标签以及<code>&lt;a&gt;</code>标签的颜色也想进行个性化。</p>
+<ol>
+<li>首先，我仍然是使用开放的个性化配置文件进行样式覆盖，<code>fexo</code>主题已提供了个性化样式的入口<code>personal-style.css</code></li>
+</ol>
+<pre><code>&lt;!--标签增加属性--&gt;
+&lt;style&gt;
+
+.article-content a {
+    color: #0366d6;
+}
+
+code {
+    background: #F4F4F5;
+    font-family: SFMono-Regular,Consolas,&quot;Liberation Mono&quot;,Menlo,Courier,monospace;
+    font-size: 0.8em;
+}
+
+table&gt;thead&gt;tr&gt;th, table&gt;thead&gt;tr&gt;td {
+    border-bottom-width: 1px;
+}
+
+&lt;/style&gt;</code></pre><p>通过重写属性，使用<code>&lt;style&gt;</code>标签提高优先级，覆盖原属性，达到了我想要的效果</p>
+<ol start="2">
+<li><p>但是仍然存在一个问题，当<code>&lt;code&gt;</code>标签和<code>&lt;a&gt;</code>标签同时使用时，<code>&lt;code&gt;</code>标签中的颜色会把<code>&lt;a&gt;</code>覆盖</p>
+<ol>
+<li><p>通过浏览器调试，发现<code>&lt;code&gt;</code>标签自带了一个颜色，层级比<code>&lt;a&gt;</code>高，所以无法通过重写样式属性的方式修改，必须要修改源码</p>
+</li>
+<li><p>首先我分析了<code>fexo</code>主题样式部分的代码，发现其所有样式都是通过多个<code>scss</code>编译成一个<code>css</code>的</p>
+<p>关于<a href="http://sass.bootcss.com/docs/sass-reference/" target="_blank" rel="noopener"><code>scss</code></a>，感兴趣的可以看下官网文档，地址：<a href="http://sass.bootcss.com/docs/sass-reference/" target="_blank" rel="noopener">http://sass.bootcss.com/docs/sass-reference/</a></p>
+</li>
+<li><p>通过浏览器修改样式标签，我修改了<code>fexo</code>的源码，最终得到了我想要的效果</p>
+<p>其中<a href="https://ninghao.net/blog/4790" target="_blank" rel="noopener">https://ninghao.net/blog/4790</a>此博客的文章给我提供了方法</p>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="五、附录"><a href="#五、附录" class="headerlink" title="五、附录"></a>五、附录</h3><p>使用浏览器修改<code>scss</code>样式的方法截图如下</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_3.png" alt="image_3" title>
+                </div>
+                <div class="image-caption">image_3</div>
+            </figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何在macOS系统下搭建hexo博客</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/03/29/CocoaPods%E5%AE%89%E8%A3%85%E8%AE%B0%E5%BD%95/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">CocoaPods安装记录</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

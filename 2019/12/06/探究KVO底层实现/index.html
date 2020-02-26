@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>探究KVO底层实现 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="iOS,KVO">
+    <meta name="description" content="本文参考《iOS窥探KVO底层实现原理篇》 一、定义 KVO全称为Key Value Observing，键值观察机制，由NSKeyValueObserving协议提供支持，NSObject类继承了该协议，所以NSObject的子类都可使用该方法  二、方法&#x2F;* Register or deregister as an observer of the value at a key path rel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探究KVO底层实现">
+<meta property="og:url" content="https://andergh.github.io/2019/12/06/%E6%8E%A2%E7%A9%B6KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="本文参考《iOS窥探KVO底层实现原理篇》 一、定义 KVO全称为Key Value Observing，键值观察机制，由NSKeyValueObserving协议提供支持，NSObject类继承了该协议，所以NSObject的子类都可使用该方法  二、方法&#x2F;* Register or deregister as an observer of the value at a key path rel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-06T06:22:28.000Z">
+<meta property="article:modified_time" content="2019-12-06T06:27:04.346Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="KVO">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">探究KVO底层实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">探究KVO底层实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-12-06T06:22:28.000Z" itemprop="datePublished" class="page-time">
+  2019-12-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、定义</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、方法"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、方法</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、代码测试"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、代码测试</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-探究KVO底层实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">探究KVO底层实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-12-06 14:22:28" datetime="2019-12-06T06:22:28.000Z"  itemprop="datePublished">2019-12-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文参考<a href="https://www.jianshu.com/p/0aa83ac521ba" target="_blank" rel="noopener">《iOS窥探KVO底层实现原理篇》</a></p>
+<h4 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h4><blockquote>
+<p><code>KVO</code>全称为<code>Key Value Observing</code>，键值观察机制，由<code>NSKeyValueObserving</code>协议提供支持，<code>NSObject</code>类继承了该协议，所以<code>NSObject</code>的子类都可使用该方法</p>
+</blockquote>
+<h4 id="二、方法"><a href="#二、方法" class="headerlink" title="二、方法"></a>二、方法</h4><pre><code>/* Register or deregister as an observer of the value at a key path relative to the receiver. The options determine what is included in observer notifications and when they&#39;re sent, as described above, and the context is passed in observer notifications as described above. You should use -removeObserver:forKeyPath:context: instead of -removeObserver:forKeyPath: whenever possible because it allows you to more precisely specify your intent. When the same observer is registered for the same key path multiple times, but with different context pointers each time, -removeObserver:forKeyPath: has to guess at the context pointer when deciding what exactly to remove, and it can guess wrong.
+在相对于接收者的关键路径上注册或注销该值的观察者。 这些选项确定观察者通知中包括的内容以及何时发送它们，如上所述，并且上下文如上所述在观察者通知中传递上下文。 您应尽可能使用removeObserver:forKeyPath:context：而不是removeObserver:forKeyPath:，因为它可以让您更精确地指定意图。 当同一观察者多次注册相同的KeyPath路径，但每次都使用不同的上下文指针时，removeObserver:forKeyPath:在确定要删除的对象时必须猜测上下文指针，并且可能会猜错。
+*/
+- (void)addObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(nullable void *)context;
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(nullable void *)context API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));
+- (void)removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;</code></pre><pre><code>/* Options for use with -addObserver:forKeyPath:options:context: and -addObserver:toObjectsAtIndexes:forKeyPath:options:context:.
+*/
+typedef NS_OPTIONS(NSUInteger, NSKeyValueObservingOptions) {
+
+    /* Whether the change dictionaries sent in notifications should contain NSKeyValueChangeNewKey and NSKeyValueChangeOldKey entries, respectively.
+    */
+    NSKeyValueObservingOptionNew = 0x01,
+    NSKeyValueObservingOptionOld = 0x02,
+
+    /* Whether a notification should be sent to the observer immediately, before the observer registration method even returns. The change dictionary in the notification will always contain an NSKeyValueChangeNewKey entry if NSKeyValueObservingOptionNew is also specified but will never contain an NSKeyValueChangeOldKey entry. (In an initial notification the current value of the observed property may be old, but it&#39;s new to the observer.) You can use this option instead of explicitly invoking, at the same time, code that is also invoked by the observer&#39;s -observeValueForKeyPath:ofObject:change:context: method. When this option is used with -addObserver:toObjectsAtIndexes:forKeyPath:options:context: a notification will be sent for each indexed object to which the observer is being added.
+    在观察者注册方法返回之前是否立即将通知发送给观察者。 如果还指定了NSKeyValueObservingOptionNew，则通知中的更改字典将始终包含NSKeyValueChangeNewKey条目，但绝不包含NSKeyValueChangeOldKey条目。 （在初始通知中，observed属性的当前值可能是旧的，但对于观察者来说是新的。）您可以使用此选项，而不是同时显式调用观察者的observeValueForKeyPath:ofObject:change:context:方法。 与addObserver:toObjectsAtIndexes:forKeyPath:options:context一起使用此选项时，将向要添加观察者的每个索引对象发送通知。
+    */
+    NSKeyValueObservingOptionInitial API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) = 0x04,
+
+    /* Whether separate notifications should be sent to the observer before and after each change, instead of a single notification after the change. The change dictionary in a notification sent before a change always contains an NSKeyValueChangeNotificationIsPriorKey entry whose value is [NSNumber numberWithBool:YES], but never contains an NSKeyValueChangeNewKey entry. You can use this option when the observer&#39;s own KVO-compliance requires it to invoke one of the -willChange... methods for one of its own properties, and the value of that property depends on the value of the observed object&#39;s property. (In that situation it&#39;s too late to easily invoke -willChange... properly in response to receiving an -observeValueForKeyPath:ofObject:change:context: message after the change.)
+
+When this option is specified, the change dictionary in a notification sent after a change contains the same entries that it would contain if this option were not specified, except for ordered unique to-many relationships represented by NSOrderedSets.  For those, for NSKeyValueChangeInsertion and NSKeyValueChangeReplacement changes, the change dictionary for a will-change notification contains an NSKeyValueChangeIndexesKey (and NSKeyValueChangeOldKey in the case of Replacement where the NSKeyValueObservingOptionOld option was specified at registration time) which give the indexes (and objects) which *may* be changed by the operation.  The second notification, after the change, contains entries reporting what did actually change.  For NSKeyValueChangeRemoval changes, removals by index are precise.
+    是否应在每次更改之前和之后将单独的通知发送给观察者，而不是在更改之后将单个通知发送给观察者。更改之前发送的通知中的更改字典始终包含NSKeyValueChangeNotificationIsPriorKey条目，其值为[NSNumber numberWithBool:YES]，但从不包含NSKeyValueChangeNewKey条目。当观察者自己的KVO兼容性要求它为其自身的属性之一调用willChange ...方法之一时，可以使用此选项，并且该属性的值取决于所观察对象的属性的值。 （在那种情况下，为响应更改后收到的observeValueForKeyPath:ofObject:change:context:消息，正确地轻松调用willChange ...为时已晚。）
+
+指定此选项后，更改后发送的通知中的更改字典包含与未指定此选项时将包含的条目相同的条目，但NSOrderedSets表示的有序唯一对多关系除外。对于这些更改，对于NSKeyValueChangeInsertion和NSKeyValueChangeReplacement更改，遗嘱变更通知的更改字典包含NSKeyValueChangeIndexesKey（在替换的情况下为NSKeyValueChangeChangeOldKey，在注册时指定了NSKeyValueObservingOptionOld选项的情况下），其索引（和对象）可以* *通过操作更改。更改后的第二个通知包含报告实际更改内容的条目。对于NSKeyValueChangeRemoval更改，按索引的删除是精确的。
+    */
+    NSKeyValueObservingOptionPrior API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0)) = 0x08
+
+};</code></pre><pre><code>typedef NSString * NSKeyValueChangeKey NS_STRING_ENUM;
+/* Keys for entries in change dictionaries. See the comments for -observeValueForKeyPath:ofObject:change:context: for more information.
+*/
+FOUNDATION_EXPORT NSKeyValueChangeKey const NSKeyValueChangeKindKey;
+FOUNDATION_EXPORT NSKeyValueChangeKey const NSKeyValueChangeNewKey;
+FOUNDATION_EXPORT NSKeyValueChangeKey const NSKeyValueChangeOldKey;
+FOUNDATION_EXPORT NSKeyValueChangeKey const NSKeyValueChangeIndexesKey;
+FOUNDATION_EXPORT NSKeyValueChangeKey const NSKeyValueChangeNotificationIsPriorKey API_AVAILABLE(macos(10.5), ios(2.0), watchos(2.0), tvos(9.0));</code></pre><h4 id="三、代码测试"><a href="#三、代码测试" class="headerlink" title="三、代码测试"></a>三、代码测试</h4><pre><code>#import &quot;ViewController.h&quot;
+#import &quot;AObject.h&quot;
+#import &lt;objc/runtime.h&gt;
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+
+    AObject *a1 = [[AObject alloc] init];
+    AObject *a2 = [[AObject alloc] init];
+
+    NSLog(@&quot;内存：%p，%p&quot;, a1, a2);
+    NSLog(@&quot;类：%@，%@&quot;, a1.class, a2.class);
+    NSLog(@&quot;isa：%@ %@&quot;, object_getClass(a1), object_getClass(a2));
+
+    SEL sel = @selector(setP:);
+    IMP imp1 = [a1 methodForSelector:sel];
+    IMP imp2 = [a2 methodForSelector:sel];
+    NSLog(@&quot;IMP指针：%p %p&quot;, imp1, imp2);
+
+    [a1 addObserver:self forKeyPath:@&quot;p&quot; options:(NSKeyValueObservingOptionNew) context:nil];
+
+    NSLog(@&quot;添加KVO后内存：%p，%p&quot;, a1, a2);
+    NSLog(@&quot;添加KVO后类：%@，%@&quot;, a1.class, a2.class);
+    NSLog(@&quot;添加KVO后isa：%@ %@&quot;, object_getClass(a1), object_getClass(a2));
+
+    imp1 = [a1 methodForSelector:sel];
+    imp2 = [a2 methodForSelector:sel];
+    NSLog(@&quot;添加KVO后IMP指针：%p %p&quot;, imp1, imp2);
+
+    a1.p = @&quot;1&quot;;
+    a2.p = @&quot;2&quot;;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context {
+    NSLog(@&quot;%@&quot;, change);
+}
+
+@end
+
+2019-12-06 13:56:30.457732+0800 testKVO[854:62432] 内存：0x283a0cc70，0x283a0cc90
+2019-12-06 13:56:30.457797+0800 testKVO[854:62432] 类：AObject，AObject
+2019-12-06 13:56:30.457821+0800 testKVO[854:62432] isa：AObject AObject
+2019-12-06 13:56:30.457839+0800 testKVO[854:62432] IMP指针：0x1009e6150 0x1009e6150
+2019-12-06 13:56:30.458057+0800 testKVO[854:62432] 添加KVO后内存：0x283a0cc70，0x283a0cc90
+2019-12-06 13:56:30.458084+0800 testKVO[854:62432] 添加KVO后类：AObject，AObject
+2019-12-06 13:56:30.458106+0800 testKVO[854:62432] 添加KVO后isa：NSKVONotifying_AObject AObject
+2019-12-06 13:56:30.458124+0800 testKVO[854:62432] 添加KVO后IMP指针：0x1842b9020 0x1009e6150</code></pre><ul>
+<li>添加了<code>KVO</code>之后<code>a1</code>修改<code>p</code>值之后 不再调用<code>AObject</code>的<code>setP:</code>方法 ,而 <code>a2</code>没有添加监听，依然正常调用<code>setP:</code>方法，由此可以得出系统修改了默认方法实现</li>
+</ul>
+<pre><code>    NSLog(@&quot;添加KVO后isa：%@ %@&quot;, object_getClass(a1), object_getClass(a2));
+    NSLog(@&quot;添加KVO后superclass：%@ %@&quot;, class_getSuperclass(object_getClass(a1)), class_getSuperclass(object_getClass(a2)));
+
+2019-12-06 14:04:00.196164+0800 testKVO[881:64017] 添加KVO后isa：NSKVONotifying_AObject AObject
+2019-12-06 14:04:00.196194+0800 testKVO[881:64017] 添加KVO后superclass：AObject NSObject</code></pre><ul>
+<li><code>NSKVONotifying_AObjectn</code>是苹果动态创建的<code>AObject</code>子类</li>
+</ul>
+<pre><code>    NSString *methods1 = [self printMethods:object_getClass(a1)];
+    NSString *methods2 = [self printMethods:object_getClass(a2)];
+    NSLog(@&quot;%@&quot;, methods1);
+    NSLog(@&quot;%@&quot;, methods2);
+
+2019-12-06 14:08:10.447603+0800 testKVO[908:65143] [
+setP:
+class
+dealloc
+_isKVOA
+]
+2019-12-06 14:08:10.447618+0800 testKVO[908:65143] [
+.cxx_destruct
+p
+setP:
+]</code></pre><p>从输出结果可以看出来<code>NSKVONotifying_AObject</code>内部也有一个<code>setP:</code>方法 还重写了<code>class</code>和<code>dealloc</code>方法，由此，给出如下猜想：</p>
+<ul>
+<li>添加<code>KVO</code>之后，动态创建了一个子类，继承所观察的类，命名<code>NSKVONotifying_*</code>，重写了所观察属性的<code>set</code>方法，并且通过重写<code>class</code>方法隐藏了子类的存在，在<code>dealloc</code>中进行了释放等操作</li>
+<li>属性值发生变化时，触发了<code>NSKVONotifying_*</code>重写的<code>set</code>方法，此时便可以得到原值和新值，并在赋值时触发给定的相应方法</li>
+<li>这就能解释：如果观察的属性不存在<code>set</code>方法（直接创建的实例），那么<code>KVO</code>观察就不会生效</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KVO/" rel="tag">KVO</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/12/05/iOS%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">iOS崩溃排查</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

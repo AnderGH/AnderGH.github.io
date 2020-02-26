@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Flex布局简析 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="flex">
+    <meta name="description" content="本文摘自阮一峰的网络日志Flex 布局教程：语法篇 一、定义 Flexible Box意为“弹性布局”，简写flex，之前已经了解过流动模型、浮动模型、层模型的布局，flex布局能够为盒状模型提供最大的灵活性。   任何一个容器都可以指定为flex布局，行内元素也可以，但需要注意个浏览器的支持情况，目前Chrome 21+，Firefox 22+，IE 10+，Safari 6.1+以上版本才支持">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flex布局简析">
+<meta property="og:url" content="https://andergh.github.io/2019/08/10/Flex%E5%B8%83%E5%B1%80%E7%AE%80%E6%9E%90/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="本文摘自阮一峰的网络日志Flex 布局教程：语法篇 一、定义 Flexible Box意为“弹性布局”，简写flex，之前已经了解过流动模型、浮动模型、层模型的布局，flex布局能够为盒状模型提供最大的灵活性。   任何一个容器都可以指定为flex布局，行内元素也可以，但需要注意个浏览器的支持情况，目前Chrome 21+，Firefox 22+，IE 10+，Safari 6.1+以上版本才支持">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-08-10T08:02:40.000Z">
+<meta property="article:modified_time" content="2019-08-10T08:03:40.090Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="flex">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Flex布局简析</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Flex布局简析</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-08-10T08:02:40.000Z" itemprop="datePublished" class="page-time">
+  2019-08-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/html5/">html5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、定义"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、定义</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、基本概念"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、基本概念</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、容器属性"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1、容器属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-flex-direction"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">1. flex-direction</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-flex-wrap"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">2. flex-wrap</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-flex-flow"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">3. flex-flow</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4-justify-content"><span class="post-toc-number">2.1.4.</span> <span class="post-toc-text">4. justify-content</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-align-items"><span class="post-toc-number">2.1.5.</span> <span class="post-toc-text">5. align-items</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#6-align-content"><span class="post-toc-number">2.1.6.</span> <span class="post-toc-text">6. align-content</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、项目属性"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2、项目属性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-order"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">1. order</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-flex-grow"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">2. flex-grow</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-flex-shrink"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">3. flex-shrink</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4-flex-basis"><span class="post-toc-number">2.2.4.</span> <span class="post-toc-text">4. flex-basis</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Flex布局简析"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Flex布局简析</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-08-10 16:02:40" datetime="2019-08-10T08:02:40.000Z"  itemprop="datePublished">2019-08-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/html5/">html5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文摘自<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank" rel="noopener">阮一峰的网络日志Flex 布局教程：语法篇</a></p>
+<h3 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h3><blockquote>
+<p><code>Flexible Box</code>意为“弹性布局”，简写<code>flex</code>，之前已经了解过流动模型、浮动模型、层模型的布局，<code>flex</code>布局能够为盒状模型提供最大的灵活性。</p>
+</blockquote>
+<blockquote>
+<p>任何一个容器都可以指定为<code>flex</code>布局，行内元素也可以，但需要注意个浏览器的支持情况，目前<code>Chrome 21+</code>，<code>Firefox 22+</code>，<code>IE 10+</code>，<code>Safari 6.1+</code>以上版本才支持。</p>
+</blockquote>
+<blockquote>
+<p><code>Webkit</code>内核的浏览器，必须加上<code>-webkit</code>前缀</p>
+</blockquote>
+<pre><code>.box {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  display: inline-flex;
+}</code></pre><h3 id="二、基本概念"><a href="#二、基本概念" class="headerlink" title="二、基本概念"></a>二、基本概念</h3><ol>
+<li><p>采用<code>Flex</code>布局的元素，称为<code>Flex容器（flex container）</code>，简称”容器”。它的所有子元素自动成为容器成员，称为<code>Flex 项目（flex item）</code>，简称”项目”。</p>
+</li>
+<li><p>容器默认存在两根轴：水平的主轴<code>（main axis）</code>和垂直的交叉轴<code>（cross axis）</code>。主轴的开始位置（与边框的交叉点）叫做<code>main start</code>，结束位置叫做<code>main end</code>；交叉轴的开始位置叫做<code>cross start</code>，结束位置叫做<code>cross end</code>。</p>
+</li>
+<li><p>项目默认沿主轴排列。单个项目占据的主轴空间叫做<code>main size</code>，占据的交叉轴空间叫做<code>cross size</code>。</p>
+</li>
+</ol>
+<h4 id="1、容器属性"><a href="#1、容器属性" class="headerlink" title="1、容器属性"></a>1、容器属性</h4><h5 id="1-flex-direction"><a href="#1-flex-direction" class="headerlink" title="1. flex-direction"></a>1. <code>flex-direction</code></h5><blockquote>
+<p><code>flex-direction</code>属性决定主轴的方向（即项目的排列方向）。</p>
+</blockquote>
+<pre><code>.box {
+  flex-direction: row | row-reverse | column | column-reverse;
+}</code></pre><ul>
+<li><code>row</code>（默认值）：主轴为水平方向，起点在左端。</li>
+<li><code>row-reverse</code>：主轴为水平方向，起点在右端。</li>
+<li><code>column</code>：主轴为垂直方向，起点在上沿。</li>
+<li><code>column-reverse</code>：主轴为垂直方向，起点在下沿。</li>
+</ul>
+<h5 id="2-flex-wrap"><a href="#2-flex-wrap" class="headerlink" title="2. flex-wrap"></a>2. <code>flex-wrap</code></h5><blockquote>
+<p>默认情况下，项目都排在一条线（又称”轴线”）上。<code>flex-wrap</code>属性定义，如果一条轴线排不下，如何换行。</p>
+</blockquote>
+<pre><code>.box{
+  flex-wrap: nowrap | wrap | wrap-reverse;
+}</code></pre><ul>
+<li>nowrap（默认）：不换行。</li>
+<li>wrap：换行，第一行在上方。</li>
+<li>wrap-reverse：换行，第一行在下方。</li>
+</ul>
+<h5 id="3-flex-flow"><a href="#3-flex-flow" class="headerlink" title="3. flex-flow"></a>3. <code>flex-flow</code></h5><blockquote>
+<p><code>flex-flow</code>属性是<code>flex-direction</code>属性和<code>flex-wrap</code>属性的简写形式，默认值为<code>row nowrap</code>。</p>
+</blockquote>
+<h5 id="4-justify-content"><a href="#4-justify-content" class="headerlink" title="4. justify-content"></a>4. <code>justify-content</code></h5><blockquote>
+<p><code>justify-content</code>属性定义了项目在主轴上的对齐方式。</p>
+</blockquote>
+<pre><code>.box {
+  justify-content: flex-start | flex-end | center | space-between | space-around;
+}</code></pre><ul>
+<li><code>flex-start</code>（默认值）：左对齐</li>
+<li><code>flex-end</code>：右对齐</li>
+<li><code>center</code>： 居中</li>
+<li><code>space-between</code>：两端对齐，项目之间的间隔都相等。</li>
+<li><code>space-around</code>：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。</li>
+</ul>
+<h5 id="5-align-items"><a href="#5-align-items" class="headerlink" title="5. align-items"></a>5. <code>align-items</code></h5><blockquote>
+<p><code>align-items</code>属性定义项目在交叉轴上如何对齐。</p>
+</blockquote>
+<pre><code>.box {
+  align-items: flex-start | flex-end | center | baseline | stretch;
+}</code></pre><ul>
+<li><code>flex-start</code>：交叉轴的起点对齐。</li>
+<li><code>flex-end</code>：交叉轴的终点对齐。</li>
+<li><code>center</code>：交叉轴的中点对齐。</li>
+<li><code>baseline</code>: 项目的第一行文字的基线对齐。</li>
+<li><code>stretch</code>（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。</li>
+</ul>
+<h5 id="6-align-content"><a href="#6-align-content" class="headerlink" title="6. align-content"></a>6. <code>align-content</code></h5><blockquote>
+<p><code>align-content</code>属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。</p>
+</blockquote>
+<pre><code>.box {
+  align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+}</code></pre><ul>
+<li><code>flex-start</code>：与交叉轴的起点对齐。</li>
+<li><code>flex-end</code>：与交叉轴的终点对齐。</li>
+<li><code>center</code>：与交叉轴的中点对齐。</li>
+<li><code>space-between</code>：与交叉轴两端对齐，轴线之间的间隔平均分布。</li>
+<li><code>space-around</code>：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。</li>
+<li><code>stretch</code>（默认值）：轴线占满整个交叉轴。</li>
+</ul>
+<div style="color: red;">
+如果设置flex-wrap不换行，那么没有交叉轴，该属性失效        
+</div>
+
+<h4 id="2、项目属性"><a href="#2、项目属性" class="headerlink" title="2、项目属性"></a>2、项目属性</h4><h5 id="1-order"><a href="#1-order" class="headerlink" title="1. order"></a>1. <code>order</code></h5><blockquote>
+<p><code>order</code>属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
+</blockquote>
+<pre><code>.item {
+  order: &lt;integer&gt;;
+}</code></pre><div style="color: red;">
+同一个容器内的所有项目参与排序
+</div>
+
+<h5 id="2-flex-grow"><a href="#2-flex-grow" class="headerlink" title="2. flex-grow"></a>2. <code>flex-grow</code></h5><blockquote>
+<p><code>flex-grow</code>属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。</p>
+</blockquote>
+<blockquote>
+<p>如果所有项目的<code>flex-grow</code>属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的<code>flex-grow</code>属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
+</blockquote>
+<pre><code>.item {
+  flex-grow: &lt;number&gt;; /* default 0 */
+}</code></pre><h5 id="3-flex-shrink"><a href="#3-flex-shrink" class="headerlink" title="3. flex-shrink"></a>3. <code>flex-shrink</code></h5><blockquote>
+<p><code>flex-shrink</code>属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
+</blockquote>
+<blockquote>
+<p>如果所有项目的<code>flex-shrink</code>属性都为1，当空间不足时，都将等比例缩小。如果一个项目的<code>flex-shrink</code>属性为0，其他项目都为1，则空间不足时，前者不缩小。</p>
+</blockquote>
+<blockquote>
+<p>负值对该属性无效。</p>
+</blockquote>
+<pre><code>.item {
+  flex-shrink: &lt;number&gt;; /* default 1 */
+}</code></pre><h5 id="4-flex-basis"><a href="#4-flex-basis" class="headerlink" title="4. flex-basis"></a>4. <code>flex-basis</code></h5><blockquote>
+<p><code>flex-basis</code>属性定义了在分配多余空间之前，项目占据的主轴空间<code>（main size）</code>。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为<code>auto</code>，即项目的本来大小。</p>
+</blockquote>
+<blockquote>
+<p>它可以设为跟<code>width</code>或<code>height</code>属性一样的值（比如<code>350px</code>），则项目将占据固定空间。</p>
+</blockquote>
+<pre><code>.item {
+  flex-basis: &lt;length&gt; | auto; /* default auto */
+}</code></pre><ol start="5">
+<li><code>flex</code></li>
+</ol>
+<blockquote>
+<p><code>flex</code>属性是<code>flex-grow</code>, <code>flex-shrink</code>和<code>flex-basis</code>的简写，默认值为<code>0 1 auto</code>。后两个属性可选。</p>
+</blockquote>
+<pre><code>.item {
+  flex: none | [ &lt;&#39;flex-grow&#39;&gt; &lt;&#39;flex-shrink&#39;&gt;? || &lt;&#39;flex-basis&#39;&gt; ]
+}</code></pre><blockquote>
+<p>该属性有两个快捷值：<code>auto (1 1 auto)</code>和<code>none (0 0 auto)</code>。</p>
+</blockquote>
+<blockquote>
+<div style="color: red;">建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</div>
+</blockquote>
+<ol start="6">
+<li><code>align-self</code></li>
+</ol>
+<blockquote>
+<p><code>align-self</code>属性允许单个项目有与其他项目不一样的对齐方式，可覆盖<code>align-items</code>属性。默认值为<code>auto</code>，表示继承父元素的<code>align-items</code>属性，如果没有父元素，则等同于<code>stretch</code>。</p>
+</blockquote>
+<pre><code>.item {
+  align-self: auto | flex-start | flex-end | center | baseline | stretch;
+}</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flex/" rel="tag">flex</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">iOS关于RSA的一些基础知识</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习日记-log7</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

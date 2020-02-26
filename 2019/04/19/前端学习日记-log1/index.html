@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>前端学习日记-log1 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="css,学习日记">
+    <meta name="description" content="现在网上有很多学习编程的网站和资料，例如W3school、菜鸟教程，我选择的是慕课网   我决定先从html基础开始，免费课程：初识HTML+CSS   日志随笔1. html基础的标签知识基础的标签其实大学里面都学习过了，复习一下 2. css样式属性内联、嵌入、外部三种写法，优先级：内联&gt;嵌入&gt;外部 3. css调用，标签选择、类选择、ID选择、子选择等熟练调用，合并相同属性，简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端学习日记-log1">
+<meta property="og:url" content="https://andergh.github.io/2019/04/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log1/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="现在网上有很多学习编程的网站和资料，例如W3school、菜鸟教程，我选择的是慕课网   我决定先从html基础开始，免费课程：初识HTML+CSS   日志随笔1. html基础的标签知识基础的标签其实大学里面都学习过了，复习一下 2. css样式属性内联、嵌入、外部三种写法，优先级：内联&gt;嵌入&gt;外部 3. css调用，标签选择、类选择、ID选择、子选择等熟练调用，合并相同属性，简">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-19T07:52:18.000Z">
+<meta property="article:modified_time" content="2019-06-24T09:12:08.200Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="学习日记">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端学习日记-log1</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端学习日记-log1</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-19T07:52:18.000Z" itemprop="datePublished" class="page-time">
+  2019-04-19
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-html基础的标签知识"><span class="post-toc-number">1.0.1.</span> <span class="post-toc-text">1. html基础的标签知识</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-css样式属性"><span class="post-toc-number">1.0.2.</span> <span class="post-toc-text">2. css样式属性</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-css调用，标签选择、类选择、ID选择、子选择等"><span class="post-toc-number">1.0.3.</span> <span class="post-toc-text">3. css调用，标签选择、类选择、ID选择、子选择等</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4-元素分类，盒子模型"><span class="post-toc-number">1.0.4.</span> <span class="post-toc-text">4. 元素分类，盒子模型</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-盒子模型"><span class="post-toc-number">1.0.5.</span> <span class="post-toc-text">5. 盒子模型</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#6-css布局模型"><span class="post-toc-number">1.0.6.</span> <span class="post-toc-text">6. css布局模型</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#7-层模型"><span class="post-toc-number">1.0.7.</span> <span class="post-toc-text">7. 层模型</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端学习日记-log1"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端学习日记-log1</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-19 15:52:18" datetime="2019-04-19T07:52:18.000Z"  itemprop="datePublished">2019-04-19</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><em>现在网上有很多学习编程的网站和资料，例如<a href="http://www.w3school.com.cn/index.html" target="_blank" rel="noopener">W3school</a>、<a href="http://www.runoob.com/" target="_blank" rel="noopener">菜鸟教程</a>，我选择的是<a href="https://www.imooc.com" target="_blank" rel="noopener">慕课网</a></em></p>
+</blockquote>
+<blockquote>
+<p><em>我决定先从<code>html</code>基础开始，免费课程：<a href="https://www.imooc.com/learn/9" target="_blank" rel="noopener">初识HTML+CSS</a></em></p>
+</blockquote>
+<hr>
+<h3 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h3><h5 id="1-html基础的标签知识"><a href="#1-html基础的标签知识" class="headerlink" title="1. html基础的标签知识"></a>1. <code>html</code>基础的标签知识</h5><p>基础的标签其实大学里面都学习过了，复习一下</p>
+<h5 id="2-css样式属性"><a href="#2-css样式属性" class="headerlink" title="2. css样式属性"></a>2. <code>css</code>样式属性</h5><p>内联、嵌入、外部三种写法，优先级：内联&gt;嵌入&gt;外部</p>
+<h5 id="3-css调用，标签选择、类选择、ID选择、子选择等"><a href="#3-css调用，标签选择、类选择、ID选择、子选择等" class="headerlink" title="3. css调用，标签选择、类选择、ID选择、子选择等"></a>3. <code>css</code>调用，标签选择、类选择、ID选择、子选择等</h5><p>熟练调用，合并相同属性，简化写法</p>
+<h5 id="4-元素分类，盒子模型"><a href="#4-元素分类，盒子模型" class="headerlink" title="4. 元素分类，盒子模型"></a>4. 元素分类，盒子模型</h5><p>块状元素、内联元素（行内元素）、内联块状元素</p>
+<p>常用的块状元素：<code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;</code></p>
+<p>常用的内联元素：<code>&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;</code></p>
+<p>常用的内联块状元素：<code>&lt;img&gt;、&lt;input&gt;</code></p>
+<h5 id="5-盒子模型"><a href="#5-盒子模型" class="headerlink" title="5. 盒子模型"></a>5. 盒子模型</h5><p>盒子模型：<code>margin、border、padding</code></p>
+<h5 id="6-css布局模型"><a href="#6-css布局模型" class="headerlink" title="6. css布局模型"></a><span style="color: red;">6. <code>css</code>布局模型</span></h5><ul>
+<li>流动模型</li>
+</ul>
+<p>流动（<code>Flow</code>）是默认的网页布局模式，也就是说网页在默认状态下的<code>HTML</code>网页元素都是根据流动模型来分布网页内容的。</p>
+<p>典型的特征：</p>
+<p>第一点，块状元素都会在所处的包含元素内自上而下按顺序垂直延伸分布，因为在默认状态下，块状元素的宽度都为100%。实际上，块状元素都会以行的形式占据位置。如右侧代码编辑器中三个块状元素标签<code>(div，h1，p)</code>宽度显示为100%。</p>
+<p>第二点，在流动模型下，内联元素都会在所处的包含元素内从左到右水平分布显示。（内联元素可不像块状元素这么霸道独占一行）</p>
+<ul>
+<li>浮动模型</li>
+</ul>
+<p>任何元素在默认情况下是不能浮动的，但可以用<code>css</code>定义为浮动，如<code>div、p、table、img</code>等元素都可以被定义为浮动。</p>
+<pre><code>float:left;
+float:right;</code></pre><h5 id="7-层模型"><a href="#7-层模型" class="headerlink" title="7. 层模型"></a><span style="color: red;">7. 层模型</span></h5><p>层布局模型就像是图像软件PhotoShop中非常流行的图层编辑功能一样，每个图层能够精确定位操作</p>
+<ul>
+<li>绝对定位<code>(position: absolute)</code></li>
+</ul>
+<p>这条语句的作用将元素从文档流中拖出来，然后使用<code>left、right、top、bottom</code>属性相对于其最接近的一个具有定位属性的父包含块进行绝对定位。如果不存在这样的包含块，则相对于<code>body</code>元素，即相对于浏览器窗口。</p>
+<ul>
+<li>相对定位<code>(position: relative)</code></li>
+</ul>
+<p>相对定位完成的过程是首先按<code>static(float)</code>方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于以前的位置移动，移动的方向和幅度由<code>left、right、top、bottom</code>属性确定，偏移前的位置保留不动。</p>
+<ul>
+<li>固定定位<code>(position: fixed)</code></li>
+</ul>
+<p>由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，除非你在屏幕中移动浏览器窗口的屏幕位置，或改变浏览器窗口的显示大小，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响</p>
+<p>练习：box4在box3标签内，把box4定位到box3的底部。</p>
+<p>代码如下，通过相对定位<code>(position: relative)</code>和绝对定位<code>(position: absolute)</code>配合达到效果</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;&lt;/title&gt;
+
+        &lt;style type=&quot;text/css&quot;&gt;
+            #box3 {
+                width: 200px;
+                height: 200px;
+                background-color: red;
+                position: relative;
+            }
+            #box4 {
+                border: 1px solid black;
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;box3&quot;&gt;
+            &lt;div id=&quot;box4&quot;&gt;测试文字&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/04/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端学习日记-log2</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/15/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习计划</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

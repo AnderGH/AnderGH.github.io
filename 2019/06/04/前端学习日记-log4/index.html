@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>前端学习日记-log4 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="学习日记,dom">
+    <meta name="description" content="继续上次的地方继续往下学习   日志随笔5. 浏览器渲染流程                                                                                             image_1.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端学习日记-log4">
+<meta property="og:url" content="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="继续上次的地方继续往下学习   日志随笔5. 浏览器渲染流程                                                                                             image_1.png">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_2.png">
+<meta property="og:image" content="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_3.png">
+<meta property="article:published_time" content="2019-06-04T07:34:21.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:32:46.485Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="学习日记">
+<meta property="article:tag" content="dom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端学习日记-log4</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端学习日记-log4</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-04T07:34:21.000Z" itemprop="datePublished" class="page-time">
+  2019-06-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-浏览器渲染流程"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">5. 浏览器渲染流程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#6-domReady实现"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">6. domReady实现</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端学习日记-log4"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端学习日记-log4</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-04 15:34:21" datetime="2019-06-04T07:34:21.000Z"  itemprop="datePublished">2019-06-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><em>继续上次的地方继续往下学习</em></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="5-浏览器渲染流程"><a href="#5-浏览器渲染流程" class="headerlink" title="5. 浏览器渲染流程"></a>5. 浏览器渲染流程</h3><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_2.png" alt="image_2.png" title>
+                </div>
+                <div class="image-caption">image_2.png</div>
+            </figure>
+
+<h3 id="6-domReady实现"><a href="#6-domReady实现" class="headerlink" title="6. domReady实现"></a>6. domReady实现</h3><p><code>domReady</code>实际上就是获取浏览器渲染过程中<code>DOM</code>树构建完成的时间，在此时间引入<code>js</code>脚本，这样实现页面的无缝渲染</p>
+<ul>
+<li><p><code>setTimeout</code>定时器，定时器制定一个固定时间，来渲染页面</p>
+</li>
+<li><p><code>window.onload</code>方法，资源加载完成后才会触发，包括外部资源，外部资源较多时，等待时间较长，效果不好</p>
+</li>
+<li><p><code>$(document).ready</code>方法，<code>jqurey</code>框架中的方法，此处暂时没有学到这个框架</p>
+</li>
+<li><p><code>DOMContentLoaded</code>方法</p>
+</li>
+</ul>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;title&gt;&lt;/title&gt;
+
+        &lt;script src=&quot;js/myDomReady.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+        &lt;script type=&quot;text/javascript&quot;&gt;
+            myReady(function() {
+                document.getElementById(&#39;header&#39;).style.color = &#39;red&#39;;
+            });
+        &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1 id=&quot;header&quot;&gt;字体颜色&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><pre><code>// myDomReady.js
+function myReady(fn) {
+    // 区分浏览器
+    if (document.addEventListener) {
+        // 现代浏览器
+        document.addEventListener(&#39;DOMContentLoaded&#39;, fn, false);
+    } else{
+        IEContentReady(fn);
+    }
+
+    //IE模拟
+    function IEContentReady(fn) {
+        var d = window.document;
+        var done = false;
+
+        // 只执行一次的回调函数
+        var init = function() {
+            if (!done) {
+                done = true;
+                fn();
+            }
+        }
+
+        (function() {
+            try {
+                // dom树未创建之前，调用doScroll的方法会报错
+                d.documentElement.doScroll(&#39;left&#39;);
+            } catch (e) {
+                //TODO handle the exception
+                // 延时再试一次
+                // arguments.callee 完成递归方法
+                setTimeout(arguments.callee, 50);
+                return;
+            }
+            // 没有错误表示dom树创建完毕
+            init();
+        })();
+
+        // 监听document的加载状态
+        d.onreadystatechange = function() {
+            // 如果用户在ready之后绑定的函数，则立马执行
+            if (d.readyState == &#39;complete&#39;) {
+                d.onratechange = null;
+
+                init();
+            }
+        }
+    }
+}</code></pre><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_3.png" alt="image_3.png" title>
+                </div>
+                <div class="image-caption">image_3.png</div>
+            </figure>
+
+<p>各主流框架DOMReady实现：<a href="https://www.cnblogs.com/JulyZhang/archive/2011/02/12/1952484.html" target="_blank" rel="noopener">https://www.cnblogs.com/JulyZhang/archive/2011/02/12/1952484.html</a></p>
+<p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dom/" rel="tag">dom</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/12/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端学习日记-log5</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习日记-log3</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>单例模式写法和注释 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="iOS">
+    <meta name="description" content="单例的完整写法如下： &#x2F;&#x2F;.h文件 #import &lt;Foundation&#x2F;Foundation.h&gt;  @interface AObject : NSObject &lt;NSCopying, NSMutableCopying&gt;  + (instancetype)shareInstance;  @end   &#x2F;&#x2F;.m文件 #import &quot;AObject.h&amp;quot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式写法和注释">
+<meta property="og:url" content="https://andergh.github.io/2018/09/03/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%86%99%E6%B3%95%E5%92%8C%E6%B3%A8%E9%87%8A/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="单例的完整写法如下： &#x2F;&#x2F;.h文件 #import &lt;Foundation&#x2F;Foundation.h&gt;  @interface AObject : NSObject &lt;NSCopying, NSMutableCopying&gt;  + (instancetype)shareInstance;  @end   &#x2F;&#x2F;.m文件 #import &quot;AObject.h&amp;quot">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-09-03T00:35:22.000Z">
+<meta property="article:modified_time" content="2019-10-15T03:08:25.072Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">单例模式写法和注释</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">单例模式写法和注释</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-09-03T00:35:22.000Z" itemprop="datePublished" class="page-time">
+  2018-09-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-单例模式写法和注释"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">单例模式写法和注释</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-09-03 08:35:22" datetime="2018-09-03T00:35:22.000Z"  itemprop="datePublished">2018-09-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>单例的完整写法如下：</p>
+<pre><code>//.h文件
+#import &lt;Foundation/Foundation.h&gt;
+
+@interface AObject : NSObject &lt;NSCopying, NSMutableCopying&gt;
+
++ (instancetype)shareInstance;
+
+@end
+
+
+//.m文件
+#import &quot;AObject.h&quot;
+
+@interface AObject ()
+
+@end
+
+@implementation AObject
+
+static AObject *instance = nil;
+
++ (instancetype)shareInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        instance = [[super allocWithZone:NULL] init];
+    });
+    return instance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        //单例的内部逻辑
+    }
+    return self;
+}
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
+    return [AObject shareInstance];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [AObject shareInstance];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return [AObject shareInstance];
+}
+
+@end
+</code></pre><ul>
+<li>仿照系统单例类，<code>.h</code>文件中提供<code>shareInstance</code>的创建方法</li>
+<li>使用<code>static</code>修饰词创建静态变量，编译时分配内存，程序结束时释放内存</li>
+<li>推荐使用<code>dispatch_once</code>的线程方法为静态变量赋值，也可以使用<code>@synchronized</code>替代</li>
+</ul>
+<pre><code>+ (instancetype)shareInstance {
+    if (instance == nil) {
+        @synchronized (self) {
+            instance = [[super allocWithZone:NULL] init];
+        }
+    }
+    return instance;
+}</code></pre><ul>
+<li>为了避免<code>[[AObject alloc] init]</code>、<code>[aObject new]</code>、<code>[aObject copy]</code>、<code>[aObject mutableCopy]</code>的方法创建出其他对象，重写<code>allocWithZone</code>、<code>copyWithZone</code>、<code>mutablecopyWithZone</code>的方法，将其他创建的入口全部导入指定的<code>shareInstance</code>方法中</li>
+<li>由于重写了<code>allocWithZone</code>的方法，所以<code>shareInstance</code>中需要使用<code>[super allocWithZone:NULL]</code>进行内存分配</li>
+<li>重写<code>init</code>方法，实现单例的内部逻辑</li>
+</ul>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/14/iOS%E5%92%8Chtml%E4%BA%A4%E4%BA%92-UIWebView/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">iOS和html交互-UIWebView</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/30/iOS%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E5%99%A8%E8%AF%A6%E7%BB%86%E6%B5%8B%E8%AF%95/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">iOS引用计数器详细测试</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

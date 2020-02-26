@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>前端学习日记-log3 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="学习日记,dom">
+    <meta name="description" content="继续上次的地方继续往下学习   日志随笔1. DOM热身案例——滑动门特效代码已贴在上一篇文章里面，其中js中有个设置onmouseover的方法的逻辑，慕课网视频讲解中使用的是js的闭包函数循环设置的，可以参考注释掉的方法二，作为原生开发人员，我一开始不太理解这个闭包函数，认为可能会导致内存释放问题，这个疑问我先不去考虑了，先当做固定写法来使用，后面其他js课程再仔细理解 2. 了解DOMDo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端学习日记-log3">
+<meta property="og:url" content="https://andergh.github.io/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="继续上次的地方继续往下学习   日志随笔1. DOM热身案例——滑动门特效代码已贴在上一篇文章里面，其中js中有个设置onmouseover的方法的逻辑，慕课网视频讲解中使用的是js的闭包函数循环设置的，可以参考注释掉的方法二，作为原生开发人员，我一开始不太理解这个闭包函数，认为可能会导致内存释放问题，这个疑问我先不去考虑了，先当做固定写法来使用，后面其他js课程再仔细理解 2. 了解DOMDo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_2.png">
+<meta property="og:image" content="https://andergh.github.io/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_3.png">
+<meta property="article:published_time" content="2019-05-10T06:58:03.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:32:26.242Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="学习日记">
+<meta property="article:tag" content="dom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端学习日记-log3</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端学习日记-log3</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-10T06:58:03.000Z" itemprop="datePublished" class="page-time">
+  2019-05-10
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-DOM热身案例——滑动门特效"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1. DOM热身案例——滑动门特效</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-了解DOM"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2. 了解DOM</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-文档片段节点"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3. 文档片段节点</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-DOM的相关方法和属性"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">4. DOM的相关方法和属性</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端学习日记-log3"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端学习日记-log3</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-10 14:58:03" datetime="2019-05-10T06:58:03.000Z"  itemprop="datePublished">2019-05-10</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><em>继续上次的地方继续往下学习</em></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="1-DOM热身案例——滑动门特效"><a href="#1-DOM热身案例——滑动门特效" class="headerlink" title="1. DOM热身案例——滑动门特效"></a>1. <code>DOM</code>热身案例——滑动门特效</h3><p>代码已贴在上一篇文章里面，其中<code>js</code>中有个设置<code>onmouseover</code>的方法的逻辑，慕课网视频讲解中使用的是<code>js</code>的闭包函数循环设置的，可以参考注释掉的方法二，作为原生开发人员，我一开始不太理解这个闭包函数，认为可能会导致内存释放问题，这个疑问我先不去考虑了，先当做固定写法来使用，后面其他<code>js</code>课程再仔细理解</p>
+<h3 id="2-了解DOM"><a href="#2-了解DOM" class="headerlink" title="2. 了解DOM"></a>2. 了解<code>DOM</code></h3><p><code>Document Object Model</code>文档对象模型，关键是理清标签节点</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<p>W3C万维网联盟</p>
+<p>元素节点、属性节点、文本节点、文档节点、文档片段节点</p>
+<h3 id="3-文档片段节点"><a href="#3-文档片段节点" class="headerlink" title="3. 文档片段节点"></a>3. 文档片段节点</h3><p><code>createDocumentFragment</code>方法创建文档片段节点，这个节点加入到文档中不会显示出来，属于占位用的</p>
+<h3 id="4-DOM的相关方法和属性"><a href="#4-DOM的相关方法和属性" class="headerlink" title="4. DOM的相关方法和属性"></a>4. <code>DOM</code>的相关方法和属性</h3><ul>
+<li><p><code>nodeType</code>节点类型</p>
+</li>
+<li><p><code>nodeName</code>节点名称</p>
+</li>
+<li><p><code>nodeValue</code>节点值</p>
+</li>
+<li><p><code>attributes</code>属性节点数组</p>
+</li>
+<li><p><code>childNodes</code>子节点数组</p>
+</li>
+<li><p>文本节点<code>#text</code></p>
+</li>
+<li><p>注释节点<code>#comment</code></p>
+</li>
+<li><p>空节点</p>
+</li>
+<li><p><code>doctype</code></p>
+</li>
+<li><p>文档片段节点<code>#document-fragment</code></p>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_2.png" alt="image_2.png" title>
+                </div>
+                <div class="image-caption">image_2.png</div>
+            </figure>
+
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_3.png" alt="image_3.png" title>
+                </div>
+                <div class="image-caption">image_3.png</div>
+            </figure>
+
+<p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dom/" rel="tag">dom</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端学习日记-log4</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习日记-log2</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

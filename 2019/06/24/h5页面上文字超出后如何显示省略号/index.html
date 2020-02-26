@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>h5页面上文字超出后如何显示省略号 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="html,css">
+    <meta name="description" content="一、单行文字代码如下 &lt;!-- html --&gt; &lt;!DOCTYPE html&gt; &lt;html&gt;     &lt;head&gt;         &lt;meta charset&#x3D;&quot;utf-8&quot; &#x2F;&gt;         &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;devic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="h5页面上文字超出后如何显示省略号">
+<meta property="og:url" content="https://andergh.github.io/2019/06/24/h5%E9%A1%B5%E9%9D%A2%E4%B8%8A%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E5%90%8E%E5%A6%82%E4%BD%95%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="一、单行文字代码如下 &lt;!-- html --&gt; &lt;!DOCTYPE html&gt; &lt;html&gt;     &lt;head&gt;         &lt;meta charset&#x3D;&quot;utf-8&quot; &#x2F;&gt;         &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;devic">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-06-24T09:00:55.000Z">
+<meta property="article:modified_time" content="2019-06-24T09:07:32.678Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">h5页面上文字超出后如何显示省略号</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">h5页面上文字超出后如何显示省略号</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-06-24T09:00:55.000Z" itemprop="datePublished" class="page-time">
+  2019-06-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/html5/">html5</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、单行文字"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、单行文字</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、多行文字"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、多行文字</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-6"><a class="post-toc-link" href="#注意："><span class="post-toc-number">2.0.1.</span> <span class="post-toc-text">注意：</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-h5页面上文字超出后如何显示省略号"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">h5页面上文字超出后如何显示省略号</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-06-24 17:00:55" datetime="2019-06-24T09:00:55.000Z"  itemprop="datePublished">2019-06-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/html5/">html5</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h4 id="一、单行文字"><a href="#一、单行文字" class="headerlink" title="一、单行文字"></a>一、单行文字</h4><p>代码如下</p>
+<pre><code>&lt;!-- html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;testOverFlow&lt;/title&gt;
+
+        &lt;style type=&quot;text/css&quot;&gt;
+            .container {
+                margin-top: 10px;
+                width: 200px;
+                height: 44px;
+                line-height: 44px;
+                background-color: lightgray;
+            }
+            /* 单行样式 */
+            #singleTextDiv {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            #singleP {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+            #singleSpan {
+                display: block;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- 单行文字 --&gt;
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;div id=&quot;singleTextDiv&quot;&gt;
+                少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;p id=&quot;singleP&quot;&gt;少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;span id=&quot;singleSpan&quot;&gt;少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书&lt;/span&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><p><code>div</code>和<code>p</code>是块级元素，<code>span</code>是内联元素，对块级元素设置<code>text-overflow</code>、<code>white-space</code>、<code>overflow</code>三个属性标签即可</p>
+<h4 id="二、多行文字"><a href="#二、多行文字" class="headerlink" title="二、多行文字"></a>二、多行文字</h4><pre><code>&lt;!-- html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;testOverFlow&lt;/title&gt;
+
+        &lt;style type=&quot;text/css&quot;&gt;
+            .container {
+                margin-top: 10px;
+                width: 200px;
+                height: 44px;
+                line-height: 44px;
+                background-color: lightgray;
+            }
+            /* 多行样式 */
+            #doubleP {
+                line-height: 22px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp:2;
+            }
+            #doubleSpan {
+                display: block;
+                line-height: 22px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp:2;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- 多行文字 --&gt;
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;p id=&quot;doubleP&quot;&gt;少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;container&quot;&gt;
+            &lt;span id=&quot;doubleSpan&quot;&gt;少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书少时诵诗书&lt;/span&gt;
+        &lt;/div&gt;
+
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><h6 id="注意："><a href="#注意：" class="headerlink" title="注意："></a><div style="color: red;">注意：</div></h6><ol>
+<li><code>-webkit</code>代表<code>Safari</code>、<code>Chrome</code>等浏览器的私有属性</li>
+<li><code>-webkit-line-clamp</code>用来限制要显示的行数，但是这是一个不规范的属性，必须组合其他的<code>-webkit</code>属性才能达到效果</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/" rel="tag">html</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端学习日记-log7</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log6/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习日记-log6</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

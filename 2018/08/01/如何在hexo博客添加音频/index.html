@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>如何在hexo博客添加音频 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="hexo">
+    <meta name="description" content="在博客中插入音频，处于音频播放顺畅和音乐版权考虑，我们一般选择各个平台的在线音频，使用播放器进行在线播放，本地加载的话，github服务器缓存可能较慢 一、使用官方网站上获取的音频外链播放器音乐网站一般会提供自家的音频外链播放器，便于其他平台集成，例如网易云音乐，在官网上搜索需要的音乐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何在hexo博客添加音频">
+<meta property="og:url" content="https://andergh.github.io/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="在博客中插入音频，处于音频播放顺畅和音乐版权考虑，我们一般选择各个平台的在线音频，使用播放器进行在线播放，本地加载的话，github服务器缓存可能较慢 一、使用官方网站上获取的音频外链播放器音乐网站一般会提供自家的音频外链播放器，便于其他平台集成，例如网易云音乐，在官网上搜索需要的音乐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/image_2.png">
+<meta property="article:published_time" content="2018-08-01T07:43:33.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:36:19.747Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">如何在hexo博客添加音频</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">如何在hexo博客添加音频</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-01T07:43:33.000Z" itemprop="datePublished" class="page-time">
+  2018-08-01
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/hexo/">hexo</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、使用官方网站上获取的音频外链播放器"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、使用官方网站上获取的音频外链播放器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、使用开源插件hexo-tag-aplayer"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、使用开源插件hexo-tag-aplayer</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、使用播放器APlayer和插件APlayer-Typecho"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、使用播放器APlayer和插件APlayer-Typecho</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-如何在hexo博客添加音频"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">如何在hexo博客添加音频</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-01 15:43:33" datetime="2018-08-01T07:43:33.000Z"  itemprop="datePublished">2018-08-01</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/hexo/">hexo</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>在博客中插入音频，处于音频播放顺畅和音乐版权考虑，我们一般选择各个平台的在线音频，使用播放器进行在线播放，本地加载的话，<code>github</code>服务器缓存可能较慢</p>
+<h3 id="一、使用官方网站上获取的音频外链播放器"><a href="#一、使用官方网站上获取的音频外链播放器" class="headerlink" title="一、使用官方网站上获取的音频外链播放器"></a>一、使用官方网站上获取的音频外链播放器</h3><p>音乐网站一般会提供自家的音频外链播放器，便于其他平台集成，例如<a href="https://music.163.com/" target="_blank" rel="noopener">网易云音乐</a>，在官网上搜索需要的音乐</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<p>点击音乐头像下面的生成外链播放器</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2018/08/01/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E9%9F%B3%E9%A2%91/image_2.png" alt="image_2.png" title>
+                </div>
+                <div class="image-caption">image_2.png</div>
+            </figure>
+
+<p>将拿到的代码直接放入博文中即可，如下</p>
+<pre><code>&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=330 height=86 src=&quot;//music.163.com/outchain/player?type=2&amp;id=28815250&amp;auto=0&amp;height=66&quot;&gt;
+&lt;/iframe&gt;</code></pre><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+
+<p>这种方式简单快捷，但是<code>iframe</code>在<code>iOS</code>设备上效果不好，而且平台也会限制版权，有些版权存在争议的音频是不提供外链播放的，如果遇到的话，建议把对应的音频下载后上传到个人歌单，重新生成外链。</p>
+<h3 id="二、使用开源插件hexo-tag-aplayer"><a href="#二、使用开源插件hexo-tag-aplayer" class="headerlink" title="二、使用开源插件hexo-tag-aplayer"></a>二、使用开源插件<a href="https://github.com/MoePlayer/hexo-tag-aplayer" target="_blank" rel="noopener">hexo-tag-aplayer</a></h3><p>详细使用请参考插件<a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">文档</a>，地址<a href="https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md" target="_blank" rel="noopener">https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md</a></p>
+<pre><code>npm install --save hexo-tag-aplayer</code></pre><h3 id="三、使用播放器APlayer和插件APlayer-Typecho"><a href="#三、使用播放器APlayer和插件APlayer-Typecho" class="headerlink" title="三、使用播放器APlayer和插件APlayer-Typecho"></a>三、使用播放器<a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">APlayer</a>和插件<a href="https://github.com/MoePlayer/APlayer-Typecho" target="_blank" rel="noopener">APlayer-Typecho</a></h3><p>方法一受限于音乐平台版权限制，方法二必须要直接调用音乐的播放url，而一般从音乐平台的页面上我们无法获取音频地址，所以方法三我们借助插件<a href="https://github.com/MoePlayer/APlayer-Typecho" target="_blank" rel="noopener">APlayer-Typecho</a>来解析各大音乐平台的音频的地址</p>
+<ol>
+<li><p>进入<code>theme/主题/source</code>目录下，新建文件夹<code>dist</code></p>
+</li>
+<li><p>访问开源框架<a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">APlayer</a>，地址<a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">https://github.com/MoePlayer/APlayer</a>，下载源码将<code>APlayer-master/dist</code>目录下<code>APlayer.min.css</code>和<code>APlayer.min.js</code>文件拷贝到第一步新建的<code>dist</code>目录下</p>
+</li>
+<li><p>访问开源框架<a href="https://github.com/MoePlayer/APlayer-Typecho" target="_blank" rel="noopener">APlayer-Typecho</a>，地址<a href="https://github.com/MoePlayer/APlayer-Typecho" target="_blank" rel="noopener">https://github.com/MoePlayer/APlayer-Typecho</a>，下载源码，将<code>APlayer-Typecho-master/assets</code>目录下<code>Meting.min.js</code>文件拷贝到第一步的目录下</p>
+</li>
+</ol>
+<p>此时文件准备已完成，在博文中相应位置进行调用</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/APlayer.min.css&quot;&gt;
+&lt;script src=&quot;/dist/APlayer.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;div class=&quot;aplayer&quot; data-id=&quot;496298744&quot; data-server=&quot;netease&quot; data-type=&quot;song&quot;&gt;&lt;/div&gt;
+
+&lt;script src=&quot;/dist/Meting.min.js&quot;&gt;&lt;/script&gt;</code></pre><link rel="stylesheet" href="/dist/APlayer.min.css">
+<script src="/dist/APlayer.min.js"></script>
+
+<div class="aplayer" data-id="496298744" data-server="netease" data-type="song"></div>
+
+<script src="/dist/Meting.min.js"></script>
+
+<p>其中<code>div</code>样式中的参数为需要展示的音频的参数，说明如下：</p>
+<ol>
+<li><p><code>class</code>：播放器样式，指定固定值<code>aplayer</code></p>
+</li>
+<li><p><code>data-id</code>：各平台对应的歌曲<code>id</code>值</p>
+</li>
+<li><p><code>data-server</code>：平台标识</p>
+</li>
+</ol>
+<ul>
+<li><code>netease</code>：网易云</li>
+<li><code>tencent</code>：QQ</li>
+<li><code>xiami</code>：虾米</li>
+<li><code>kugou</code>：酷狗</li>
+<li><code>baidu</code>：百度</li>
+</ul>
+<ol start="4">
+<li><code>data-type</code>：音乐类型</li>
+</ol>
+<ul>
+<li><code>song</code>：单曲</li>
+<li><code>album</code>：专辑</li>
+<li><code>playlist</code>：歌单</li>
+<li><code>search</code>：搜索</li>
+</ul>
+<p>更多参数说明请参考<a href="https://github.com/MoePlayer/APlayer" target="_blank" rel="noopener">APlayer</a>和<a href="https://github.com/MoePlayer/APlayer-Typecho" target="_blank" rel="noopener">APlayer-Typecho</a>文档</p>
+<p>当然，如果你不想每次重新引入<code>js</code>，你也可以找到主题中博文开始和结束的地方，修改博客源文件，将方法的引入放在博客框架中完成。</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/08/02/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0%E8%A7%86%E9%A2%91/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">如何在hexo博客中添加视频</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/07/31/%E5%A6%82%E4%BD%95%E5%9C%A8hexo%E5%8D%9A%E5%AE%A2%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">如何在hexo博客中添加图片</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

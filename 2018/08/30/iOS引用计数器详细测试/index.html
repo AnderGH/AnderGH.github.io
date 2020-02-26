@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>iOS引用计数器详细测试 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="iOS">
+    <meta name="description" content="一、MRC模式 局部变量   ARC模式下局部变量alloc后计数器+1，release后计数器-1，计数器变为0后，对象立即被释放 addSubview方法也是强引用，计数器+1，所以在控制器释放后，内部的subviews计数器-1，此时计数器变为0的才会被正确释放  - (IBAction)clickButton:(id)sender {     AObject *aObject &#x3D; [[AO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS引用计数器详细测试">
+<meta property="og:url" content="https://andergh.github.io/2018/08/30/iOS%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E5%99%A8%E8%AF%A6%E7%BB%86%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="一、MRC模式 局部变量   ARC模式下局部变量alloc后计数器+1，release后计数器-1，计数器变为0后，对象立即被释放 addSubview方法也是强引用，计数器+1，所以在控制器释放后，内部的subviews计数器-1，此时计数器变为0的才会被正确释放  - (IBAction)clickButton:(id)sender {     AObject *aObject &#x3D; [[AO">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-08-30T07:27:18.000Z">
+<meta property="article:modified_time" content="2019-01-09T09:03:19.000Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">iOS引用计数器详细测试</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">iOS引用计数器详细测试</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-08-30T07:27:18.000Z" itemprop="datePublished" class="page-time">
+  2018-08-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、MRC模式"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、MRC模式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、ARC模式"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、ARC模式</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-iOS引用计数器详细测试"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">iOS引用计数器详细测试</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-08-30 15:27:18" datetime="2018-08-30T07:27:18.000Z"  itemprop="datePublished">2018-08-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="一、MRC模式"><a href="#一、MRC模式" class="headerlink" title="一、MRC模式"></a>一、MRC模式</h3><ol>
+<li>局部变量</li>
+</ol>
+<ul>
+<li>ARC模式下局部变量alloc后计数器+1，release后计数器-1，计数器变为0后，对象立即被释放</li>
+<li>addSubview方法也是强引用，计数器+1，所以在控制器释放后，内部的subviews计数器-1，此时计数器变为0的才会被正确释放</li>
+</ul>
+<pre><code>- (IBAction)clickButton:(id)sender {
+    AObject *aObject = [[AObject alloc] init];
+    NSLog(@&quot;retainCount = %ld&quot;, aObject.retainCount);
+    [aObject release];
+
+    BView *bView = [[BView alloc] init];
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    [self.view addSubview:bView];
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    [bView release];
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    NSLog(@&quot;clickButton&quot;);
+}
+- (void)dealloc {
+    [super dealloc];
+    NSLog(@&quot;AViewController dealloc&quot;);
+}
+
+2018-08-30 14:12:06.863748+0800 testram[6748:354224] retainCount = 1
+2018-08-30 14:12:06.863935+0800 testram[6748:354224] AObject dealloc
+2018-08-30 14:12:06.864148+0800 testram[6748:354224] retainCount = 1
+2018-08-30 14:12:06.864393+0800 testram[6748:354224] retainCount = 2
+2018-08-30 14:12:06.864472+0800 testram[6748:354224] retainCount = 1
+2018-08-30 14:12:06.864560+0800 testram[6748:354224] clickButton
+2018-08-30 14:12:11.896023+0800 testram[6748:354224] AViewController dealloc
+2018-08-30 14:12:11.896327+0800 testram[6748:354224] BView dealloc</code></pre><ol start="2">
+<li>全局变量</li>
+</ol>
+<ul>
+<li>ARC模式下，只有先创建局部变量，再使用属性直接赋值，此时引用计数器才会正确累加，如果使用self点语法进行初始化，那么会受到ARC的retain和strong修饰词的影响</li>
+<li>addSubview的也会使计数器+1，所以在控制器释放后，添加的subViews计数器-1，此时为0的view才会释放</li>
+</ul>
+<pre><code>@interface AViewController ()
+@property (nonatomic, strong) AObject *aObject;
+@property (nonatomic, strong) BView *bView;
+@end
+
+@implementation AViewController
+
+- (IBAction)clickButton:(id)sender {
+    self.aObject = [[AObject alloc] init];
+    NSLog(@&quot;retainCount = %ld&quot;, self.aObject.retainCount);
+    [self.aObject release];
+    NSLog(@&quot;retainCount = %ld&quot;, self.aObject.retainCount);
+
+    BView *bView = [[BView alloc] init];
+    _bView = bView;
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    [self.view addSubview:bView];
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    [bView release];
+    NSLog(@&quot;retainCount = %ld&quot;, bView.retainCount);
+    NSLog(@&quot;clickButton&quot;);
+}
+
+- (void)dealloc {
+    [super dealloc];
+    NSLog(@&quot;AViewController dealloc&quot;);
+}
+@end
+
+2018-08-30 14:16:16.162771+0800 testram[6779:360385] retainCount = 2
+2018-08-30 14:16:16.162931+0800 testram[6779:360385] retainCount = 1
+2018-08-30 14:16:16.163164+0800 testram[6779:360385] retainCount = 1
+2018-08-30 14:16:16.163423+0800 testram[6779:360385] retainCount = 2
+2018-08-30 14:16:16.163524+0800 testram[6779:360385] retainCount = 1
+2018-08-30 14:16:16.163622+0800 testram[6779:360385] clickButton
+2018-08-30 14:16:54.180754+0800 testram[6779:360385] AViewController dealloc
+2018-08-30 14:16:54.181212+0800 testram[6779:360385] BView dealloc</code></pre><h3 id="二、ARC模式"><a href="#二、ARC模式" class="headerlink" title="二、ARC模式"></a>二、ARC模式</h3><ol>
+<li>局部变量</li>
+</ol>
+<ul>
+<li>在ARC模式下，系统对局部变量的自动回收是以方法为界限的，当方法执行完毕后，即开始回收局部变量</li>
+</ul>
+<pre><code>- (IBAction)clickButton:(id)sender {
+    NSLog(@&quot;start&quot;);
+    AObject *aObject = [[AObject alloc] init];
+    BView *bView = [[BView alloc] init];
+    NSLog(@&quot;clickButton&quot;);
+}
+
+- (void)dealloc {
+    NSLog(@&quot;AViewController dealloc&quot;);
+}
+
+2018-08-30 11:06:48.769565+0800 testram[6184:253141] start
+2018-08-30 11:06:48.769851+0800 testram[6184:253141] clickButton
+2018-08-30 11:06:48.769980+0800 testram[6184:253141] BView dealloc
+2018-08-30 11:06:48.770490+0800 testram[6184:253141] AObject dealloc
+2018-08-30 11:06:54.061334+0800 testram[6184:253141] AViewController dealloc</code></pre><ol start="2">
+<li>全局变量</li>
+</ol>
+<ul>
+<li>在ARC模式下，系统推荐我们使用strong修饰一般属性对象，而且对点语法进行了兼容，所以可以直接使用strong的点语法进行初始化赋值</li>
+</ul>
+<pre><code>@interface AViewController ()
+@property (nonatomic, strong) AObject *aObject;
+@property (nonatomic, strong) BView *bView;
+@end
+
+@implementation AViewController
+
+- (IBAction)clickButton:(id)sender {
+    NSLog(@&quot;start&quot;);
+    self.aObject = [[AObject alloc] init];
+    self.bView = [[BView alloc] init];
+    [self.view addSubview:self.bView];
+    NSLog(@&quot;clickButton&quot;);
+}
+
+- (void)dealloc {
+    NSLog(@&quot;AViewController dealloc&quot;);
+}
+
+@end
+
+2018-08-30 13:49:36.579188+0800 testram[6559:324193] start
+2018-08-30 13:49:36.579550+0800 testram[6559:324193] clickButton
+2018-08-30 13:49:39.892344+0800 testram[6559:324193] AViewController dealloc
+2018-08-30 13:49:39.892746+0800 testram[6559:324193] AObject dealloc
+2018-08-30 13:49:39.893146+0800 testram[6559:324193] BView dealloc</code></pre>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/09/03/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%86%99%E6%B3%95%E5%92%8C%E6%B3%A8%E9%87%8A/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">单例模式写法和注释</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/08/22/%E3%80%8A%E6%97%A0%E9%97%AE%E8%A5%BF%E4%B8%9C%E3%80%8B%E8%A7%82%E5%90%8E%E6%84%9F/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">《无问西东》观后感</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

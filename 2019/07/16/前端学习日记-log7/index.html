@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>前端学习日记-log7 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="html,css,学习日记">
+    <meta name="description" content="第五天和第六天：三种简历   第一种                                                                                             image_1.png               个人思路：  总体上是左右分栏，默认的流动模型（flow）不太适合，浮动模型（float）和层模型（layer）可以考虑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端学习日记-log7">
+<meta property="og:url" content="https://andergh.github.io/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="第五天和第六天：三种简历   第一种                                                                                             image_1.png               个人思路：  总体上是左右分栏，默认的流动模型（flow）不太适合，浮动模型（float）和层模型（layer）可以考虑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/image_2.png">
+<meta property="article:published_time" content="2019-07-16T03:38:28.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:35:52.671Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="html">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="学习日记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端学习日记-log7</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端学习日记-log7</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-07-16T03:38:28.000Z" itemprop="datePublished" class="page-time">
+  2019-07-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第一种"><span class="post-toc-number">1.</span> <span class="post-toc-text">第一种</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#第二种"><span class="post-toc-number">2.</span> <span class="post-toc-text">第二种</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端学习日记-log7"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端学习日记-log7</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-07-16 11:38:28" datetime="2019-07-16T03:38:28.000Z"  itemprop="datePublished">2019-07-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <hr>
+<blockquote>
+<p><em><a href="http://ife.baidu.com/course/detail/id/40" target="_blank" rel="noopener">第五天和第六天：三种简历</a></em></p>
+</blockquote>
+<hr>
+<h4 id="第一种"><a href="#第一种" class="headerlink" title="第一种"></a>第一种</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<p>个人思路：</p>
+<ol>
+<li>总体上是左右分栏，默认的流动模型（<code>flow</code>）不太适合，浮动模型（<code>float</code>）和层模型（<code>layer</code>）可以考虑</li>
+<li>层模型不太适合整个右侧一栏的布局，浮动模型代码量较多</li>
+<li>弹性布局（<code>flex</code>）非常适合，代码简单，单需要适配解决老版本的兼容问题，整体代码少</li>
+</ol>
+<p>综上，第一种样式代码如下：</p>
+<pre><code>&lt;!-- html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;三种简历&lt;/title&gt;
+
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/test1.css&quot; /&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;div class=&quot;pageTitleClass&quot;&gt;
+            &lt;p&gt;XX&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;infoClass&quot;&gt;
+            &lt;div&gt;
+                &lt;div class=&quot;titleClass&quot;&gt;
+                    basicInfo
+                &lt;/div&gt;
+
+                &lt;div class=&quot;contentClass&quot;&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;name&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;zhangsan&lt;/span&gt;
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;gender&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;male&lt;/span&gt;
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;position&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxx&lt;/span&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;
+
+            &lt;/div&gt;
+            &lt;div&gt;
+                &lt;div class=&quot;titleClass&quot;&gt;
+                    phone&amp;email
+                &lt;/div&gt;
+
+                &lt;div class=&quot;contentClass&quot;&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;phone&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;18600000000&lt;/span&gt;
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;email&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxx@xxx.com&lt;/span&gt;
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;homepage&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxxx&lt;/span&gt;
+                    &lt;/span&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div&gt;
+                &lt;div class=&quot;titleClass&quot;&gt;
+                    schools
+                &lt;/div&gt;
+
+                &lt;div class=&quot;contentClass&quot;&gt;
+                    &lt;p class=&quot;keyClass&quot;&gt;Bachelor&lt;/p&gt;
+                    &lt;p class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxx&lt;/p&gt;
+                    &lt;div class=&quot;keyClass&quot;&gt;Postgraduate&lt;/div&gt;
+                    &lt;p class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxx&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div&gt;
+                &lt;div class=&quot;titleClass&quot;&gt;
+                    projects
+                &lt;/div&gt;
+
+                &lt;div class=&quot;contentClass&quot;&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;project name&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;A&lt;/span&gt;
+
+                    &lt;/span&gt;
+                    &lt;span&gt;
+                        &lt;span class=&quot;keyClass&quot;&gt;project time&lt;/span&gt;
+                        &lt;span class=&quot;valueCalss&quot;&gt;xxxx.xx - xxxx.xx&lt;/span&gt;
+                    &lt;/span&gt;
+
+                    &lt;div class=&quot;keyClass&quot;&gt;project info：&lt;/div&gt;
+                    &lt;p&gt;sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss, sssss, ssss, sssss.&lt;/p&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><pre><code>/* css */
+body {
+    display: flex;
+}
+
+.pageTitleClass {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 120px;
+
+    background-color: lightgrey;
+}
+.pageTitleClass &gt; p {
+    width: 100%;
+    margin-top: 50px;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+
+.infoClass {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+
+    margin-left: 20px;
+    margin-bottom: 25px;
+}
+
+.titleClass {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 25px;
+}
+
+.contentClass {
+    margin-top: 20px;
+    font-size: 16px;
+}
+.keyClass {
+    font-weight: bold;
+}
+.valueCalss {
+    margin-left: 8px;
+}
+.contentClass &gt; span {
+    margin-right: 40px;
+}
+.contentClass &gt; p {
+    margin: 0 0 0 0;
+}
+.contentClass &gt; div {
+    margin: 10px 0 0 0;
+}</code></pre><h4 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/07/16/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log7/image_2.png" alt="image_2.png" title>
+                </div>
+                <div class="image-caption">image_2.png</div>
+            </figure>
+
+<p>个人思路：</p>
+<ol>
+<li>总体上是默认的流动模型（<code>flow</code>），所以总体使用流程模型</li>
+<li>除标题外，每行是左右分栏，所以考虑浮动模型（<code>float</code>）和层模型（<code>layer</code>）</li>
+<li>注意到分割线等细节，浮动模型不适合，考虑每行使用层模型布局</li>
+</ol>
+<p>综上，第二种样式代码如下：</p>
+<pre><code>&lt;!-- html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;三种简历&lt;/title&gt;
+
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/test2.css&quot;/&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+
+        &lt;div class=&quot;pageTitleClass&quot;&gt;
+            &lt;p&gt;XX&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;cellClass&quot;&gt;
+            &lt;div class=&quot;titleClass&quot;&gt;
+                basicInfo
+            &lt;/div&gt;
+
+            &lt;div class=&quot;contentClass&quot;&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;name&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;zhangsan&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;gender&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;male&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;position&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxx&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;cellClass&quot;&gt;
+            &lt;div class=&quot;titleClass&quot;&gt;
+                phone&amp;email
+            &lt;/div&gt;
+
+            &lt;div class=&quot;contentClass&quot;&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;phone&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;18600000000&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;email&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxx@xxx.com&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;homepage&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxxx&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;cellClass&quot;&gt;
+            &lt;div class=&quot;titleClass&quot;&gt;
+                schools
+            &lt;/div&gt;
+
+            &lt;div class=&quot;contentClass&quot;&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;Bachelor&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxx&lt;/span&gt;
+                &lt;/span&gt;
+                &lt;span&gt;
+                    &lt;span class=&quot;keyClass&quot;&gt;Postgraduate&lt;/span&gt;
+                    &lt;span class=&quot;valueCalss&quot;&gt;xxxxxxxxxxxxxxxxxxxxxxxx&lt;/span&gt;
+                &lt;/span&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre><pre><code>/* css */
+.pageTitleClass {
+    width: 100%;
+    height: 60px;
+    background-color: darkgray;
+    line-height: 60px;
+}
+.pageTitleClass &gt; p {
+    margin: 0 0 0 20px;
+    color: white;
+    font-size: 16px;
+}
+
+.cellClass {
+    margin-top: 1px;
+    height: 100px;
+    background: white;
+    position: relative;
+    background: lightgray;
+}
+
+.titleClass {
+    width: 100px;
+    line-height: 100px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.contentClass {
+    position: absolute;
+    top: 1px;
+    left: 100px;
+    right: 0;
+    bottom: 0;
+
+    padding-top: 12px;
+    padding-left: 10px;
+    background: white;
+}
+
+.keyClass {
+    font-weight: bold;
+}
+.valueCalss {
+    margin-left: 8px;
+}</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/" rel="tag">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/08/10/Flex%E5%B8%83%E5%B1%80%E7%AE%80%E6%9E%90/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Flex布局简析</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/06/24/h5%E9%A1%B5%E9%9D%A2%E4%B8%8A%E6%96%87%E5%AD%97%E8%B6%85%E5%87%BA%E5%90%8E%E5%A6%82%E4%BD%95%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">h5页面上文字超出后如何显示省略号</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

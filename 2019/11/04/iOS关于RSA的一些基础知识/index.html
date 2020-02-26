@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>iOS关于RSA的一些基础知识 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="RSA">
+    <meta name="description" content="一、基础概念 RSA加密算法是最常用的非对称加密算法，目前普遍认为是最优秀的方案之一，关于RSA的数学原理和方法，这里不做说明，感兴趣的可以自行了解下。本文主要介绍RSA的一些常用的基础知识  RSA分为公钥和私钥，生成时会需要传入参数，秘钥位数和秘钥格式，秘钥位数有512bit、1024bit、2048bit等，通常使用的是1024bit，私钥格式分为PKCS8和PKCS1，其中PKCS8为ja">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS关于RSA的一些基础知识">
+<meta property="og:url" content="https://andergh.github.io/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="一、基础概念 RSA加密算法是最常用的非对称加密算法，目前普遍认为是最优秀的方案之一，关于RSA的数学原理和方法，这里不做说明，感兴趣的可以自行了解下。本文主要介绍RSA的一些常用的基础知识  RSA分为公钥和私钥，生成时会需要传入参数，秘钥位数和秘钥格式，秘钥位数有512bit、1024bit、2048bit等，通常使用的是1024bit，私钥格式分为PKCS8和PKCS1，其中PKCS8为ja">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image_1.png">
+<meta property="og:image" content="https://andergh.github.io/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image_2.png">
+<meta property="article:published_time" content="2019-11-04T07:10:53.000Z">
+<meta property="article:modified_time" content="2020-02-25T03:39:33.865Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="RSA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">iOS关于RSA的一些基础知识</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">iOS关于RSA的一些基础知识</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-11-04T07:10:53.000Z" itemprop="datePublished" class="page-time">
+  2019-11-04
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、基础概念"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、基础概念</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、一些在线网站"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、一些在线网站</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、命令行生成命令"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、命令行生成命令</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1、基础生成命令"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">1、基础生成命令</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、iOS数字证书"><span class="post-toc-number">3.2.</span> <span class="post-toc-text">2、iOS数字证书</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#四、iOS代码"><span class="post-toc-number">4.</span> <span class="post-toc-text">四、iOS代码</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1、OpenSSL开源库"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">1、OpenSSL开源库</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2、苹果官方Security库"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">2、苹果官方Security库</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3、一些概念"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">3、一些概念</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4、遗留的问题"><span class="post-toc-number">4.4.</span> <span class="post-toc-text">4、遗留的问题</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-iOS关于RSA的一些基础知识"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">iOS关于RSA的一些基础知识</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-11-04 15:10:53" datetime="2019-11-04T07:10:53.000Z"  itemprop="datePublished">2019-11-04</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h4 id="一、基础概念"><a href="#一、基础概念" class="headerlink" title="一、基础概念"></a>一、基础概念</h4><ul>
+<li><p><code>RSA</code>加密算法是最常用的非对称加密算法，目前普遍认为是最优秀的方案之一，关于<code>RSA</code>的数学原理和方法，这里不做说明，感兴趣的可以自行了解下。本文主要介绍<code>RSA</code>的一些常用的基础知识</p>
+</li>
+<li><p><code>RSA</code>分为公钥和私钥，生成时会需要传入参数，秘钥位数和秘钥格式，秘钥位数有<code>512bit</code>、<code>1024bit</code>、<code>2048bit</code>等，通常使用的是<code>1024bit</code>，私钥格式分为<code>PKCS8</code>和<code>PKCS1</code>，其中<code>PKCS8</code>为<code>java</code>语言中使用的格式，<code>PKCS1</code>为<code>iOS</code>相关语言中使用的格式。</p>
+</li>
+<li><p>通常生成的秘钥会保存在<code>.pem</code>格式的文件中，使用文本编辑器或者代码编辑器打开，可以查看到保存的值，如果是按<code>1024bit</code>取模，<code>PKCS1</code>格式的私钥长度应该是<code>824</code>（包含回车），如果是<code>PKCS8</code>的格式的密钥长度为<code>861</code></p>
+</li>
+<li><p>通常<code>RSA</code>有两种用法，公钥加密私钥解密和私钥签名公钥验签，加密是为了数据保密，签名是为了防恶意攻击，例如防止别人模拟我们的客户端对我们的服务器进行攻击，导致服务器瘫痪等</p>
+</li>
+</ul>
+<h4 id="二、一些在线网站"><a href="#二、一些在线网站" class="headerlink" title="二、一些在线网站"></a>二、一些在线网站</h4><p>有一些网站可以在线生成<code>RSA</code>秘钥，例如<a href="http://web.chacuo.net/netrsakeypair" target="_blank" rel="noopener">http://web.chacuo.net/netrsakeypair</a>，这些网站可以便捷的生成私钥，并自动得出相应的公钥，以及能在线转换格式，加密解密等</p>
+<h4 id="三、命令行生成命令"><a href="#三、命令行生成命令" class="headerlink" title="三、命令行生成命令"></a>三、命令行生成命令</h4><p>我们先了解下一个软件包<code>OpenSSL</code>，<code>OpenSSL</code>是为网络通信提供安全及数据完整性的一种安全协议，囊括了主要的密码算法、常用的密钥和证书封装管理功能以及<code>SSL</code>协议，并提供了丰富的应用程序供测试或其它目的使用。<code>LibreSSL</code>是<code>OpenSSL</code>加密软件库的一个分支。在<code>OpenSS</code>L爆出安全漏洞之后，于2014年4月创立，目标是重构<code>OpenSSL</code>的代码，以提供一个更安全的替代品。所以通过在电脑上安装<code>OpenSSL</code>或者<code>LibreSSL</code>后，即可通过相关的命令行生成秘钥。<code>mac</code>电脑已自带<code>LibreSSL</code>，如果没有，可以寻找相关的安装方法，此处不再扩展</p>
+<h5 id="1、基础生成命令"><a href="#1、基础生成命令" class="headerlink" title="1、基础生成命令"></a>1、基础生成命令</h5><ol>
+<li>生成模长为<code>1024bit</code>的私钥</li>
+</ol>
+<pre><code>$ openssl genrsa -out /xx/xx/private_pkcs1.pem 1024</code></pre><p><code>private_pkcs1.pem</code>前为本地路径，<code>pem</code>文件会生成到制定目录，长度<code>824</code>，此命令行生成的为<code>PKCS1</code>格式的私钥，如下</p>
+<pre><code>-----BEGIN RSA PRIVATE KEY-----
+MIICXgIBAAKBgQDWa6g5OgPyB5xCkvEIitA1gKOBoQi21nAVJL7iVMqkA2MrhmUl
+ZonITpqMW3syTtaksMualat1CmqJRQaDn+UVe0u2Wgtvvu8KaDdbDa6Tyq6S2K89
+GI2l/AzouLE06daaHDh3qjtwNmEDqsK7mEcSPddIKaIOHZ7bKzOkbYnGEwIDAQAB
+AoGBAIiOY8KeaijYI/JaNtuj3FpWpMtHzY70Hsm4b0EhkzTFW4E6xGv/U7yYIuFE
+2b7+asDUP7chnuKZUaQ+q5lkWbYcKsSWORgGBUeYUOVoU9SuTp65oFKkc9AOtaxz
+VavX536Y1VRtT+b8mB++gZwp5cZHUbJTj4BPSKH7IJawKskRAkEA7jA4c+I3ZfFD
+koOl41x3cvwH+xQLi6vpL6Gw3/muJrc6mtdZbcuXwjMYlac++mXPTUt1K4b1sUmG
+G3qwnkUjXwJBAOZ0b2fZhRhsDzNFihnD1PXGNl56FVG3G0aWZzQIHQX1DIE+sG4k
+CJxrqxTnHWc+O2ODPU2PbJUN0fcpEuoDbc0CQQC9LpWYDUP89yy5cVDQDgBd1qos
+FRa6f/d9Ooq2yqQ04fFtTMAeAcfumhDbxHO0BCsr9FQDF3WLs58NslwXyUg3AkBg
+GK1b4JhfVq//8T9k/wQOeFizjLTXHkOBa7YdPETd9xD/0+Q+CUiN8Veln7njE1Aw
+bslhTi04+kpThg0dB9EBAkEAiWIlUGra4M5q7u+FWbgtcJRKjMX6LIlsB1UiFHba
+auSSQGwP+LMHVYDaWljzcPO/c5/MZbIDmGCZsDeImvSdMQ==
+-----END RSA PRIVATE KEY-----</code></pre><ol start="2">
+<li><code>PKCS1</code>和<code>PKCS8</code>互相转换</li>
+</ol>
+<pre><code>// PKCS1私钥转换为PKCS8，java语言使用的是PKCS8
+$ openssl pkcs8 -topk8 -inform PEM -in /xx/xx/private_pkcs1.pem -outform pem -nocrypt -out /xx/xx/private_pkcs8.pem
+
+// PKCS8私钥转换为PKCS1
+$ openssl rsa -in /xx/xx/private_pkcs8.pem -out /xx/xx/private_pkcs1.pem</code></pre><p>同样文件名之前为本地路径，生成到对应的路径下，生成的<code>PKCS8</code>格式私钥如下</p>
+<pre><code>-----BEGIN PRIVATE KEY-----
+MIICeAIBADANBgkqhkiG9w0BAQEFAASCAmIwggJeAgEAAoGBANZrqDk6A/IHnEKS
+8QiK0DWAo4GhCLbWcBUkvuJUyqQDYyuGZSVmichOmoxbezJO1qSwy5qVq3UKaolF
+BoOf5RV7S7ZaC2++7wpoN1sNrpPKrpLYrz0YjaX8DOi4sTTp1pocOHeqO3A2YQOq
+wruYRxI910gpog4dntsrM6RticYTAgMBAAECgYEAiI5jwp5qKNgj8lo226PcWlak
+y0fNjvQeybhvQSGTNMVbgTrEa/9TvJgi4UTZvv5qwNQ/tyGe4plRpD6rmWRZthwq
+xJY5GAYFR5hQ5WhT1K5OnrmgUqRz0A61rHNVq9fnfpjVVG1P5vyYH76BnCnlxkdR
+slOPgE9IofsglrAqyRECQQDuMDhz4jdl8UOSg6XjXHdy/Af7FAuLq+kvobDf+a4m
+tzqa11lty5fCMxiVpz76Zc9NS3UrhvWxSYYberCeRSNfAkEA5nRvZ9mFGGwPM0WK
+GcPU9cY2XnoVUbcbRpZnNAgdBfUMgT6wbiQInGurFOcdZz47Y4M9TY9slQ3R9ykS
+6gNtzQJBAL0ulZgNQ/z3LLlxUNAOAF3WqiwVFrp/9306irbKpDTh8W1MwB4Bx+6a
+ENvEc7QEKyv0VAMXdYuznw2yXBfJSDcCQGAYrVvgmF9Wr//xP2T/BA54WLOMtNce
+Q4Frth08RN33EP/T5D4JSI3xV6WfueMTUDBuyWFOLTj6SlOGDR0H0QECQQCJYiVQ
+atrgzmru74VZuC1wlEqMxfosiWwHVSIUdtpq5JJAbA/4swdVgNpaWPNw879zn8xl
+sgOYYJmwN4ia9J0x
+-----END PRIVATE KEY-----</code></pre><ol start="3">
+<li>生成公钥</li>
+</ol>
+<p><code>RSA</code>公钥是由私钥中生成的，公钥不区分格式，<code>PKCS1</code>和<code>PKCS8</code>都能生成公钥，生成结果一致</p>
+<pre><code>$ openssl rsa -in /xx/xx/private_pkcs1.pem -pubout -out /xx/xx/public.pem</code></pre><p>生成结果如下</p>
+<pre><code>-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDWa6g5OgPyB5xCkvEIitA1gKOB
+oQi21nAVJL7iVMqkA2MrhmUlZonITpqMW3syTtaksMualat1CmqJRQaDn+UVe0u2
+Wgtvvu8KaDdbDa6Tyq6S2K89GI2l/AzouLE06daaHDh3qjtwNmEDqsK7mEcSPddI
+KaIOHZ7bKzOkbYnGEwIDAQAB
+-----END PUBLIC KEY-----</code></pre><blockquote>
+<p>以上为生成<code>RSA</code>秘钥基本的操作，所有的秘钥文件均以<code>.pem</code>格式存在，可以直接使用文本编辑器读取其中的秘钥字符串，秘钥字符串为<code>Base64</code>格式，<code>Android</code>和<code>iOS</code>在使用时都可以直接使用文件或者字符串</p>
+</blockquote>
+<h5 id="2、iOS数字证书"><a href="#2、iOS数字证书" class="headerlink" title="2、iOS数字证书"></a>2、<code>iOS</code>数字证书</h5><p><code>.pem</code>格式文件已能正常使用，<code>iOS</code>系统也可以直接使用文件中的秘钥字符串，为了进一步保证安全性，<code>iOS</code>系统中可以对公钥和私钥进行进一步签名，做成数字证书的形式，<code>.der</code>格式文件存放，<code>.p12</code>格式的文件存放的是私钥，<code>.der</code>和<code>.p12</code>文件均为二进制文件，无法查看</p>
+<ol>
+<li>生成证书请求文件<code>.csr</code></li>
+</ol>
+<pre><code>$ openssl req -new -key /xxx/xxx/private_pkcs1.pem -out /xxx/xxx/rsa_cert.csr</code></pre><p>这一步会提示输入国家、省份等信息，可酌情填写</p>
+<ol start="2">
+<li>生成证书<code>.crt</code>，并设置有效时间1年</li>
+</ol>
+<pre><code>$ openssl x509 -req -days 365 -in /xxx/xxx/rsa_cert.csr -signkey /xxx/xxx/private_pkcs1.pem -out /xxx/xxx/rsa_cert.crt</code></pre><ol start="3">
+<li>导出<code>iOS</code>使用的公钥文件<code>.der</code></li>
+</ol>
+<pre><code>$ openssl x509 -outform der -in /xxx/xxx/rsa_cert.crt -out /xxx/xxx/public.der</code></pre><ol start="4">
+<li>导出<code>iOS</code>使用的私钥文件<code>.p12</code></li>
+</ol>
+<pre><code>$ openssl pkcs12 -export -out /xxx/xxx/private.p12 -inkey /xxx/xxx/private_pkcs1.pem -in /xxx/xxx/rsa_cert.crt</code></pre><p>这一步会提示给私钥证书<code>.p12</code>设置证书密码，输入即可</p>
+<h4 id="四、iOS代码"><a href="#四、iOS代码" class="headerlink" title="四、iOS代码"></a>四、<code>iOS</code>代码</h4><h5 id="1、OpenSSL开源库"><a href="#1、OpenSSL开源库" class="headerlink" title="1、OpenSSL开源库"></a>1、<code>OpenSSL</code>开源库</h5><p><a href="https://github.com/" target="_blank" rel="noopener"><code>github</code></a>上有<a href="https://github.com/openssl/openssl" target="_blank" rel="noopener"><code>OpenSSL</code></a>的开源代码，但是工程里面无法直接引入，此处推荐另一个开源代码<a href="https://github.com/x2on/OpenSSL-for-iPhone" target="_blank" rel="noopener"><code>OpenSSL-for-iPhone</code></a>，在<code>README</code>中作者提供了相关的编译方法</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<p>编译完成后，找到<code>OpenSSL-for-iPhone</code>工程里面编译成功的<code>.a</code>文件，<code>libcrypto.a</code>和<code>libssl.a</code>，还有文件夹<code>include</code></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/image_2.png" alt="image_2.png" title>
+                </div>
+                <div class="image-caption">image_2.png</div>
+            </figure>
+
+<p>导入项目工程中，并把<code>include</code>文件夹添加到<code>Build Setting</code>中的<code>Header Search Paths</code>中，再检查<code>Library Search Paths</code>中是否能引用到<code>.a</code>文件，具体代码如下</p>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+#import &lt;openssl/rsa.h&gt;
+
+NS_ASSUME_NONNULL_BEGIN
+
+typedef enum : NSUInteger {
+    OpenSSL_RSA_SignType_MD5,
+    OpenSSL_RSA_SignType_SHA1,
+    OpenSSL_RSA_SignType_SHA224,
+    OpenSSL_RSA_SignType_SHA256,
+    OpenSSL_RSA_SignType_SHA384,
+    OpenSSL_RSA_SignType_SHA512,
+} OpenSSL_RSA_SignType;
+
+@interface OpenSSLWrapper : NSObject
+
+/**
+ 生成一对秘钥
+
+ @param keySize 512、1024、2048
+ @param publicKey 公钥内存地址
+ @param privateKey 私钥内存地址
+ @return 是否成功生成
+ */
++ (BOOL)generateKeyPairWithKeySize:(int)keySize publicKey:(RSA *_Nullable*_Nullable)publicKey privateKey:(RSA *_Nullable*_Nullable)privateKey;
+
+/**
+ 公钥加密
+
+ @param publicKey 公钥
+ @param plainString 源数据
+ @return 加密后数据
+ */
++ (NSString *)opensslEncryptWithPublicKey:(RSA *)publicKey plainString:(NSString *)plainString;
+
+/**
+ 私钥解密
+
+ @param privateKey 私钥
+ @param encryptString 加密后数据
+ @return 源数据
+ */
++ (NSString *)opensslDecryptWithPrivateKey:(RSA *)privateKey encryptString:(NSString *)encryptString;
+
+/**
+ 私钥签名
+
+ @param privateKey 私钥
+ @param signType 签名算法
+ @param plainString 源数据
+ @return 签名后数据
+ */
++ (NSString *)signWithPrivateKey:(RSA *)privateKey signType:(OpenSSL_RSA_SignType)signType plainString:(NSString *)plainString;
+
+/**
+ 公钥验证签名
+
+ @param publicKey 公钥
+ @param signType 签名算法
+ @param plainString 源数据
+ @param signString 签名后数据
+ @return 是否验证成功
+ */
++ (BOOL)verifyWithPublicKey:(RSA *)publicKey signType:(OpenSSL_RSA_SignType)signType plainString:(NSString *)plainString signString:(NSString *)signString;
+
+// RSA转base64
++ (NSString *)base64StringFromPublicRSAKey:(RSA *)rsaKey;
++ (NSString *)base64StringFromPrivateRSAKey:(RSA *)rsaKey;
+// base64转RSA秘钥
++ (RSA *)publicRSAKeyFromBase64String:(NSString *)keyString;
++ (RSA *)privateRSAKeyFromBase64String:(NSString *)keyString;
+
+@end
+
+NS_ASSUME_NONNULL_END</code></pre><pre><code>#import &quot;OpenSSLWrapper.h&quot;
+#import &lt;openssl/pem.h&gt;
+#import &lt;CommonCrypto/CommonCrypto.h&gt;
+
+@implementation OpenSSLWrapper
+
+/**
+ 生成一对秘钥
+ */
++ (BOOL)generateKeyPairWithKeySize:(int)keySize publicKey:(RSA *_Nullable*_Nullable)publicKey privateKey:(RSA *_Nullable*_Nullable)privateKey {
+    if (keySize == 512 || keySize == 1024 || keySize == 2048) {
+        RSA *rsa = RSA_generate_key(keySize, RSA_F4, NULL, NULL);
+        if (rsa) {
+            *privateKey = RSAPrivateKey_dup(rsa);
+            *publicKey = RSAPublicKey_dup(rsa);
+            if (*privateKey &amp;&amp; *publicKey) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+/**
+ 公钥加密
+ */
++ (NSString *)opensslEncryptWithPublicKey:(RSA *)publicKey plainString:(NSString *)plainString {
+    // 参数转data
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *encryptData = [NSMutableData data];
+    // 分段加密，计算分段长度
+    int cipherBufferSize = RSA_size(publicKey);
+    NSUInteger totalSize = plainData.length;
+
+    int blockSize = cipherBufferSize - RSA_PKCS1_PADDING_SIZE;
+    int blockCount = ceil(totalSize * 1.f / blockSize);
+
+    // 遍历获取每个分段数据
+    for (int i = 0; i &lt; blockCount; i++) {
+        // 取出当前分段数据
+        NSData *blockData;
+        if (i &lt; (blockCount - 1)) {
+            blockData = [plainData subdataWithRange:NSMakeRange(i * blockSize, blockSize)];
+        } else {
+            blockData = [plainData subdataWithRange:NSMakeRange(i * blockSize, totalSize - i * blockSize)];
+        }
+        // 申请对应内存，公钥长度
+        uint8_t *cipherBuffer = malloc(cipherBufferSize * sizeof(uint8_t));
+        memset((void *)cipherBuffer, 0x0, cipherBufferSize);
+        // 加密当前分段数据
+        int result = RSA_public_encrypt((int)blockData.length, (const unsigned char *)blockData.bytes, (unsigned char *)cipherBuffer, publicKey, RSA_PKCS1_PADDING);
+        if (result &lt; 0) {
+            // 加密失败，释放内存
+            if (cipherBuffer) {
+                free(cipherBuffer);
+            }
+            return nil;
+        }
+        NSData *cipher = [[NSData alloc] initWithBytes:cipherBuffer length:result];
+        [encryptData appendData:cipher];
+        if (cipherBuffer) {
+            free(cipherBuffer);
+        }
+    }
+    // 转base64
+    NSString *encryptString = [encryptData base64EncodedStringWithOptions:0];
+    return encryptString;
+}
+
+/**
+ 私钥解密
+ */
++ (NSString *)opensslDecryptWithPrivateKey:(RSA *)privateKey encryptString:(NSString *)encryptString {
+    // 参数转data
+    NSData *encryptData = [[NSData alloc] initWithBase64EncodedString:encryptString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSMutableData *outputPlainData = [NSMutableData data];
+    // 分段解密，计算分段长度
+    int cipherBufferSize = RSA_size(privateKey);
+    NSUInteger totalSize = encryptData.length;
+
+    int blockSize = cipherBufferSize;
+    int blockCount = ceil(totalSize * 1.f / blockSize);
+
+    // 遍历获取每个分段数据
+    for (int i = 0; i &lt; blockCount; i++) {
+        // 取出当前分段数据
+        NSData *blockData;
+        if (i &lt; (blockCount - 1)) {
+            blockData = [encryptData subdataWithRange:NSMakeRange(i * blockSize, blockSize)];
+        } else {
+            blockData = [encryptData subdataWithRange:NSMakeRange(i * blockSize, totalSize - i * blockSize)];
+        }
+        // 申请对应内存
+        uint8_t *keyBuffer = malloc(cipherBufferSize * sizeof(uint8_t));
+        memset((void *)keyBuffer, 0x0, cipherBufferSize);
+        // 解密当前分段数据
+        int result = RSA_private_decrypt(cipherBufferSize, (const unsigned char *)blockData.bytes, (unsigned char *)keyBuffer, privateKey, RSA_PKCS1_PADDING);
+        if (result &lt; 0) {
+            // 解密失败，释放内存
+            if (keyBuffer) {
+                free(keyBuffer);
+            }
+            return nil;
+        }
+        NSData *key = [[NSData alloc] initWithBytes:keyBuffer length:result];
+        [outputPlainData appendData:key];
+        if (keyBuffer) {
+            free(keyBuffer);
+        }
+    }
+    NSString *outputPlainString = [[NSString alloc] initWithData:outputPlainData encoding:NSUTF8StringEncoding];
+    return outputPlainString;
+}
+
+/**
+ 私钥签名
+ */
++ (NSString *)signWithPrivateKey:(RSA *)privateKey signType:(OpenSSL_RSA_SignType)signType plainString:(NSString *)plainString {
+    NSData *plainData = [plainString dataUsingEncoding:(NSUTF8StringEncoding)];
+
+    int type;
+    NSData *digestData = nil;
+    switch (signType) {
+            case OpenSSL_RSA_SignType_MD5:
+        {
+            unsigned char digest[CC_MD5_DIGEST_LENGTH];
+            CC_MD5([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+            type = NID_md5;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA1:
+        {
+            unsigned char digest[CC_SHA1_DIGEST_LENGTH];
+            CC_SHA1([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+            type = NID_sha1;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA224:
+        {
+            unsigned char digest[CC_SHA224_DIGEST_LENGTH];
+            CC_SHA224([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA224_DIGEST_LENGTH];
+            type = NID_sha224;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA256:
+        {
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+            CC_SHA256([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+            type = NID_sha256;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA384:
+        {
+            unsigned char digest[CC_SHA384_DIGEST_LENGTH];
+            CC_SHA384([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA384_DIGEST_LENGTH];
+            type = NID_sha384;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA512:
+        {
+            unsigned char digest[CC_SHA512_DIGEST_LENGTH];
+            CC_SHA512([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA512_DIGEST_LENGTH];
+            type = NID_sha512;
+        }
+            break;
+
+        default:
+            break;
+    }
+
+    if (digestData) {
+        int signedHashBytesSize = RSA_size(privateKey);
+
+        uint8_t *signedHashBytes = malloc(signedHashBytesSize * sizeof(uint8_t));
+        memset((void *)signedHashBytes, 0x0, signedHashBytesSize);
+
+
+        unsigned int siglen = 0;
+        int result = RSA_sign(type, (const unsigned char *)digestData.bytes, (unsigned int)digestData.length, (unsigned char *)signedHashBytes, &amp;siglen, privateKey);
+        if (result == 1) {
+            NSData *signedHash = [NSData dataWithBytes:signedHashBytes length:siglen];
+            if (signedHashBytes) {
+                free(signedHashBytes);
+            }
+            NSString *signString = [signedHash base64EncodedStringWithOptions:0];
+            return signString;
+        }
+        if (signedHashBytes) {
+            free(signedHashBytes);
+        }
+        return nil;
+    } else {
+        return nil;
+    }
+}
+
+/**
+ 公钥验证签名
+ */
++ (BOOL)verifyWithPublicKey:(RSA *)publicKey signType:(OpenSSL_RSA_SignType)signType plainString:(NSString *)plainString signString:(NSString *)signString {
+
+    NSData *plainData = [plainString dataUsingEncoding:(NSUTF8StringEncoding)];
+    NSData *signData = [[NSData alloc] initWithBase64EncodedString:signString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+
+    int type;
+    NSData *digestData = nil;
+    switch (signType) {
+            case OpenSSL_RSA_SignType_MD5:
+        {
+            unsigned char digest[CC_MD5_DIGEST_LENGTH];
+            CC_MD5([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_MD5_DIGEST_LENGTH];
+            type = NID_md5;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA1:
+        {
+            unsigned char digest[CC_SHA1_DIGEST_LENGTH];
+            CC_SHA1([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH];
+            type = NID_sha1;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA224:
+        {
+            unsigned char digest[CC_SHA224_DIGEST_LENGTH];
+            CC_SHA224([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA224_DIGEST_LENGTH];
+            type = NID_sha224;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA256:
+        {
+            unsigned char digest[CC_SHA256_DIGEST_LENGTH];
+            CC_SHA256([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA256_DIGEST_LENGTH];
+            type = NID_sha256;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA384:
+        {
+            unsigned char digest[CC_SHA384_DIGEST_LENGTH];
+            CC_SHA384([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA384_DIGEST_LENGTH];
+            type = NID_sha384;
+        }
+            break;
+            case OpenSSL_RSA_SignType_SHA512:
+        {
+            unsigned char digest[CC_SHA512_DIGEST_LENGTH];
+            CC_SHA512([plainData bytes], (unsigned int)[plainData length], digest);
+            digestData = [NSData dataWithBytes:digest length:CC_SHA512_DIGEST_LENGTH];
+            type = NID_sha512;
+        }
+            break;
+
+        default:
+            break;
+    }
+
+    if (digestData) {
+        int result = RSA_verify(type, (const unsigned char *)digestData.bytes, (unsigned int)digestData.length, (const unsigned char *)signData.bytes, (unsigned int)signData.length, publicKey);
+        if (result == 1) {
+            return YES;
+        }
+        return NO;
+    } else {
+        return NO;
+    }
+}
+
+/**
+ RSA转base64
+ */
++ (NSString *)base64StringFromPublicRSAKey:(RSA *)rsaKey {
+    BIO *bio = BIO_new(BIO_s_mem());
+    PEM_write_bio_RSA_PUBKEY(bio, rsaKey);
+    BUF_MEM *buf;
+    BIO_get_mem_ptr(bio, &amp;buf);
+    // data 后面可能会有有脏数据
+    NSString *pemString = [[NSString stringWithFormat:@&quot;%s&quot;, buf-&gt;data] substringToIndex:buf-&gt;length];
+    BIO_set_close(bio, BIO_NOCLOSE);
+    BIO_free(bio);
+    NSString *base64 = [[pemString componentsSeparatedByString:@&quot;-----&quot;] objectAtIndex:2];
+    return base64;
+}
++ (NSString *)base64StringFromPrivateRSAKey:(RSA *)rsaKey {
+    BIO *bio = BIO_new(BIO_s_mem());
+    PEM_write_bio_RSAPrivateKey(bio, rsaKey, NULL, NULL, 0, NULL, NULL);
+    BUF_MEM *buf;
+    BIO_get_mem_ptr(bio, &amp;buf);
+    // data 后面可能会有有脏数据
+    NSString *pemString = [[NSString stringWithFormat:@&quot;%s&quot;, buf-&gt;data] substringToIndex:buf-&gt;length];
+    BIO_set_close(bio, BIO_NOCLOSE);
+    BIO_free(bio);
+    NSString *base64 = [[pemString componentsSeparatedByString:@&quot;-----&quot;] objectAtIndex:2];
+    return base64;
+}
+
+/**
+ base64转RSA秘钥
+ */
++ (RSA *)publicRSAKeyFromBase64String:(NSString *)keyString {
+    NSMutableString *result = [NSMutableString string];
+    [result appendString:@&quot;-----BEGIN PUBLIC KEY-----\n&quot;];
+    int count = 0;
+    for (int i = 0; i &lt; keyString.length; i++) {
+        unichar c = [keyString characterAtIndex:i];
+        if (c == &#39;\n&#39; || c == &#39;\r&#39;) {
+            continue;
+        }
+        [result appendFormat:@&quot;%c&quot;, c];
+        count++;
+        if (count == 64) {
+            [result appendString:@&quot;\n&quot;];
+            count = 0;
+        }
+    }
+    [result appendString:@&quot;\n-----END PUBLIC KEY-----&quot;];
+
+    const char *buffer = [result UTF8String];
+    BIO *bio = BIO_new_mem_buf(buffer, (int)strlen(buffer));
+    RSA *publicKey = PEM_read_bio_RSA_PUBKEY(bio, NULL, NULL, NULL);
+    BIO_free_all(bio);
+    return publicKey;
+}
+
++ (RSA *)privateRSAKeyFromBase64String:(NSString *)keyString {
+    NSMutableString *result = [NSMutableString string];
+    [result appendString:@&quot;-----BEGIN RSA PRIVATE KEY-----\n&quot;];
+    int count = 0;
+    for (int i = 0; i &lt; keyString.length; i++) {
+        unichar c = [keyString characterAtIndex:i];
+        if (c == &#39;\n&#39; || c == &#39;\r&#39;) {
+            continue;
+        }
+        [result appendFormat:@&quot;%c&quot;, c];
+        count++;
+        if (count == 64) {
+            [result appendString:@&quot;\n&quot;];
+            count = 0;
+        }
+    }
+    [result appendString:@&quot;\n-----END RSA PRIVATE KEY-----&quot;];
+
+    const char *buffer = [result UTF8String];
+    BIO *bio = BIO_new_mem_buf(buffer, (int)strlen(buffer));
+    RSA *privateKey = PEM_read_bio_RSAPrivateKey(bio, NULL, NULL, NULL);
+    BIO_free_all(bio);
+    return privateKey;
+}
+
+@end</code></pre><p>方法调用示例：</p>
+<pre><code>#import &quot;ViewController.h&quot;
+#import &quot;OpenSSLWrapper.h&quot;
+
+@interface ViewController () {
+    RSA *_publicKey;
+    RSA *_privateKey;
+}
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+
+    _publicKey = NULL;
+    _privateKey = NULL;
+    [OpenSSLWrapper generateKeyPairWithKeySize:1024 publicKey:&amp;_publicKey privateKey:&amp;_privateKey];
+    NSString *publicKeyBase64 = [OpenSSLWrapper base64StringFromPublicRSAKey:_publicKey];
+    NSLog(@&quot;公钥：%@&quot;, publicKeyBase64);
+    NSString *privateKeyBase64 = [OpenSSLWrapper base64StringFromPrivateRSAKey:_privateKey];
+    NSLog(@&quot;私钥：%@&quot;, privateKeyBase64);
+
+    NSString *plainString = @&quot;123qweQWE测试@#%&amp;*&quot;;
+
+    NSString *encryptedString = [OpenSSLWrapper opensslEncryptWithPublicKey:_publicKey plainString:plainString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;公钥加密：%@&quot;, encryptedString]);
+
+    NSString *outputPlainString = [OpenSSLWrapper opensslDecryptWithPrivateKey:_privateKey encryptString:encryptedString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;私钥解密：%@&quot;, outputPlainString]);
+
+    NSString *signString = [OpenSSLWrapper signWithPrivateKey:_privateKey signType:(OpenSSL_RSA_SignType_SHA1) plainString:plainString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;私钥签名：%@&quot;, signString]);
+
+    BOOL verify = [OpenSSLWrapper verifyWithPublicKey:_publicKey signType:(OpenSSL_RSA_SignType_SHA1) plainString:plainString signString:signString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;验证 %@&quot;, verify ? @&quot;通过&quot; : @&quot;不通过&quot;]);
+}
+
+@end</code></pre><h5 id="2、苹果官方Security库"><a href="#2、苹果官方Security库" class="headerlink" title="2、苹果官方Security库"></a>2、苹果官方<code>Security</code>库</h5><p>苹果官方<code>Security</code>库也集成了相应的方法，在<code>iOS 2</code>中便已经提供，官网也提供了调用示例代码，苹果系统打包和发布均采用了<code>RSA</code>的操作</p>
+<blockquote>
+<div style="color: red;">注：部分新的方法在`iOS 10.0`系统后提供</div>
+</blockquote>
+<pre><code>#import &lt;Foundation/Foundation.h&gt;
+#import &lt;Security/Security.h&gt;
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface SecKeyWrapper : NSObject &lt;NSCopying, NSMutableCopying&gt;
+
+/**
+ 单例方法
+ */
++ (instancetype)shareInstance;
+
+/**
+ 生成秘钥
+
+ @param keySize 512、1024、2048
+ @param publicKeyRef 公钥内存地址
+ @param privateKeyRef 公钥内存地址
+ @return 是否成功生成
+ */
+- (BOOL)generateKeyPair:(NSUInteger)keySize publicKey:(SecKeyRef _Nullable *_Nonnull)publicKeyRef privateKey:(SecKeyRef _Nullable *_Nonnull)privateKeyRef;
+
+/**
+ 公钥加密
+
+ @param publicKey 公钥
+ @param plainString 源数据
+ @return 加密后数据
+ */
+- (NSString *)secKeyEncryptWithPublicKey:(SecKeyRef)publicKey plainString:(NSString *)plainString;
+
+/**
+ 私钥解密
+
+ @param privateKey 私钥
+ @param encryptString 加密后数据
+ @return 源数据
+ */
+- (NSString *)secKeyDecryptWithPrivateKey:(SecKeyRef)privateKey encryptString:(NSString *)encryptString;
+
+/**
+ 私钥签名
+
+ @param privateKey 私钥
+ @param secPadding 算法类型
+ @param plainString 源数据
+ @return 签名后数据
+ */
+- (NSString *)signWithPrivateSecKey:(SecKeyRef)privateKey secPadding:(SecPadding)secPadding plainString:(NSString *)plainString;
+
+/**
+ 公钥验证签名
+
+ @param publicKey 公钥
+ @param secPadding 算法类型
+ @param plainString 源数据
+ @param signString 签名后数据
+ @return 是否验证成功
+ */
+- (BOOL)verifyWithPublicSecKey:(SecKeyRef)publicKey secPadding:(SecPadding)secPadding plainString:(NSString *)plainString signString:(NSString *)signString;
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= __IPHONE_10_0
+
+/**
+ SecKeyRef转base64
+ */
+- (NSString *)base64StringFromSecKey:(SecKeyRef)secKey;
+
+/**
+ base64转SecKeyRef
+ */
+- (SecKeyRef)publicSecKeyFromBase64String:(NSString *)keyString;
+- (SecKeyRef)privateSecKeyFromBase64String:(NSString *)keyString;
+
+#endif
+
+@end
+
+NS_ASSUME_NONNULL_END</code></pre><pre><code>#import &quot;SecKeyWrapper.h&quot;
+#import &lt;CommonCrypto/CommonDigest.h&gt;
+#import &lt;CommonCrypto/CommonCryptor.h&gt;
+#import &lt;Security/SecKey.h&gt;
+
+@interface SecKeyWrapper () {
+    NSData *_publicTag;
+    NSData *_privateTag;
+}
+
+@end
+
+@implementation SecKeyWrapper
+
+static SecKeyWrapper *instance = nil;
+
+
++ (instancetype)shareInstance {
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        instance = [[super allocWithZone:NULL] init];
+    });
+    return instance;
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        // 单例的内部逻辑
+        // 初始化tag标记，此字符串长度固定，内容可更改
+        _privateTag = [@&quot;com.ghtest.rsasecprivatekey&quot; dataUsingEncoding:NSUTF8StringEncoding];
+        _publicTag = [@&quot;com.ghtest.rsasecpublickey&quot; dataUsingEncoding:NSUTF8StringEncoding];
+
+    }
+    return self;
+}
+
++ (instancetype)allocWithZone:(struct _NSZone *)zone {
+    return [SecKeyWrapper shareInstance];
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return [SecKeyWrapper shareInstance];
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone {
+    return [SecKeyWrapper shareInstance];
+}
+
+/**
+ 生成秘钥
+ */
+- (BOOL)generateKeyPair:(NSUInteger)keySize publicKey:(SecKeyRef _Nullable *_Nonnull)publicKeyRef privateKey:(SecKeyRef _Nullable *_Nonnull)privateKeyRef {
+
+    if (keySize == 512 || keySize == 1024 || keySize == 2048) {
+        // 首先删除旧的秘钥
+        OSStatus sanityCheck = noErr;
+        NSMutableDictionary *queryPublicKey = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *queryPrivateKey = [[NSMutableDictionary alloc] init];
+        // 设置公钥队列
+        [queryPublicKey setObject:(id)kSecClassKey forKey:(id)kSecClass];
+        [queryPublicKey setObject:_publicTag forKey:(id)kSecAttrApplicationTag];
+        [queryPublicKey setObject:(id)kSecAttrKeyTypeRSA forKey:(id)kSecAttrKeyType];
+        // 设置私钥队列
+        [queryPrivateKey setObject:(id)kSecClassKey forKey:(id)kSecClass];
+        [queryPrivateKey setObject:_privateTag forKey:(id)kSecAttrApplicationTag];
+        [queryPrivateKey setObject:(id)kSecAttrKeyTypeRSA forKey:(id)kSecAttrKeyType];
+
+        // 删除私钥
+        sanityCheck = SecItemDelete((CFDictionaryRef)queryPrivateKey);
+        if (sanityCheck == noErr || sanityCheck == errSecItemNotFound) {
+
+        } else {
+            NSLog(@&quot;Error removing private key, OSStatus == %d.&quot;, sanityCheck);
+        }
+        // 删除公钥
+        sanityCheck = SecItemDelete((CFDictionaryRef)queryPublicKey);
+        if (sanityCheck == noErr || sanityCheck == errSecItemNotFound) {
+
+        } else {
+            NSLog(@&quot;Error removing public key, OSStatus == %d.&quot;, sanityCheck);
+        }
+
+        // Container dictionaries.
+        NSMutableDictionary *keyPairAttr = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *publicKeyAttr = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary *privateKeyAttr = [[NSMutableDictionary alloc] init];
+        // Set top level dictionary for the keypair.
+        [keyPairAttr setObject:(id)kSecAttrKeyTypeRSA forKey:(id)kSecAttrKeyType];
+        [keyPairAttr setObject:[NSNumber numberWithUnsignedInteger:keySize] forKey:(id)kSecAttrKeySizeInBits];
+        // 公钥字典，其他参数SecKey.h
+        [publicKeyAttr setObject:[NSNumber numberWithBool:YES] forKey:(id)kSecAttrIsPermanent];
+        [publicKeyAttr setObject:_publicTag forKey:(id)kSecAttrApplicationTag];
+        // 私钥字典，其他参数SecKey.h
+        [privateKeyAttr setObject:[NSNumber numberWithBool:YES] forKey:(id)kSecAttrIsPermanent];
+        [privateKeyAttr setObject:_privateTag forKey:(id)kSecAttrApplicationTag];
+        // Set attributes to top level dictionary.
+        [keyPairAttr setObject:publicKeyAttr forKey:(id)kSecPublicKeyAttrs];
+        [keyPairAttr setObject:privateKeyAttr forKey:(id)kSecPrivateKeyAttrs];
+
+        // 同步方法生成秘钥
+        OSStatus status = noErr;
+        status = SecKeyGeneratePair((CFDictionaryRef)keyPairAttr, publicKeyRef, privateKeyRef);
+        if (status == noErr &amp;&amp; publicKeyRef != NULL &amp;&amp; privateKeyRef != NULL) {
+            return YES;
+        } else {
+            NSLog(@&quot;Something really bad went wrong with generating the key pair.&quot;);
+        }
+    }
+    return NO;
+}
+
+/**
+ 公钥加密
+ */
+- (NSString *)secKeyEncryptWithPublicKey:(SecKeyRef)publicKey plainString:(NSString *)plainString {
+    // 原数据
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData *encryptData = [NSMutableData data];
+    // 循环分段加密，每次最多加密公钥长度，其中还需要kSecPaddingPKCS1填充，-11位
+    size_t cipherBufferSize = SecKeyGetBlockSize(publicKey);
+    NSUInteger totalSize = plainData.length;
+    // 分段数量
+    NSUInteger blockSize = cipherBufferSize - 11;
+    double blockCount = ceil(totalSize * 1.f / blockSize);
+    for (NSInteger i = 0; i &lt; blockCount; i++) {
+        // 取出当前分段数据
+        NSData *blockData;
+        if (i &lt; (blockCount - 1)) {
+            blockData = [plainData subdataWithRange:NSMakeRange(i * blockSize, blockSize)];
+        } else {
+            blockData = [plainData subdataWithRange:NSMakeRange(i * blockSize, totalSize - i * blockSize)];
+        }
+        // 申请缓冲区内存，使用公钥长度申请
+        uint8_t *cipherBuffer = malloc(cipherBufferSize * sizeof(uint8_t));
+        memset((void *)cipherBuffer, 0x0, cipherBufferSize);
+        // 加密
+        OSStatus sanityCheck = noErr;
+        sanityCheck = SecKeyEncrypt(publicKey, kSecPaddingPKCS1, (const uint8_t *)[blockData bytes], [blockData length], cipherBuffer, &amp;cipherBufferSize);
+        if (sanityCheck == noErr) {
+            // Build up cipher text blob.
+            NSData *cipher = [NSData dataWithBytes:(const void *)cipherBuffer length:(NSUInteger)cipherBufferSize];
+            [encryptData appendData:cipher];
+            if (cipherBuffer) {
+                free(cipherBuffer);
+            }
+        } else {
+            // 加密失败
+            if (cipherBuffer) {
+                free(cipherBuffer);
+            }
+            return nil;
+        }
+    }
+    // 转base64
+    NSString *encryptString = [encryptData base64EncodedStringWithOptions:0];
+    return encryptString;
+}
+
+/**
+ 私钥解密
+ */
+- (NSString *)secKeyDecryptWithPrivateKey:(SecKeyRef)privateKey encryptString:(NSString *)encryptString {
+    // 原数据
+    NSData *encryptData = [[NSData alloc] initWithBase64EncodedString:encryptString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    NSMutableData *outputPlainData = [NSMutableData data];
+    // 循环分段解密，每次最多解密私钥长度
+    size_t cipherBufferSize = SecKeyGetBlockSize(privateKey);
+    NSUInteger totalSize = encryptData.length;
+    // 分段数量
+    NSUInteger blockSize = cipherBufferSize;
+    double blockCount = ceil(totalSize * 1.f / cipherBufferSize);
+    for (int i = 0; i &lt; blockCount; i++) {
+        // 取出当前分段数据
+        NSData *blockData;
+        if (i &lt; (blockCount - 1)) {
+            blockData = [encryptData subdataWithRange:NSMakeRange(i * blockSize, blockSize)];
+        } else {
+            blockData = [encryptData subdataWithRange:NSMakeRange(i * blockSize, totalSize - i * blockSize)];
+        }
+        // 申请当前分段加密占用内存
+        uint8_t *keyBuffer = malloc(cipherBufferSize * sizeof(uint8_t));
+        memset((void *)keyBuffer, 0x0, cipherBufferSize);
+        // 解密
+        OSStatus status = noErr;
+        status = SecKeyDecrypt(privateKey, kSecPaddingPKCS1, (const uint8_t *)[blockData bytes], [blockData length], keyBuffer, &amp;cipherBufferSize);
+        if (status == noErr) {
+            NSData *key = [NSData dataWithBytes:(const void *)keyBuffer length:(NSUInteger)cipherBufferSize];
+            [outputPlainData appendData:key];
+            if (keyBuffer) {
+                free(keyBuffer);
+            }
+        } else {
+            if (keyBuffer) {
+                free(keyBuffer);
+            }
+            return nil;
+        }
+    }
+
+    NSString *outputPlainString = [[NSString alloc] initWithData:outputPlainData encoding:NSUTF8StringEncoding];
+    return outputPlainString;
+}
+
+/**
+ 私钥签名
+ */
+- (NSString *)signWithPrivateSecKey:(SecKeyRef)privateKey secPadding:(SecPadding)secPadding plainString:(NSString *)plainString {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED &lt; __IPHONE_10_0
+    // 原数据
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    // 哈希值算法，md5、sha1、sha224、sha256、sha384、sha512
+    NSData *hashData = nil;
+    NSInteger digest_length = 0;
+    switch (secPadding) {
+            case kSecPaddingPKCS1MD5:
+        {
+            digest_length = CC_MD5_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_MD5_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_MD5_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_MD5_CTX ctx;
+            CC_MD5_Init(&amp;ctx);
+            // Perform the hash.
+            CC_MD5_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_MD5_Final(hashBytes, &amp;ctx);
+            // Build up the SHAMD5 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_MD5_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA1:
+        {
+            digest_length = CC_SHA1_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA1_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA1_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA1_CTX ctx;
+            CC_SHA1_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA1_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA1_Final(hashBytes, &amp;ctx);
+            // Build up the SHA1 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA1_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA224:
+        {
+            digest_length = CC_SHA224_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA224_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA224_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA256_CTX ctx;
+            CC_SHA224_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA224_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA224_Final(hashBytes, &amp;ctx);
+            // Build up the SHA224 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA224_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA256:
+        {
+            digest_length = CC_SHA256_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA256_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA256_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA256_CTX ctx;
+            CC_SHA256_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA256_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA256_Final(hashBytes, &amp;ctx);
+            // Build up the SHA256 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA256_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA384:
+        {
+            digest_length = CC_SHA384_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA384_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA384_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA512_CTX ctx;
+            CC_SHA384_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA384_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA384_Final(hashBytes, &amp;ctx);
+            // Build up the SHA384 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA384_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA512:
+        {
+            digest_length = CC_SHA512_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA512_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA512_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA512_CTX ctx;
+            CC_SHA512_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA512_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA512_Final(hashBytes, &amp;ctx);
+            // Build up the SHA512 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA512_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+
+        default:
+            break;
+    }
+    if (hashData) {
+        size_t signedHashBytesSize = SecKeyGetBlockSize(privateKey);
+        // Malloc a buffer to hold signature.
+        uint8_t *signedHashBytes = malloc(signedHashBytesSize * sizeof(uint8_t));
+        memset((void *)signedHashBytes, 0x0, signedHashBytesSize);
+        // Sign the hash Data.
+        OSStatus sanityCheck = noErr;
+        sanityCheck = SecKeyRawSign(privateKey, secPadding, (const uint8_t *)[hashData bytes], digest_length, (uint8_t *)signedHashBytes, &amp;signedHashBytesSize);
+        if (sanityCheck == noErr) {
+            // Build up signed blob.
+            NSData *signedHash = [NSData dataWithBytes:(const void *)signedHashBytes length:(NSUInteger)signedHashBytesSize];
+            if (signedHashBytes) {
+                free(signedHashBytes);
+            }
+            NSString *signString = [signedHash base64EncodedStringWithOptions:0];
+            return signString;
+        } else {
+            if (signedHashBytes) {
+                free(signedHashBytes);
+            }
+            return nil;
+        }
+    } else {
+        return nil;
+    }
+#else
+    // iOS10以上系统可以使用新的方法
+    // 原数据
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    SecKeyAlgorithm Algorithm = nil;
+    switch (secPadding) {
+            case kSecPaddingPKCS1SHA1:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1;
+        }
+            break;
+            case kSecPaddingPKCS1SHA224:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224;
+        }
+            break;
+            case kSecPaddingPKCS1SHA256:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256;
+        }
+            break;
+            case kSecPaddingPKCS1SHA384:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384;
+        }
+            break;
+            case kSecPaddingPKCS1SHA512:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512;
+        }
+            break;
+
+        default:
+            break;
+    }
+    if (Algorithm) {
+        NSError *error = nil;
+        CFErrorRef ee = (__bridge CFErrorRef)error;
+        CFDataRef dataRef = SecKeyCreateSignature(privateKey, kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1, (CFDataRef)plainData, &amp;ee);
+        if (error) {
+            return nil;
+        } else {
+            NSData *signature = CFBridgingRelease(dataRef);
+            NSString *signString = [signature base64EncodedStringWithOptions:0];
+            return signString;
+        }
+    } else {
+        return nil;
+    }
+#endif
+}
+
+/**
+ 公钥验证签名
+ */
+- (BOOL)verifyWithPublicSecKey:(SecKeyRef)publicKey secPadding:(SecPadding)secPadding plainString:(NSString *)plainString signString:(NSString *)signString {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED &lt; __IPHONE_10_0
+    // 原数据
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    // 哈希值算法，md5、sha1、sha224、sha256、sha384、sha512
+    NSData *hashData = nil;
+    NSInteger digest_length = 0;
+    switch (secPadding) {
+            case kSecPaddingPKCS1MD5:
+        {
+            digest_length = CC_MD5_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_MD5_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_MD5_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_MD5_CTX ctx;
+            CC_MD5_Init(&amp;ctx);
+            // Perform the hash.
+            CC_MD5_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_MD5_Final(hashBytes, &amp;ctx);
+            // Build up the SHAMD5 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_MD5_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA1:
+        {
+            digest_length = CC_SHA1_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA1_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA1_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA1_CTX ctx;
+            CC_SHA1_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA1_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA1_Final(hashBytes, &amp;ctx);
+            // Build up the SHA1 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA1_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA224:
+        {
+            digest_length = CC_SHA224_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA224_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA224_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA256_CTX ctx;
+            CC_SHA224_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA224_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA224_Final(hashBytes, &amp;ctx);
+            // Build up the SHA224 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA224_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA256:
+        {
+            digest_length = CC_SHA256_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA256_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA256_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA256_CTX ctx;
+            CC_SHA256_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA256_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA256_Final(hashBytes, &amp;ctx);
+            // Build up the SHA256 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA256_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA384:
+        {
+            digest_length = CC_SHA384_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA384_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA384_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA512_CTX ctx;
+            CC_SHA384_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA384_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA384_Final(hashBytes, &amp;ctx);
+            // Build up the SHA384 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA384_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+            case kSecPaddingPKCS1SHA512:
+        {
+            digest_length = CC_SHA512_DIGEST_LENGTH;
+            // Malloc a buffer to hold hash.
+            uint8_t *hashBytes = malloc(CC_SHA512_DIGEST_LENGTH * sizeof(uint8_t));
+            memset((void *)hashBytes, 0x0, CC_SHA512_DIGEST_LENGTH);
+            // Initialize the context.
+            CC_SHA512_CTX ctx;
+            CC_SHA512_Init(&amp;ctx);
+            // Perform the hash.
+            CC_SHA512_Update(&amp;ctx, (void *)[plainData bytes], (CC_LONG)[plainData length]);
+            // Finalize the output.
+            CC_SHA512_Final(hashBytes, &amp;ctx);
+            // Build up the SHA512 blob.
+            hashData = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA512_DIGEST_LENGTH];
+            if (hashBytes) {
+                free(hashBytes);
+            }
+        }
+            break;
+
+        default:
+            break;
+    }
+    if (hashData) {
+        // 签名数据
+        NSData *signData = [[NSData alloc] initWithBase64EncodedString:signString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        // Get the size of the assymetric block.
+        size_t signedHashBytesSize = SecKeyGetBlockSize(publicKey);
+        OSStatus sanityCheck = noErr;
+        sanityCheck = SecKeyRawVerify(publicKey, secPadding, (const uint8_t *)[hashData bytes], digest_length, (const uint8_t *)[signData bytes], signedHashBytesSize);
+        if (sanityCheck == noErr) {
+            return YES;
+        } else {
+            return NO;
+        }
+    } else {
+        return NO;
+    }
+#else
+    // iOS10以上系统可以使用新的方法
+    // 原数据
+    NSData *plainData = [plainString dataUsingEncoding:NSUTF8StringEncoding];
+    // 签名数据
+    NSData *signData = [[NSData alloc] initWithBase64EncodedString:signString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+    SecKeyAlgorithm Algorithm = nil;
+    switch (secPadding) {
+            case kSecPaddingPKCS1SHA1:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA1;
+        }
+            break;
+            case kSecPaddingPKCS1SHA224:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA224;
+        }
+            break;
+            case kSecPaddingPKCS1SHA256:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA256;
+        }
+            break;
+            case kSecPaddingPKCS1SHA384:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA384;
+        }
+            break;
+            case kSecPaddingPKCS1SHA512:
+        {
+            Algorithm = kSecKeyAlgorithmRSASignatureMessagePKCS1v15SHA512;
+        }
+            break;
+
+        default:
+            break;
+    }
+    if (Algorithm) {
+        NSError *error = nil;
+        CFErrorRef ee = (__bridge CFErrorRef)error;
+        Boolean boolen = SecKeyVerifySignature(publicKey, Algorithm, (CFDataRef)plainData, (CFDataRef)signData, &amp;ee);
+        if (error) {
+            return NO;
+        } else {
+            if (boolen == TRUE) {
+                return YES;
+            } else {
+                return NO;
+            }
+        }
+    } else {
+        return NO;
+    }
+#endif
+}
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED &gt;= __IPHONE_10_0
+
+// SecKeyRef转base64
+- (NSString *)base64StringFromSecKey:(SecKeyRef)secKey {
+    NSData *keyData = (NSData *)CFBridgingRelease(SecKeyCopyExternalRepresentation(secKey, NULL));
+    NSString *base64 = [keyData base64EncodedStringWithOptions:0];
+    return base64;
+}
+
+// base64转SecKeyRef
+- (SecKeyRef)publicSecKeyFromBase64String:(NSString *)keyString {
+    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:keyString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    options[(__bridge id)kSecAttrKeyType] = (__bridge id) kSecAttrKeyTypeRSA;
+    options[(__bridge id)kSecAttrKeyClass] = (__bridge id) kSecAttrKeyClassPublic;
+
+    NSError *error = nil;
+    CFErrorRef ee = (__bridge CFErrorRef)error;
+    SecKeyRef ref = SecKeyCreateWithData((__bridge CFDataRef)keyData, (__bridge CFDictionaryRef)options, &amp;ee);
+    if (error) {
+        NSLog(@&quot;%@&quot;, error.description);
+        return nil;
+    }
+    return ref;
+}
+
+- (SecKeyRef)privateSecKeyFromBase64String:(NSString *)keyString {
+    NSData *keyData = [[NSData alloc] initWithBase64EncodedString:keyString options:NSDataBase64DecodingIgnoreUnknownCharacters];
+
+    NSMutableDictionary *options = [NSMutableDictionary dictionary];
+    options[(__bridge id)kSecAttrKeyType] = (__bridge id) kSecAttrKeyTypeRSA;
+    options[(__bridge id)kSecAttrKeyClass] = (__bridge id) kSecAttrKeyClassPrivate;
+
+    NSError *error = nil;
+    CFErrorRef ee = (__bridge CFErrorRef)error;
+    SecKeyRef ref = SecKeyCreateWithData((__bridge CFDataRef)keyData, (__bridge CFDictionaryRef)options, &amp;ee);
+    if (error) {
+        NSLog(@&quot;%@&quot;, error.description);
+        return nil;
+    }
+    return ref;
+}
+
+#endif
+
+@end</code></pre><p>调用示例：</p>
+<pre><code>#import &quot;ViewController.h&quot;
+#import &quot;SecKeyWrapper.h&quot;
+
+@interface ViewController () {
+    SecKeyRef _publicKeyRef;
+    SecKeyRef _privateKeyRef;
+}
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+
+    _publicKeyRef = NULL;
+    _privateKeyRef = NULL;
+    SecKeyWrapper *secKeyWrapper = [SecKeyWrapper shareInstance];
+    [secKeyWrapper generateKeyPair:1024 publicKey:&amp;_publicKeyRef privateKey:&amp;_privateKeyRef];
+
+    NSString *publicKeyBase64 = [secKeyWrapper base64StringFromSecKey:_publicKeyRef];
+    NSLog(@&quot;公钥：%@&quot;, publicKeyBase64);
+    NSString *privateKeyBase64 = [secKeyWrapper base64StringFromSecKey:_privateKeyRef];
+    NSLog(@&quot;私钥：%@&quot;, privateKeyBase64);
+
+    NSString *plainString = @&quot;123qweQWE测试@#%&amp;*&quot;;
+
+    NSString *encryptedString = [secKeyWrapper secKeyEncryptWithPublicKey:_publicKeyRef plainString:plainString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;公钥加密：%@&quot;, encryptedString]);
+
+    NSString *outputPlainString = [secKeyWrapper secKeyDecryptWithPrivateKey:_privateKeyRef encryptString:encryptedString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;私钥解密：%@&quot;, outputPlainString]);
+
+    NSString *signString = [secKeyWrapper signWithPrivateSecKey:_privateKeyRef secPadding:kSecPaddingPKCS1SHA1 plainString:plainString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;私钥签名：%@&quot;, signString]);
+
+    BOOL verify = [secKeyWrapper verifyWithPublicSecKey:_publicKeyRef secPadding:kSecPaddingPKCS1SHA1 plainString:plainString signString:signString];
+    NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;验证 %@&quot;, verify ? @&quot;通过&quot; : @&quot;不通过&quot;]);
+}
+
+@end</code></pre><h5 id="3、一些概念"><a href="#3、一些概念" class="headerlink" title="3、一些概念"></a>3、一些概念</h5><ol>
+<li>公钥加密，私钥解密</li>
+</ol>
+<blockquote>
+<p>对于二进制数据，加密时为了确定内容实际长度，所以在末尾需要用约定好的字符进行标记结尾，防止被内存中的垃圾数据等影响，这就是<code>padding</code>，<code>PKCS1</code>格式秘钥建议使用的<code>padding</code>为11字节</p>
+</blockquote>
+<blockquote>
+<p>以1024位秘钥为例，公钥加密时支持最大字节数：证书位数/8-11=117，解密时支持最大字节数：证书位数/8=128</p>
+</blockquote>
+<ol start="2">
+<li>私钥签名，公钥验签</li>
+</ol>
+<blockquote>
+<p>私钥签名，公钥验签是为了对数据进行验证，确保数据没有被篡改</p>
+</blockquote>
+<blockquote>
+<p>需要使用哈希值算法获取原数据的哈希值，哈希值特点是唯一性，一旦原数据发生变化，哈希值也会变化，再使用私钥对哈希值进行摘要签名，通过公钥验证后即可确保数据的保密性</p>
+</blockquote>
+<h5 id="4、遗留的问题"><a href="#4、遗留的问题" class="headerlink" title="4、遗留的问题"></a>4、遗留的问题</h5><p>在使用<code>Security</code>生成秘钥的过程中，发现一个问题：</p>
+<blockquote>
+<p>使用<code>Security</code>生成公钥私钥，其中私钥转成<code>base64</code>字符串后，可以使用<code>Openssl</code>的方法读取私钥，并使用<code>Openssl</code>的方法进行其他操作，但是公钥长度格式不对，无法使用<code>Openssl</code>的方法读取使用，如果要发送公钥给第三方，只能用<code>Openssl</code>的方法读取到公钥并发送，正常使用过程中，<code>Security</code>的公钥只能给<code>Security</code>自己的方法使用，对加密解密的功能没有影响，暂时无法找到合理的解释。</p>
+</blockquote>
+<p>另外，<code>Security</code>的部分方法在<code>iOS 10.0</code>后的系统才会生效，也没有找到以前以前系统中提供其他类似的方法，据网上资料了解，<code>Openssl</code>生成秘钥的方法有失败的可能，但是实际测试没有出现过，可能是测试数量不够多</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RSA/" rel="tag">RSA</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/12/05/iOS%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">iOS崩溃排查</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/10/Flex%E5%B8%83%E5%B1%80%E7%AE%80%E6%9E%90/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flex布局简析</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

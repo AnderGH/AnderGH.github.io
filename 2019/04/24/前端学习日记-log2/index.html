@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>前端学习日记-log2 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="css,javascript,学习日记">
+    <meta name="description" content="继续上次的地方继续往下学习   日志随笔8. 单位 px：像素  我们用的最多的就是像素，一般移动端切图什么的都是使用像素作为单位，原生开发也一样  em：倍数  百分号：百分比   9. 水平居中和垂直居中可以看教程，也可以自己理解，毕竟前面已经看了很多概念了   慕课网上第二篇课程JavaScript入门篇   日志随笔1. 引用jsjavascript作为一种脚本语言可以放在html页面中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端学习日记-log2">
+<meta property="og:url" content="https://andergh.github.io/2019/04/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="继续上次的地方继续往下学习   日志随笔8. 单位 px：像素  我们用的最多的就是像素，一般移动端切图什么的都是使用像素作为单位，原生开发也一样  em：倍数  百分号：百分比   9. 水平居中和垂直居中可以看教程，也可以自己理解，毕竟前面已经看了很多概念了   慕课网上第二篇课程JavaScript入门篇   日志随笔1. 引用jsjavascript作为一种脚本语言可以放在html页面中">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-04-24T01:55:47.000Z">
+<meta property="article:modified_time" content="2019-06-24T09:11:55.167Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="css">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="学习日记">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">前端学习日记-log2</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">前端学习日记-log2</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-24T01:55:47.000Z" itemprop="datePublished" class="page-time">
+  2019-04-24
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#8-单位"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">8. 单位</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#9-水平居中和垂直居中"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">9. 水平居中和垂直居中</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔-1"><span class="post-toc-number">2.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-引用js"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1. 引用js</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-变量和数据类型，这点w3school上讲的更清楚"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2. 变量和数据类型，这点w3school上讲的更清楚</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-对象"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3. 对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-函数方法"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">4. 函数方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#5-各种弹出窗口"><span class="post-toc-number">2.5.</span> <span class="post-toc-text">5. 各种弹出窗口</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-DOM热身案例——滑动门特效"><span class="post-toc-number">2.6.</span> <span class="post-toc-text">1. DOM热身案例——滑动门特效</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-前端学习日记-log2"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">前端学习日记-log2</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-24 09:55:47" datetime="2019-04-24T01:55:47.000Z"  itemprop="datePublished">2019-04-24</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">前端学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><em>继续上次的地方继续往下学习</em></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="8-单位"><a href="#8-单位" class="headerlink" title="8. 单位"></a>8. 单位</h3><ul>
+<li><code>px</code>：像素</li>
+</ul>
+<p>我们用的最多的就是像素，一般移动端切图什么的都是使用像素作为单位，原生开发也一样</p>
+<ul>
+<li><p><code>em</code>：倍数</p>
+</li>
+<li><p>百分号：百分比</p>
+</li>
+</ul>
+<h3 id="9-水平居中和垂直居中"><a href="#9-水平居中和垂直居中" class="headerlink" title="9. 水平居中和垂直居中"></a>9. 水平居中和垂直居中</h3><p>可以看教程，也可以自己理解，毕竟前面已经看了很多概念了</p>
+<hr>
+<blockquote>
+<p><em><a href="https://www.imooc.com" target="_blank" rel="noopener">慕课网</a>上第二篇课程<a href="https://www.imooc.com/learn/36" target="_blank" rel="noopener">JavaScript入门篇</a></em></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔-1"><a href="#日志随笔-1" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="1-引用js"><a href="#1-引用js" class="headerlink" title="1. 引用js"></a>1. 引用<code>js</code></h3><p><code>javascript</code>作为一种脚本语言可以放在<code>html</code>页面中任何位置，但是浏览器解释<code>html</code>时是按先后顺序的，所以前面的就先被执行。比如进行页面显示初始化的<code>js</code>必须放在<code>head</code>里面，因为初始化都要求提前进行（如给页面<code>body</code>设置<code>css</code>等）；而如果是通过事件调用执行的<code>function</code>那么对位置没什么要求的</p>
+<h3 id="2-变量和数据类型，这点w3school上讲的更清楚"><a href="#2-变量和数据类型，这点w3school上讲的更清楚" class="headerlink" title="2. 变量和数据类型，这点w3school上讲的更清楚"></a>2. 变量和数据类型，这点<a href="http://www.w3school.com.cn/js/js_datatypes.asp" target="_blank" rel="noopener"><code>w3school</code></a>上讲的更清楚</h3><p><code>JavaScript</code>拥有动态类型，这点和<code>OC</code>很不一样，类型错误是没有提示的，要自己去排查。</p>
+<p>布尔值、数组、字典写法差不多</p>
+<p><code>Undefined</code>和<code>Null</code>，<code>Undefined</code>这个值表示变量不含有值,可以通过将变量的值设置为<code>null</code>来清空变量</p>
+<h3 id="3-对象"><a href="#3-对象" class="headerlink" title="3. 对象"></a>3. 对象</h3><p><code>JavaScript</code>中的所有事物都是对象：字符串、数字、数组、日期，等等，对象是拥有属性和方法的数据</p>
+<h3 id="4-函数方法"><a href="#4-函数方法" class="headerlink" title="4. 函数方法"></a>4. 函数方法</h3><p>方法使用及作用域基本一致，写法稍有区别，其他一些循环语句等设计都是一样的</p>
+<h3 id="5-各种弹出窗口"><a href="#5-各种弹出窗口" class="headerlink" title="5. 各种弹出窗口"></a>5. 各种弹出窗口</h3><p><code>alert</code>、<code>confirm</code>、<code>prompt</code>都是原生系统浏览器对<code>html</code>的支持，其他window的方法也是<code>window.open</code>，<code>window.close</code></p>
+<p><code>window</code>层的方法也是对原生容器开放的，原生可以直接触发，参考我的其他文章</p>
+<hr>
+<blockquote>
+<p><em><a href="https://www.imooc.com/learn/488" target="_blank" rel="noopener">DOM探索之基础详解篇</a></em></p>
+</blockquote>
+<hr>
+<h3 id="1-DOM热身案例——滑动门特效"><a href="#1-DOM热身案例——滑动门特效" class="headerlink" title="1. DOM热身案例——滑动门特效"></a>1. <code>DOM</code>热身案例——滑动门特效</h3><pre><code>&lt;!-- html --&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset=&quot;utf-8&quot; /&gt;
+        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+        &lt;title&gt;&lt;/title&gt;
+
+        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/test1.css&quot; /&gt;
+        &lt;script src=&quot;js/test1.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;container&quot;&gt;
+            &lt;div id=&quot;image1&quot; class=&quot;size&quot;&gt;&lt;/div&gt;
+            &lt;div id=&quot;image2&quot; class=&quot;size&quot;&gt;&lt;/div&gt;
+            &lt;div id=&quot;image3&quot; class=&quot;size&quot;&gt;&lt;/div&gt;
+            &lt;div id=&quot;image4&quot; class=&quot;size&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre><pre><code>// test1.js
+window.onload = function() {
+    //获取image数组
+    var container = document.getElementById(&quot;container&quot;);
+    var imgs = container.getElementsByTagName(&quot;div&quot;);
+
+    //图片宽度
+    var imageWidth = imgs[0].offsetWidth;
+
+    //设置边缘露出的堆叠宽度
+    var gapWidth = 30;
+
+    //整个容器宽度
+    var containerWidth = imageWidth + (imgs.length - 1) * gapWidth;
+    container.style.width = containerWidth + &#39;px&#39;;
+
+    //初始位置
+    function setImgsPos() {
+        for (var i = 1; i &lt; imgs.length; i++) {
+            imgs[i].style.left = imageWidth + gapWidth * (i - 1) + &#39;px&#39;;
+        }
+    }
+    setImgsPos();
+
+    //左侧距离
+    var leftGap = imageWidth - gapWidth;
+
+    //设置四张图片的鼠标焦点方法
+    imgs[0].onmouseover = function() {
+        setImgsPos();
+    }
+    imgs[1].onmouseover = function() {
+        setImgsPos();
+        imgs[1].style.left = gapWidth + &#39;px&#39;;
+        parseInt()
+    }
+    imgs[2].onmouseover = function() {
+        setImgsPos();
+        imgs[1].style.left = gapWidth + &#39;px&#39;;
+        imgs[2].style.left = gapWidth * 2 + &#39;px&#39;;
+    }
+    imgs[3].onmouseover = function() {
+        setImgsPos();
+        imgs[1].style.left = gapWidth + &#39;px&#39;;
+        imgs[2].style.left = gapWidth * 2 + &#39;px&#39;;
+        imgs[3].style.left = gapWidth * 3 + &#39;px&#39;;
+    }
+
+    //方法二，使用闭包设置四张图片的鼠标焦点方法
+    // for (var i = 0; i &lt; imgs.length; i++) {
+    //     (function(i) {
+    //         imgs[i].onmouseover = function() {
+    //             setImgsPos();
+    //             
+    //             for (var j = 1; j &lt;= i; j++) {
+    //                 imgs[j].style.left = gapWidth * j + &#39;px&#39;;
+    //             }
+    //         }
+    //     })(i)
+    // }
+};
+</code></pre><pre><code>/* test1.css */
+#container {
+    height: 300px;
+    margin: 0 auto;
+    border: 1px solid red;
+    overflow: hidden;
+    position: relative;
+}
+
+.size {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    display: block;
+    left: 0;
+}
+
+#image1 {
+    background-color: lightgray;
+}
+
+#image2 {
+    background-color: darkgray;
+}
+
+#image3 {
+    background-color: gray;
+}
+
+#image4 {
+    background-color: black;
+}
+</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">前端学习日记-log3</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/04/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log1/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">前端学习日记-log1</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

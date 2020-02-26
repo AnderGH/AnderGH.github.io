@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>iOS崩溃排查 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="iOS">
+    <meta name="description" content="一、记录崩溃日志1、连接设备，直接通过Xcode获取 在菜单栏找到Devices and Simulators，找到View Device Logs，根据日期包名等信息即可以找到对应的闪退日志，稍等一段时间后，Xcode会自动将日志符号化，此处日志导出后，会生成对应的.crash格式的崩溃日志  2、设备中提取 iPhone设置里面，依次找到隐私-分析-分析数据，此处会记录设备上所有的日志，同样找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS崩溃排查">
+<meta property="og:url" content="https://andergh.github.io/2019/12/05/iOS%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="一、记录崩溃日志1、连接设备，直接通过Xcode获取 在菜单栏找到Devices and Simulators，找到View Device Logs，根据日期包名等信息即可以找到对应的闪退日志，稍等一段时间后，Xcode会自动将日志符号化，此处日志导出后，会生成对应的.crash格式的崩溃日志  2、设备中提取 iPhone设置里面，依次找到隐私-分析-分析数据，此处会记录设备上所有的日志，同样找">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-12-05T10:07:21.000Z">
+<meta property="article:modified_time" content="2019-12-06T06:22:14.441Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!-- 个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">iOS崩溃排查</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">iOS崩溃排查</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-12-05T10:07:21.000Z" itemprop="datePublished" class="page-time">
+  2019-12-05
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、记录崩溃日志"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、记录崩溃日志</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、连接设备，直接通过Xcode获取"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">1、连接设备，直接通过Xcode获取</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、设备中提取"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">2、设备中提取</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、代码中系统方法记录"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">3、代码中系统方法记录</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、第三方库KSCrash"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">4、第三方库KSCrash</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、-crash符号化"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、.crash符号化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、dSYM符号文件"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1、dSYM符号文件</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、-找到Xcode的symbolicatecrash脚本"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2、 找到Xcode的symbolicatecrash脚本</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、校验uuid"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">3、校验uuid</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、符号化"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">4、符号化</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、dSYMTools"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、dSYMTools</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-iOS崩溃排查"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">iOS崩溃排查</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-12-05 18:07:21" datetime="2019-12-05T10:07:21.000Z"  itemprop="datePublished">2019-12-05</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="一、记录崩溃日志"><a href="#一、记录崩溃日志" class="headerlink" title="一、记录崩溃日志"></a>一、记录崩溃日志</h3><h4 id="1、连接设备，直接通过Xcode获取"><a href="#1、连接设备，直接通过Xcode获取" class="headerlink" title="1、连接设备，直接通过Xcode获取"></a>1、连接设备，直接通过<code>Xcode</code>获取</h4><blockquote>
+<p>在菜单栏找到<code>Devices and Simulators</code>，找到<code>View Device Logs</code>，根据日期包名等信息即可以找到对应的闪退日志，稍等一段时间后，<code>Xcode</code>会自动将日志符号化，此处日志导出后，会生成对应的<code>.crash</code>格式的崩溃日志</p>
+</blockquote>
+<h4 id="2、设备中提取"><a href="#2、设备中提取" class="headerlink" title="2、设备中提取"></a>2、设备中提取</h4><blockquote>
+<p><code>iPhone</code>设置里面，依次找到隐私-分析-分析数据，此处会记录设备上所有的日志，同样找到相应的日志，点击后可以复制出来，但此处日志没有经过符号化，还需要再进行符号化才能看懂</p>
+</blockquote>
+<h4 id="3、代码中系统方法记录"><a href="#3、代码中系统方法记录" class="headerlink" title="3、代码中系统方法记录"></a>3、代码中系统方法记录</h4><pre><code>FOUNDATION_EXPORT void NSSetUncaughtExceptionHandler(NSUncaughtExceptionHandler * _Nullable);</code></pre><blockquote>
+<p>在代码中使用系统提供的<code>API</code>记录日志后，再通过网络上传，这样就能统计到所有设备上的崩溃日志了</p>
+</blockquote>
+<h4 id="4、第三方库KSCrash"><a href="#4、第三方库KSCrash" class="headerlink" title="4、第三方库KSCrash"></a>4、第三方库<a href="https://github.com/kstenerud/KSCrash" target="_blank" rel="noopener"><code>KSCrash</code></a></h4><p>相比系统方法，有些第三方库的日志记录更为精确，例如<a href="https://github.com/kstenerud/KSCrash" target="_blank" rel="noopener"><code>KSCrash</code></a></p>
+<h3 id="二、-crash符号化"><a href="#二、-crash符号化" class="headerlink" title="二、.crash符号化"></a>二、<code>.crash</code>符号化</h3><h4 id="1、dSYM符号文件"><a href="#1、dSYM符号文件" class="headerlink" title="1、dSYM符号文件"></a>1、<code>dSYM</code>符号文件</h4><blockquote>
+<p><code>dSYM</code>文件是指具有调试信息的目标文件，每次打包时<code>Xcode</code>菜单栏中<code>Organizer</code>下回生成<code>Archives</code>记录，右键<code>Show in Finder</code>可以找到对应的<code>.xcarchive</code>文件，在该文件包内容中可以找到<code>dSYMs</code>文件夹，里面包含<code>dSYM</code>文件，如果没有，需要检查<code>Xcode</code>相关的打包配置参数</p>
+</blockquote>
+<h4 id="2、-找到Xcode的symbolicatecrash脚本"><a href="#2、-找到Xcode的symbolicatecrash脚本" class="headerlink" title="2、 找到Xcode的symbolicatecrash脚本"></a>2、 找到<code>Xcode</code>的<code>symbolicatecrash</code>脚本</h4><p>在终端中输入命令</p>
+<pre><code>$ find /Applications/Xcode.app -name symbolicatecrash -type f</code></pre><p>其中<code>Xcode.app</code>的路径请以本机路径为准，一段时间后，即可以找到几个<code>symbolicatecrash</code>脚本，拷贝其中一个脚本即可</p>
+<h4 id="3、校验uuid"><a href="#3、校验uuid" class="headerlink" title="3、校验uuid"></a>3、校验<code>uuid</code></h4><p>查看<code>dSYM</code>文件的<code>uuid</code></p>
+<pre><code>$ xcrun dwarfdump --uuid xx/xx/.dSYM</code></pre><p>查看<code>app</code>的<code>uuid</code></p>
+<pre><code>$ xcrun dwarfdump --uuid xx/xx/.app</code></pre><p>查看<code>crash</code>文件的<code>uuid</code>，在<code>crash</code>文件中找到<code>Binary Images</code>，其下面的第一行类似于下面代码，尖括号中的就是<code>uuid</code></p>
+<pre><code>0x1021d4000 -        0x103d97fff +name arm64  &lt;574a9bf6c9133dd28f0238271676b1aa&gt; /private/var/containers/Bundle/Application/F2986301-7085-4018-A6DD-64AB69F95AA2/name.app/name</code></pre><h4 id="4、符号化"><a href="#4、符号化" class="headerlink" title="4、符号化"></a>4、符号化</h4><p>将<code>symbolicatecrash</code>脚本、<code>dSYM</code>文件、<code>.app</code>、<code>.crash</code>文件放在一起，要先确保三个文件为同一个<code>app</code>打包产生的，使用如下命令行即可符号化</p>
+<pre><code>$ xx/xx/symbolicatecrash xx/xx/.crash xx/xx/.dSYM &gt; xx/xx/.log</code></pre><p>如果出现报错，则需要重置下环境变量</p>
+<pre><code>$ export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer</code></pre><h3 id="三、dSYMTools"><a href="#三、dSYMTools" class="headerlink" title="三、dSYMTools"></a>三、<a href="https://github.com/answer-huang/dSYMTools" target="_blank" rel="noopener"><code>dSYMTools</code></a></h3><p><code>github</code>有做成<code>mac app</code>的工程，可以直接使用</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/12/06/%E6%8E%A2%E7%A9%B6KVO%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">探究KVO底层实现</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/11/04/iOS%E5%85%B3%E4%BA%8ERSA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">iOS关于RSA的一些基础知识</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
