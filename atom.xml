@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-02-27T10:00:58.163Z</updated>
+  <updated>2020-02-27T10:02:02.849Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,29 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>testnumber</title>
-    <link href="https://andergh.github.io/2020/02/27/testnumber/"/>
-    <id>https://andergh.github.io/2020/02/27/testnumber/</id>
-    <published>2020-02-27T06:57:53.000Z</published>
-    <updated>2020-02-27T10:00:58.163Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>&lt;div class=&quot;brand&quot; style=&quot;text-align: center;&quot;&gt;</code></pre><pre><code>&lt;!--第7行，添加居中样式--&gt;&lt;div class=&quot;brand&quot; style=&quot;text-align: center;&quot;&gt;</code></pre><pre><code>&lt;footer class=&quot;footer&quot;&gt;    &lt;!--删除上半部分标签--&gt;    &lt;!--&lt;div class=&quot;top&quot;&gt;--&gt;    &lt;!--    &lt;%- partial(&#39;plugins/site-visit&#39;) %&gt;--&gt;    &lt;!--    &lt;p&gt;--&gt;    &lt;!--        &lt;% if ((config.feed) &amp;&amp; (config.feed.path.length)) { %&gt;--&gt;    &lt;!--            &lt;span&gt;&lt;a href=&quot;&lt;%- url_for(config.feed.path) %&gt;&quot; target=&quot;_blank&quot; class=&quot;rss&quot; title=&quot;rss&quot;&gt;&lt;i class=&quot;icon icon-lg icon-rss&quot;&gt;&lt;/i&gt;&lt;/a&gt;&lt;/span&gt;--&gt;    &lt;!--        &lt;% } %&gt;--&gt;    &lt;!--        &lt;span&gt;&lt;%- __(&#39;footer.license&#39;) %&gt;&lt;/span&gt;--&gt;    &lt;!--    &lt;/p&gt;--&gt;    &lt;!--&lt;/div&gt;--&gt;    &lt;div class=&quot;bottom&quot;&gt;        &lt;p&gt;&lt;span&gt;&lt;%-config.author %&gt; &amp;copy; &lt;%if (theme.since_year &amp;&amp; theme.since_year &lt; date(new Date(), &#39;YYYY&#39;)) {%><%- theme.since_year %> - <%}%&gt;&lt;%- date(new date(), &#39;yyyy&#39;) %&gt;&lt; span&gt; 添加rss标签 &lt;% if ((config.feed) &amp;&amp; (config.feed.path.length)) { %&gt; &lt;span&gt;&lt;a href="&quot;&lt;%-" url_for(config.feed.path) %&gt;&quot; target="&quot;_blank&quot;" class="&quot;rss&quot;" title="&quot;rss&quot;&gt;&lt;i" icon-lg icon-rss&quot;&gt;&lt; i&gt;&lt; a&gt;&lt; } &lt;span&gt; if(theme.icp_license) {%&gt; &lt;a theme.icp_license a&gt;&lt;br&gt; power by theme &lt; p&gt; div&gt; footer&gt;< code></%}%&gt;&lt;%-></%-></code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;brand&amp;quot; style=&amp;quot;text-align: center;&amp;quot;&amp;gt;&lt;/code&gt;&lt;/pre&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;!--第7行，添加居中样式--&amp;gt;
-&amp;lt;div 
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
   
   <entry>
     <title>启用hexo新主题indigo</title>
@@ -587,6 +564,34 @@
     
     
       <category term="隐形守护者" scheme="https://andergh.github.io/tags/%E9%9A%90%E5%BD%A2%E5%AE%88%E6%8A%A4%E8%80%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>NSPredicate谓词简析</title>
+    <link href="https://andergh.github.io/2019/03/22/NSPredicate%E8%B0%93%E8%AF%8D%E7%AE%80%E6%9E%90/"/>
+    <id>https://andergh.github.io/2019/03/22/NSPredicate%E8%B0%93%E8%AF%8D%E7%AE%80%E6%9E%90/</id>
+    <published>2019-03-22T07:05:34.000Z</published>
+    <updated>2019-03-29T11:58:29.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、NSPredicate定义"><a href="#一、NSPredicate定义" class="headerlink" title="一、NSPredicate定义"></a>一、NSPredicate定义</h3><p><code>NSPredicate</code>是<code>Foundation</code>框架中提供的一个类，中文翻译成谓词，官方文档中的注释如下：</p><pre><code>// Predicates wrap some combination of expressions and operators and when evaluated return a BOOL.</code></pre><p>意思为包含表达式和运算符的某种组合，并在计算时返回<code>BOOL</code>值，以次我们可以简单推测其主要的作用是用来比较的</p><p>官方文档释义如下：</p><blockquote><p>A definition of logical conditions used to constrain a search either for a fetch or for in-memory filtering.</p></blockquote><blockquote><p>Predicates represent logical conditions, which you can use to filter collections of objects. Although it’s common to create predicates directly from instances of NSComparisonPredicate, NSCompoundPredicate, and NSExpression, you often create predicates from a format string which is parsed by the class methods on NSPredicate.</p></blockquote><h3 id="二、相关方法和属性"><a href="#二、相关方法和属性" class="headerlink" title="二、相关方法和属性"></a>二、相关方法和属性</h3><p>经常使用的是如下的初始化方法，通过格式化字符串来进行谓词对象的初始化</p><pre><code>+ (NSPredicate *)predicateWithFormat:(NSString *)predicateFormat argumentArray:(nullable NSArray *)arguments;+ (NSPredicate *)predicateWithFormat:(NSString *)predicateFormat, ...;+ (NSPredicate *)predicateWithFormat:(NSString *)predicateFormat arguments:(va_list)argList;</code></pre><p>例如：</p><pre><code>//检测length为5的对象NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;length = 5&quot;];NSArray *test = @[@&quot;1213&quot;, @&quot;dddda&quot;, @&quot;adas&quot;, @&quot;f&quot;, @&quot;ccccc&quot;];NSArray *result = [test filteredArrayUsingPredicate:predicate];NSLog(@&quot;%@&quot;, result);//打印result值得到数组中的两个值@&quot;dddda&quot;和@&quot;ccccc&quot;</code></pre><p>使用字符串初始化时，需要注意语法的正确，以及正确的转义字符，否则会引起崩溃。</p><p>除了字符串初始化<code>NSPredicate</code>对象以外，通过模板来创建谓词对象也是一种十分常用的方式，模板中只有键名，没有键值，键值需要在字典中进行提供，例如：</p><pre><code>NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;length = $LENGTH&quot;];predicate = [predicate predicateWithSubstitutionVariables:@{@&quot;LENGTH&quot; : @5}];NSArray *test = @[@&quot;1213&quot;, @&quot;dddda&quot;, @&quot;adas&quot;, @&quot;f&quot;, @&quot;ccccc&quot;];NSArray *result = [test filteredArrayUsingPredicate:predicate];NSLog(@&quot;%@&quot;, result);//值为@&quot;dddda&quot;和@&quot;ccccc&quot;数组</code></pre><p>其他属性与方法解析如下：</p><pre><code>//创建一个总是验证通过或不通过的谓词对象，如果是验证通过的，则任何检索都会成功进行返回，否则任何检索都会失败且不返回任何对象+ (NSPredicate *)predicateWithValue:(BOOL)value;//检索函数的Block版本，可以更加方遍的书写逻辑，类似遍历方法+ (NSPredicate*)predicateWithBlock:(BOOL (^)(id _Nullable evaluatedObject, NSDictionary&lt;NSString *, id&gt; * _Nullable bindings))block API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0));//格式化字符串属性@property (readonly, copy) NSString *predicateFormat;//检查一个Object对象是否可以通过验证- (BOOL)evaluateWithObject:(nullable id)object;    // evaluate a predicate against a single object//用谓词模板进行对象的验证- (BOOL)evaluateWithObject:(nullable id)object substitutionVariables:(nullable NSDictionary&lt;NSString *, id&gt; *)bindings API_AVAILABLE(macos(10.5), ios(3.0), watchos(2.0), tvos(9.0)); // single pass evaluation substituting variables from the bindings dictionary for any variable expressions encountered//允许安全评估- (void)allowEvaluation API_AVAILABLE(macos(10.9), ios(7.0), watchos(2.0), tvos(9.0)); // Force a predicate which was securely decoded to allow evaluation</code></pre><p>不同的初始化方法可以搭配不同<code>filter</code>的方法，此处不再一一演示各个方法的效果。</p><pre><code>@interface NSArray&lt;ObjectType&gt; (NSPredicateSupport)//根据对象数组计算谓词并返回已过滤的数组- (NSArray&lt;ObjectType&gt; *)filteredArrayUsingPredicate:(NSPredicate *)predicate;    // evaluate a predicate against an array of objects and return a filtered array@end@interface NSMutableArray&lt;ObjectType&gt; (NSPredicateSupport)//根据对象数组计算谓词并直接过滤可变数组- (void)filterUsingPredicate:(NSPredicate *)predicate;    // evaluate a predicate against an array of objects and filter the mutable array directly@end@interface NSSet&lt;ObjectType&gt; (NSPredicateSupport)//根据一组对象评估谓词并返回一个过滤集- (NSSet&lt;ObjectType&gt; *)filteredSetUsingPredicate:(NSPredicate *)predicate API_AVAILABLE(macos(10.5), ios(3.0), watchos(2.0), tvos(9.0));    // evaluate a predicate against a set of objects and return a filtered set@end@interface NSMutableSet&lt;ObjectType&gt; (NSPredicateSupport)//根据一组对象评估谓词并直接过滤可变集- (void)filterUsingPredicate:(NSPredicate *)predicate API_AVAILABLE(macos(10.5), ios(3.0), watchos(2.0), tvos(9.0));    // evaluate a predicate against a set of objects and filter the mutable set directly@end@interface NSOrderedSet&lt;ObjectType&gt; (NSPredicateSupport)//根据有序对象集评估谓词并返回已过滤的有序集- (NSOrderedSet&lt;ObjectType&gt; *)filteredOrderedSetUsingPredicate:(NSPredicate *)p API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));    // evaluate a predicate against an ordered set of objects and return a filtered ordered set@end@interface NSMutableOrderedSet&lt;ObjectType&gt; (NSPredicateSupport)//根据有序对象集评估谓词，并直接过滤可变有序集- (void)filterUsingPredicate:(NSPredicate *)p API_AVAILABLE(macos(10.7), ios(5.0), watchos(2.0), tvos(9.0));  // evaluate a predicate against an ordered set of objects and filter the mutable ordered set directly@end</code></pre><h3 id="三、拓展"><a href="#三、拓展" class="headerlink" title="三、拓展"></a>三、拓展</h3><p>前面官方文档中提到了几个<code>NSPredicate</code>的子类</p><h4 id="1、NSComparisonPredicate比较谓词"><a href="#1、NSComparisonPredicate比较谓词" class="headerlink" title="1、NSComparisonPredicate比较谓词"></a>1、NSComparisonPredicate比较谓词</h4><p>同样是获取数组中的指定元素，相同的例子可以使用NSComparisonPredicate写成如下形式：</p><pre><code>//创建左侧表达式对象 对应为键NSExpression *left = [NSExpression expressionForKeyPath:@&quot;length&quot;];//创建右侧表达式对象 对应为值NSExpression *right = [NSExpression expressionForConstantValue:@5];//创建比较谓词对象 这里设置为严格等于NSComparisonPredicate *cPredicate = [NSComparisonPredicate predicateWithLeftExpression:left rightExpression:right modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:NSCaseInsensitivePredicateOption];NSArray *test = @[@&quot;1213&quot;, @&quot;dddda&quot;, @&quot;adas&quot;, @&quot;f&quot;, @&quot;ccccc&quot;];NSArray *result = [test filteredArrayUsingPredicate:cPredicate];</code></pre><p>其中包含的几个枚举如下</p><pre><code>// Describes how the operator is modified: can be direct, ALL, or ANYtypedef NS_ENUM(NSUInteger, NSComparisonPredicateModifier) {NSDirectPredicateModifier = 0, // Do a direct comparison//直接进行比较操作NSAllPredicateModifier, // ALL toMany.x = y//只有当内部所有元素都通过验证时，才算通过NSAnyPredicateModifier // ANY toMany.x = y//当内部有一个元素满足时，就算通过验证//后两个一般用于数组};// Type basic set of operators defined. Most are obvious; NSCustomSelectorPredicateOperatorType allows a developer to create an operator which uses the custom selector specified in the constructor to do the evaluation.typedef NS_ENUM(NSUInteger, NSPredicateOperatorType) {NSLessThanPredicateOperatorType = 0, // compare: returns NSOrderedAscending// 小于NSLessThanOrEqualToPredicateOperatorType, // compare: returns NSOrderedAscending || NSOrderedSame// 小于等于NSGreaterThanPredicateOperatorType, // compare: returns NSOrderedDescending// 大于NSGreaterThanOrEqualToPredicateOperatorType, // compare: returns NSOrderedDescending || NSOrderedSame// 大于等于NSEqualToPredicateOperatorType, // isEqual: returns true// 等于NSNotEqualToPredicateOperatorType, // isEqual: returns false//不等于NSMatchesPredicateOperatorType,// 正则比配NSLikePredicateOperatorType,// Like匹配NSBeginsWithPredicateOperatorType,// 左边的表达式以右边的表达式作为开头NSEndsWithPredicateOperatorType,// 左边的表达式以右边的表达式作为结尾NSInPredicateOperatorType, // rhs contains lhs returns true// 左边的表达式出现在右边的集合中NSCustomSelectorPredicateOperatorType,// 使用自定义的函数来进行验证NSContainsPredicateOperatorType API_AVAILABLE(macos(10.5), ios(3.0), watchos(2.0), tvos(9.0)) = 99, // lhs contains rhs returns true// 左边的集合包括右边的元素NSBetweenPredicateOperatorType API_AVAILABLE(macos(10.5), ios(3.0), watchos(2.0), tvos(9.0))// 左边表达式的值在右边的范围中};// Flags(s) that can be passed to the factory to indicate that a operator operating on strings should do so in a case insensitive fashion.typedef NS_OPTIONS(NSUInteger, NSComparisonPredicateOptions) {NSCaseInsensitivePredicateOption = 0x01,// 不区分大小写NSDiacriticInsensitivePredicateOption = 0x02,// 不区分读音符号NSNormalizedPredicateOption API_AVAILABLE(macos(10.6), ios(4.0), watchos(2.0), tvos(9.0)) = 0x04, /* Indicate that the strings to be compared have been preprocessed; this supersedes other options and is intended as a performance optimization option *///比较前进行预处理 代替上面两个选项};</code></pre><h4 id="2、NSCompoundPredicate复合谓词"><a href="#2、NSCompoundPredicate复合谓词" class="headerlink" title="2、NSCompoundPredicate复合谓词"></a>2、NSCompoundPredicate复合谓词</h4><pre><code>// 创建与运算+ (NSCompoundPredicate *)andPredicateWithSubpredicates:(NSArray&lt;NSPredicate *&gt; *)subpredicates NS_SWIFT_NAME(init(andPredicateWithSubpredicates:));// 创建或运算+ (NSCompoundPredicate *)orPredicateWithSubpredicates:(NSArray&lt;NSPredicate *&gt; *)subpredicates NS_SWIFT_NAME(init(orPredicateWithSubpredicates:));// 创建非运算+ (NSCompoundPredicate *)notPredicateWithSubpredicate:(NSPredicate *)predicate NS_SWIFT_NAME(init(notPredicateWithSubpredicate:));</code></pre><h3 id="四、iOS正则使用"><a href="#四、iOS正则使用" class="headerlink" title="四、iOS正则使用"></a>四、iOS正则使用</h3><p><code>NSPredicate</code>谓词的用法比较冷门，但是其中包含了一个非常重要的正则表达式的用法，通过<code>SELF MATCHES</code>的格式化字符串，引入通用的正则表达式的判断逻辑，例如：</p><pre><code>// 判断字符串是否符合规则NSString *reg = @&quot;^[0-9]+$&quot;;NSPredicate *predicate = [NSPredicate predicateWithFormat:@&quot;SELF MATCHES %@&quot;, reg];BOOL validate1 = [predicate evaluateWithObject:@&quot;qw&quot;];//NOBOOL validate2 = [predicate evaluateWithObject:@&quot;12&quot;];//YES</code></pre><p>需要注意的点如下：</p><ul><li><code>iOS</code>中正则表达式有些字符需要有额外的转义，否则会崩溃</li><li><code>NSPredicate</code>中只提供了匹配方法，没有其他语音的提取方法，一些提取的操作需要使用<code>iOS</code>其他方法配合使用</li></ul><p>虽然谓词比较冷门，但是关于谓词的使用，还是有很多灵活的用法等待我们去研究。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;一、NSPredicate定义&quot;&gt;&lt;a href=&quot;#一、NSPredicate定义&quot; class=&quot;headerlink&quot; title=&quot;一、NSPredicate定义&quot;&gt;&lt;/a&gt;一、NSPredicate定义&lt;/h3&gt;&lt;p&gt;&lt;code&gt;NSPredicate&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="iOS" scheme="https://andergh.github.io/categories/iOS/"/>
+    
+    
+      <category term="iOS" scheme="https://andergh.github.io/tags/iOS/"/>
+    
+      <category term="正则表达式" scheme="https://andergh.github.io/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     
   </entry>
   
