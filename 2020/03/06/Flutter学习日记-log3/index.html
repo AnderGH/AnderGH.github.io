@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Flutter学习日记-log3 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="学习日记,Flutter">
+    <meta name="description" content="Flutter中文网   日志随笔一、复习 命名路由 路由传参  二、状态管理 Widget管理自身状态 父Widget管理子Widget状态，在子Widget上包裹一层父Widget，子Widget把状态调整的方法对外提供成参数给父Widget GestureDetector手势，onTap等方法 Container绘制矩形区域，decoration属性设置背景、边框等，decoration里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter学习日记-log3">
+<meta property="og:url" content="https://andergh.github.io/2020/03/06/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="Flutter中文网   日志随笔一、复习 命名路由 路由传参  二、状态管理 Widget管理自身状态 父Widget管理子Widget状态，在子Widget上包裹一层父Widget，子Widget把状态调整的方法对外提供成参数给父Widget GestureDetector手势，onTap等方法 Container绘制矩形区域，decoration属性设置背景、边框等，decoration里">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2020/03/06/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png">
+<meta property="article:published_time" content="2020-03-06T09:58:26.000Z">
+<meta property="article:modified_time" content="2020-03-06T09:59:05.886Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="学习日记">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2020/03/06/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!--个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/custom/highlightjs-line-numbers.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Flutter学习日记-log3</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Flutter学习日记-log3</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-06T09:58:26.000Z" itemprop="datePublished" class="page-time">
+  2020-03-06
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、复习"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">一、复习</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、状态管理"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">二、状态管理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、组件和组件样式"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">三、组件和组件样式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、文本"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">1、文本</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、按钮"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">2、按钮</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、图片和图标"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">3、图片和图标</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-图片"><span class="post-toc-number">1.3.3.1.</span> <span class="post-toc-text">1. 图片</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-图标"><span class="post-toc-number">1.3.3.2.</span> <span class="post-toc-text">2. 图标</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、单选和复选框"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">4、单选和复选框</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、输入框"><span class="post-toc-number">1.3.5.</span> <span class="post-toc-text">5、输入框</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、Form表单"><span class="post-toc-number">1.3.6.</span> <span class="post-toc-text">6、Form表单</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7、进度条指示器"><span class="post-toc-number">1.3.7.</span> <span class="post-toc-text">7、进度条指示器</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、布局"><span class="post-toc-number">1.4.</span> <span class="post-toc-text">四、布局</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、线性布局（Row和Column）"><span class="post-toc-number">1.4.1.</span> <span class="post-toc-text">1、线性布局（Row和Column）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、弹性布局（Flex）"><span class="post-toc-number">1.4.2.</span> <span class="post-toc-text">2、弹性布局（Flex）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、流式布局（Wrap和Flow）"><span class="post-toc-number">1.4.3.</span> <span class="post-toc-text">3、流式布局（Wrap和Flow）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、层叠布局（Stack和Positioned）"><span class="post-toc-number">1.4.4.</span> <span class="post-toc-text">4、层叠布局（Stack和Positioned）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、对齐与相对定位（Align）"><span class="post-toc-number">1.4.5.</span> <span class="post-toc-text">5、对齐与相对定位（Align）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-Alignment"><span class="post-toc-number">1.4.5.1.</span> <span class="post-toc-text">1. Alignment</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-FractionalOffset"><span class="post-toc-number">1.4.5.2.</span> <span class="post-toc-text">2. FractionalOffset</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-Align和Stack对比"><span class="post-toc-number">1.4.5.3.</span> <span class="post-toc-text">3. Align和Stack对比</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Flutter学习日记-log3"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Flutter学习日记-log3</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-06 17:58:26" datetime="2020-03-06T09:58:26.000Z"  itemprop="datePublished">2020-03-06</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><a href="https://flutterchina.club/get-started/install/" target="_blank" rel="noopener"><em>Flutter中文网</em></a></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="一、复习"><a href="#一、复习" class="headerlink" title="一、复习"></a>一、复习</h3><ul>
+<li>命名路由</li>
+<li>路由传参</li>
+</ul>
+<h3 id="二、状态管理"><a href="#二、状态管理" class="headerlink" title="二、状态管理"></a>二、状态管理</h3><ul>
+<li><code>Widget</code>管理自身状态</li>
+<li>父<code>Widget</code>管理子<code>Widget</code>状态，在子<code>Widget</code>上包裹一层父<code>Widget</code>，子<code>Widget</code>把状态调整的方法对外提供成参数给父<code>Widget</code><ul>
+<li><code>GestureDetector</code>手势，<code>onTap</code>等方法</li>
+<li><code>Container</code>绘制矩形区域，<code>decoration</code>属性设置背景、边框等，<code>decoration</code>里面<code>color</code>字段和<code>Container</code>本身的<code>color</code>字段不能同时设置，会报错，使用<code>padding</code>调整位置，或者使用<code>Center</code>包裹居中</li>
+</ul>
+</li>
+<li>混合管理状态</li>
+<li>全局状态管理，例如国际化等操作，此处暂不学习</li>
+</ul>
+<pre><code>import &#39;package:flutter/material.dart&#39;;
+
+void main() =&gt; runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: &#39;状态管理&#39;,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: &#39;HomePage&#39;,
+      routes: {
+        &#39;HomePage&#39;: (context) =&gt; HomePage(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(&#39;首页&#39;),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: &lt;Widget&gt;[
+            Text(
+              &#39;这是首页&#39;,
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 20,
+              ),
+            ),
+            TapboxA(),
+            ParentWidget(),
+            ParentWidgetC(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// TapboxA 管理自身状态.
+
+//------------------------- TapboxA ----------------------------------
+
+class TapboxA extends StatefulWidget {
+  @override
+  _TapboxAState createState() =&gt; _TapboxAState();
+}
+
+class _TapboxAState extends State&lt;TapboxA&gt; {
+  bool _active = false;
+  void _handleTap() {
+    setState(() {
+      _active = !_active;
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        child: Center(
+          child: Text(
+            _active ? &#39;00&#39; : &#39;99&#39;,
+            style: TextStyle(
+              fontSize: 100,
+              color: Colors.white,
+              backgroundColor: _active ? Colors.red : Colors.blue,
+            ),
+          ),
+        ),
+        width: 200,
+        height: 200,
+        padding: EdgeInsets.only(left: 20),
+        decoration: BoxDecoration(
+          color: Colors.orange,
+          border: Border(
+              top: BorderSide(
+            color: Colors.black,
+            width: 10,
+            style: BorderStyle.solid,
+          )),
+          // border: Border.all(
+          //   color: Colors.black,
+          //   width: 10,
+          //   style: BorderStyle.solid,
+          // ),
+        ),
+      ),
+      onTap: _handleTap,
+    );
+  }
+}
+
+// ParentWidget 为 TapboxB 管理状态.
+
+//------------------------ ParentWidget --------------------------------
+
+class ParentWidget extends StatefulWidget {
+  @override
+  _ParentWidgetState createState() =&gt; _ParentWidgetState();
+}
+
+class _ParentWidgetState extends State&lt;ParentWidget&gt; {
+  bool _active = false;
+
+  void _handleTapboxChanged(bool newValue) {
+    setState(() {
+      _active = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: new TapboxB(
+        active: _active,
+        onChanged: _handleTapboxChanged,
+      ),
+    );
+  }
+}
+
+//------------------------- TapboxB ----------------------------------
+
+class TapboxB extends StatelessWidget {
+  final bool active;
+  final ValueChanged&lt;bool&gt; onChanged;
+
+  TapboxB({
+    Key key, 
+    this.active: false, 
+    @required this.onChanged
+  }): super(key: key);
+
+  void _handleTap() {
+    onChanged(!active);
+  }
+
+  Widget build(BuildContext context) {
+    return new GestureDetector(
+      onTap: _handleTap,
+      child: new Container(
+        child: new Center(
+          child: new Text(
+            active ? &#39;Active&#39; : &#39;Inactive&#39;,
+            style: new TextStyle(fontSize: 32.0, color: Colors.white),
+          ),
+        ),
+        width: 200.0,
+        height: 200.0,
+        decoration: new BoxDecoration(
+          color: active ? Colors.lightGreen[700] : Colors.grey[600],
+        ),
+      ),
+    );
+  }
+}
+
+//---------------------------- ParentWidget ----------------------------
+
+class ParentWidgetC extends StatefulWidget {
+  @override
+  _ParentWidgetCState createState() =&gt; new _ParentWidgetCState();
+}
+
+class _ParentWidgetCState extends State&lt;ParentWidgetC&gt; {
+  bool _active = false;
+
+  void _handleTapboxChanged(bool newValue) {
+    setState(() {
+      _active = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+      child: new TapboxC(
+        active: _active,
+        onChanged: _handleTapboxChanged,
+      ),
+    );
+  }
+}
+
+//----------------------------- TapboxC ------------------------------
+
+class TapboxC extends StatefulWidget {
+  TapboxC({Key key, this.active: false, @required this.onChanged})
+      : super(key: key);
+
+  final bool active;
+  final ValueChanged&lt;bool&gt; onChanged;
+
+  @override
+  _TapboxCState createState() =&gt; new _TapboxCState();
+}
+
+class _TapboxCState extends State&lt;TapboxC&gt; {
+  bool _highlight = false;
+
+  void _handleTapDown(TapDownDetails details) {
+    setState(() {
+      _highlight = true;
+    });
+  }
+
+  void _handleTapUp(TapUpDetails details) {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  void _handleTapCancel() {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  void _handleTap() {
+    widget.onChanged(!widget.active);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 在按下时添加绿色边框，当抬起时，取消高亮  
+    return new GestureDetector(
+      onTapDown: _handleTapDown, // 处理按下事件
+      onTapUp: _handleTapUp, // 处理抬起事件
+      onTap: _handleTap,
+      onTapCancel: _handleTapCancel,
+      child: new Container(
+        child: new Center(
+          child: new Text(widget.active ? &#39;Active&#39; : &#39;Inactive&#39;,
+              style: new TextStyle(fontSize: 32.0, color: Colors.white)),
+        ),
+        width: 200.0,
+        height: 200.0,
+        decoration: new BoxDecoration(
+          color: widget.active ? Colors.lightGreen[700] : Colors.grey[600],
+          border: _highlight
+              ? new Border.all(
+                  color: Colors.teal[700],
+                  width: 10.0,
+                )
+              : null,
+        ),
+      ),
+    );
+  }
+}
+</code></pre><h3 id="三、组件和组件样式"><a href="#三、组件和组件样式" class="headerlink" title="三、组件和组件样式"></a>三、组件和组件样式</h3><h4 id="1、文本"><a href="#1、文本" class="headerlink" title="1、文本"></a>1、文本</h4><ul>
+<li>基础样式：<code>textAlign</code>、<code>maxLines</code>、<code>overflow</code>、<code>textScaleFactor</code>等</li>
+<li>高级一点的直接定制<code>TextStyle</code>属性</li>
+<li><code>TextSpan</code>实现富文本样式</li>
+<li><code>DefaultTextStyle</code>样式继承</li>
+<li>字体：使用<a href="https://fonts.google.com/" target="_blank" rel="noopener"><code>Google Fonts</code></a>中的字体，首先在<code>pubspec.yaml</code>中声明，然后通过<code>TextStyle</code>属性使用</li>
+</ul>
+<h4 id="2、按钮"><a href="#2、按钮" class="headerlink" title="2、按钮"></a>2、按钮</h4><blockquote>
+<p>此处学习基于<code>Android</code>端的<code>Material</code>组件，所有<code>Material</code> 库中的按钮都是直接或间接的<code>RawMaterialButton</code>组件的包装定制，都有如下相同点：</p>
+<ol>
+<li>按下时都会有“水波动画”（又称“涟漪动画”，就是点击时按钮上会出现水波荡漾的动画）</li>
+<li>有一个<code>onPressed</code>属性来设置点击回调，当按钮按下时会执行该回调，如果不提供该回调则按钮会处于禁用状态，禁用状态不响应用户点击</li>
+</ol>
+</blockquote>
+<ul>
+<li><code>RaisedButton</code>漂浮按钮，文字+图标</li>
+<li><code>FlatButton</code>扁平按钮，文字+图标<ul>
+<li><code>highlightColor</code>和<code>splashColor</code>冲突，前者设置后，后者的效果就没了，暂不研究</li>
+<li><code>shape</code>属性是<code>ShapeBorder</code>类的，但<code>ShapeBorder</code>不直接使用，应该使用该类的子类，子类提供了具体的样式效果<pre><code>const FlatButton({
+...  
+@required this.onPressed, //按钮点击回调
+this.textColor, //按钮文字颜色
+this.disabledTextColor, //按钮禁用时的文字颜色
+this.color, //按钮背景颜色
+this.disabledColor,//按钮禁用时的背景颜色
+this.highlightColor, //按钮按下时的背景颜色
+this.splashColor, //点击时，水波动画中水波的颜色
+this.colorBrightness,//按钮主题，默认是浅色主题 
+this.padding, //按钮的填充
+this.shape, //外形
+@required this.child, //按钮的内容
+})</code></pre></li>
+</ul>
+</li>
+<li><code>OutlineButton</code>边框按钮，文字+图标</li>
+<li><code>IconButton</code>图标按钮，没有文字</li>
+</ul>
+<pre><code>import &#39;package:flutter/material.dart&#39;;
+
+void main() =&gt; runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: &#39;控件样式&#39;,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: &#39;HomePage&#39;,
+      routes: {
+        &#39;HomePage&#39;: (context) =&gt; HomePage(),
+      },
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  void _onPressed() {}
+
+  @override
+  Widget build(BuildContext context) {
+    String icons = &quot;&quot;;
+    // accessible: &amp;#xE914; or 0xE914 or E914
+    icons += &quot;\uE914&quot;;
+    // error: &amp;#xE000; or 0xE000 or E000
+    icons += &quot; \uE000&quot;;
+    // fingerprint: &amp;#xE90D; or 0xE90D or E90D
+    icons += &quot; \uE90D&quot;;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(&#39;首页&#39;),
+      ),
+      body: Column(
+        children: &lt;Widget&gt;[
+          Container(
+            child: Row(
+              children: &lt;Widget&gt;[
+                RaisedButton(
+                  child: Text(&quot;RaisedButton&quot;),
+                  onPressed: () {},
+                ),
+                FlatButton(
+                  child: Text(&quot;FlatButton&quot;),
+                  onPressed: () {},
+                ),
+                OutlineButton(
+                  child: Text(&quot;normal&quot;),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.thumb_up),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: &lt;Widget&gt;[
+                RaisedButton.icon(
+                  icon: Icon(Icons.send),
+                  label: Text(&quot;发送&quot;),
+                  onPressed: _onPressed,
+                ),
+                FlatButton.icon(
+                  icon: Icon(Icons.info),
+                  label: Text(&quot;详情&quot;),
+                  onPressed: _onPressed,
+                ),
+                OutlineButton.icon(
+                  icon: Icon(Icons.add),
+                  label: Text(&quot;添加&quot;),
+                  onPressed: _onPressed,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              children: &lt;Widget&gt;[
+                FlatButton(
+                  onPressed: _onPressed,
+                  child: Text(&quot;提交&quot;),
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  // highlightColor: Colors.blue[700],
+                  // splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+                RaisedButton(
+                  onPressed: _onPressed,
+                  child: Text(&quot;提交&quot;),
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  // highlightColor: Colors.blue[700],
+                  // splashColor: Colors.grey,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+</code></pre><h4 id="3、图片和图标"><a href="#3、图片和图标" class="headerlink" title="3、图片和图标"></a>3、图片和图标</h4><h5 id="1-图片"><a href="#1-图片" class="headerlink" title="1. 图片"></a>1. 图片</h5><ul>
+<li><code>ImageProvider</code>是一个抽象类，从不同的数据源获取图片使用不同的方法，从<code>Asset</code>中加载图片使用<code>AssetImage</code>，从网络加载图片使用<code>NetworkImage</code></li>
+<li><code>fit</code>属性<ul>
+<li><code>fill</code>：会拉伸填充满显示空间，图片本身长宽比会发生变化，图片会变形。</li>
+<li><code>cover</code>：会按图片的长宽比放大后居中填满显示空间，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>contain</code>：这是图片的默认适应规则，图片会在保证图片本身长宽比不变的情况下缩放以适应当前显示空间，图片不会变形。</li>
+<li><code>fitWidth</code>：图片的宽度会缩放到显示空间的宽度，高度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>fitHeight</code>：图片的高度会缩放到显示空间的高度，宽度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>none</code>：图片没有适应策略，会在显示空间内显示图片，如果图片比显示空间大，则显示空间只会显示图片中间部分。</li>
+</ul>
+</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2020/03/06/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/image_1.png" alt="image_1" title>
+                </div>
+                <div class="image-caption">image_1</div>
+            </figure>
+
+<ul>
+<li><code>Flutter</code>框架对加载过的图片是有缓存的（内存），默认最大缓存数量是<code>1000</code>，最大缓存空间为<code>100M</code>，此处暂不学习</li>
+</ul>
+<h5 id="2-图标"><a href="#2-图标" class="headerlink" title="2. 图标"></a>2. 图标</h5><p><code>Flutter</code>默认包含了一套<code>Material Design</code>的字体图标<code>iconfont</code>，<code>pubspec.yaml</code>文件中配置默认打开，官网地址：<a href="https://material.io/tools/icons/" target="_blank" rel="noopener"><code>https://material.io/tools/icons/</code></a></p>
+<h4 id="4、单选和复选框"><a href="#4、单选和复选框" class="headerlink" title="4、单选和复选框"></a>4、单选和复选框</h4><ul>
+<li><code>Switch</code></li>
+<li><code>Checkbox</code></li>
+</ul>
+<h4 id="5、输入框"><a href="#5、输入框" class="headerlink" title="5、输入框"></a>5、输入框</h4><ul>
+<li><code>onChange</code>方法通知输入框文本发生变化</li>
+<li>创建<code>TextEditingController</code>控制器，绑定输入框<ul>
+<li>设置占位文本，比输入框本身的属性优先级高</li>
+<li>获取绑定的输入框内的文本</li>
+<li>创建<code>FocusNode</code>，绑定输入框，来控制键盘焦点</li>
+</ul>
+</li>
+</ul>
+<h4 id="6、Form表单"><a href="#6、Form表单" class="headerlink" title="6、Form表单"></a>6、<code>Form</code>表单</h4><p><code>Form</code>表单是基于输入框封装的一个功能更完善的控件，需要对应<code>TextFormField</code>的使用，可以实现<code>validate</code>方法对所有输入框条件的一键验证</p>
+<pre><code>import &#39;package:flutter/material.dart&#39;;
+
+void main() =&gt; runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: &#39;表单&#39;,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: FormTestRoute(),
+    );
+  }
+}
+
+class FormTestRoute extends StatefulWidget {
+  @override
+  _FormTestRouteState createState() =&gt; new _FormTestRouteState();
+}
+
+class _FormTestRouteState extends State&lt;FormTestRoute&gt; {
+  TextEditingController _unameController = new TextEditingController();
+  TextEditingController _pwdController = new TextEditingController();
+  GlobalKey _formKey = new GlobalKey&lt;FormState&gt;();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(&quot;Form Test&quot;),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+        child: Form(
+          key: _formKey, //设置globalKey，用于后面获取FormState
+          autovalidate: true, //开启自动校验
+          child: Column(
+            children: &lt;Widget&gt;[
+              TextFormField(
+                  autofocus: true,
+                  controller: _unameController,
+                  decoration: InputDecoration(
+                      labelText: &quot;用户名&quot;,
+                      hintText: &quot;用户名或邮箱&quot;,
+                      icon: Icon(Icons.person)),
+                  // 校验用户名
+                  validator: (v) {
+                    return v.trim().length &gt; 0 ? null : &quot;用户名不能为空&quot;;
+                  }),
+              TextFormField(
+                  controller: _pwdController,
+                  decoration: InputDecoration(
+                      labelText: &quot;密码&quot;,
+                      hintText: &quot;您的登录密码&quot;,
+                      icon: Icon(Icons.lock)),
+                  obscureText: true,
+                  //校验密码
+                  validator: (v) {
+                    return v.trim().length &gt; 5 ? null : &quot;密码不能少于6位&quot;;
+                  }),
+              // 登录按钮
+              Padding(
+                padding: const EdgeInsets.only(top: 28.0),
+                child: Row(
+                  children: &lt;Widget&gt;[
+                    Expanded(
+                      child: RaisedButton(
+                        padding: EdgeInsets.all(15.0),
+                        child: Text(&quot;登录&quot;),
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.white,
+                        onPressed: () {
+                          //在这里不能通过此方式获取FormState，context不对
+                          //print(Form.of(context));
+
+                          // 通过_formKey.currentState 获取FormState后，
+                          // 调用validate()方法校验用户名密码是否合法，校验
+                          // 通过后再提交数据。
+                          if ((_formKey.currentState as FormState).validate()) {
+                            //验证通过提交数据
+                            debugPrint(&#39;通过&#39;);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+</code></pre><h4 id="7、进度条指示器"><a href="#7、进度条指示器" class="headerlink" title="7、进度条指示器"></a>7、进度条指示器</h4><pre><code>import &#39;package:flutter/material.dart&#39;;
+
+void main() =&gt; runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: &#39;进度条控件&#39;,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  _MyHomePageState createState() =&gt; _MyHomePageState();
+}
+
+class _MyHomePageState extends State&lt;MyHomePage&gt;
+    with SingleTickerProviderStateMixin {
+  AnimationController _animationController;
+
+  @override
+  void initState() {
+    //动画执行时间3秒
+    _animationController =
+        new AnimationController(vsync: this, duration: Duration(seconds: 3));
+    _animationController.forward();
+    _animationController.addListener(() =&gt; setState(() =&gt; {}));
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(&#39;主页&#39;),
+      ),
+      body: Column(
+        children: &lt;Widget&gt;[
+          LinearProgressIndicator(
+            backgroundColor: Colors.grey[200],
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+          ),
+          //进度条显示50%
+          LinearProgressIndicator(
+            backgroundColor: Colors.grey[200],
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+            value: .5,
+          ),
+          // 模糊进度条(会执行一个旋转动画)
+          CircularProgressIndicator(
+            backgroundColor: Colors.grey[200],
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+          ),
+          //进度条显示50%，会显示一个半圆
+          CircularProgressIndicator(
+            backgroundColor: Colors.grey[200],
+            valueColor: AlwaysStoppedAnimation(Colors.blue),
+            value: .5,
+          ),
+          // 线性进度条高度指定为3
+          SizedBox(
+            height: 3,
+            child: LinearProgressIndicator(
+              backgroundColor: Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation(Colors.blue),
+              value: .5,
+            ),
+          ),
+          // 圆形进度条直径指定为100
+          SizedBox(
+            height: 100,
+            width: 100,
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation(Colors.blue),
+              value: .7,
+            ),
+          ),
+          // 宽高不等
+          SizedBox(
+            height: 100,
+            width: 130,
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.grey[200],
+              valueColor: AlwaysStoppedAnimation(Colors.blue),
+              value: .7,
+            ),
+          ),
+          LinearProgressIndicator(
+            backgroundColor: Colors.grey[200],
+            valueColor: ColorTween(begin: Colors.grey, end: Colors.blue)
+                .animate(_animationController), // 从灰色变成蓝色
+            value: _animationController.value,
+          ),
+        ],
+      ),
+    );
+  }
+}
+</code></pre><h3 id="四、布局"><a href="#四、布局" class="headerlink" title="四、布局"></a>四、布局</h3><h4 id="1、线性布局（Row和Column）"><a href="#1、线性布局（Row和Column）" class="headerlink" title="1、线性布局（Row和Column）"></a>1、线性布局（<code>Row</code>和<code>Column</code>）</h4><ul>
+<li><code>Row</code>和<code>Column</code>会在主轴方向占用尽可能大的空间，而纵轴的长度则取决于他们最大子元素的长度</li>
+<li>如果<code>Row</code>里面嵌套<code>Row</code>，或者<code>Column</code>里面再嵌套<code>Column</code>，那么只有最外面的<code>Row</code>或<code>Column</code>会占用尽可能大的空间，里面<code>Row</code>或<code>Column</code>所占用的空间为实际大小</li>
+</ul>
+<h4 id="2、弹性布局（Flex）"><a href="#2、弹性布局（Flex）" class="headerlink" title="2、弹性布局（Flex）"></a>2、弹性布局（<code>Flex</code>）</h4><ul>
+<li><code>Row</code>和<code>Column</code>都继承自<code>Flex</code></li>
+<li><code>Expanded</code>可以按比例“扩伸”<code>Row</code>、<code>Column</code>和<code>Flex</code>子组件所占用的空间</li>
+<li><code>Spacer</code>的功能是占用指定比例的空间</li>
+</ul>
+<h4 id="3、流式布局（Wrap和Flow）"><a href="#3、流式布局（Wrap和Flow）" class="headerlink" title="3、流式布局（Wrap和Flow）"></a>3、流式布局（<code>Wrap</code>和<code>Flow</code>）</h4><ul>
+<li>超出屏幕显示范围会自动折行的布局称为流式布局</li>
+<li>一般很少会使用<code>Flow</code></li>
+</ul>
+<h4 id="4、层叠布局（Stack和Positioned）"><a href="#4、层叠布局（Stack和Positioned）" class="headerlink" title="4、层叠布局（Stack和Positioned）"></a>4、层叠布局（<code>Stack</code>和<code>Positioned</code>）</h4><ul>
+<li><code>Stack</code>允许子组件堆叠</li>
+<li><code>Positioned</code>用于根据<code>Stack</code>的四个角来确定子组件的位置</li>
+<li><code>Stack</code>和<code>Positioned</code>最好一起搭配使用</li>
+</ul>
+<h4 id="5、对齐与相对定位（Align）"><a href="#5、对齐与相对定位（Align）" class="headerlink" title="5、对齐与相对定位（Align）"></a>5、对齐与相对定位（<code>Align</code>）</h4><h5 id="1-Alignment"><a href="#1-Alignment" class="headerlink" title="1. Alignment"></a>1. <code>Alignment</code></h5><ul>
+<li><code>Alignment</code>会以矩形的中心点作为坐标原点，即<code>Alignment(0.0, 0.0)</code>，<code>x</code>、<code>y</code>的值从<code>-1</code>到<code>1</code>分别代表矩形左边到右边的距离和顶部到底边的距离</li>
+<li>计算公式：<code>(Alignment.x*childWidth/2+childWidth/2, Alignment.y*childHeight/2+childHeight/2)</code></li>
+</ul>
+<h5 id="2-FractionalOffset"><a href="#2-FractionalOffset" class="headerlink" title="2. FractionalOffset"></a>2. <code>FractionalOffset</code></h5><ul>
+<li><code>FractionalOffset</code>继承自<code>Alignment</code>，它和<code>Alignment</code>唯一的区别就是坐标原点不同，<code>FractionalOffset</code>的坐标原点为矩形的左侧顶点</li>
+<li>计算公式：<code>实际偏移 = (FractionalOffse.x * childWidth, FractionalOffse.y * childHeight)</code></li>
+</ul>
+<h5 id="3-Align和Stack对比"><a href="#3-Align和Stack对比" class="headerlink" title="3. Align和Stack对比"></a>3. <code>Align</code>和<code>Stack</code>对比</h5><ul>
+<li>定位参考系统不同</li>
+<li><code>Stack</code>可以有多个子元素，并且子元素可以堆叠，而<code>Align</code>只能有一个子元素，不存在堆叠</li>
+<li><code>Center</code>继承自<code>Align</code>，可以认为<code>Center</code>组件其实是对齐方式确定<code>（Alignment.center）</code>了的<code>Align</code></li>
+</ul>
+<p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/05/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flutter学习日记-log2</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
