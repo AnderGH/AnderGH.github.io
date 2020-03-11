@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Flutter学习日记-log4 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="学习日记,Flutter">
+    <meta name="description" content="Flutter中文网   日志随笔一、复习 如果使用Navigator.push方法传参，那么接收回调参数时，可以使用确定类型例如String等接收，也可以使用var接收，如果使用的命名路由传参，那么只能使用var接收回调参数，否则会报错 &#x3D;&gt;代表调用无参数的函数，并获取返回值  &#39;HomePage&#39;: (context) &#x3D;&gt; HomePage(), &#x2F;&#x2F; 另外写法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter学习日记-log4">
+<meta property="og:url" content="https://andergh.github.io/2020/03/11/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="Flutter中文网   日志随笔一、复习 如果使用Navigator.push方法传参，那么接收回调参数时，可以使用确定类型例如String等接收，也可以使用var接收，如果使用的命名路由传参，那么只能使用var接收回调参数，否则会报错 &#x3D;&gt;代表调用无参数的函数，并获取返回值  &#39;HomePage&#39;: (context) &#x3D;&gt; HomePage(), &#x2F;&#x2F; 另外写法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-11T01:31:36.000Z">
+<meta property="article:modified_time" content="2020-03-11T01:32:16.576Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="学习日记">
+<meta property="article:tag" content="Flutter">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!--个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/custom/highlightjs-line-numbers.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Flutter学习日记-log4</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Flutter学习日记-log4</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-03-11T01:31:36.000Z" itemprop="datePublished" class="page-time">
+  2020-03-11
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志随笔"><span class="post-toc-number">1.</span> <span class="post-toc-text">日志随笔</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、复习"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">一、复习</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、容器类组件"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">二、容器类组件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、填充（Padding）"><span class="post-toc-number">1.2.1.</span> <span class="post-toc-text">1、填充（Padding）</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、尺寸限制类容器"><span class="post-toc-number">1.2.2.</span> <span class="post-toc-text">2、尺寸限制类容器</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、装饰容器"><span class="post-toc-number">1.2.3.</span> <span class="post-toc-text">3、装饰容器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-DecoratedBox"><span class="post-toc-number">1.2.3.1.</span> <span class="post-toc-text">1. DecoratedBox</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-BoxDecoration"><span class="post-toc-number">1.2.3.2.</span> <span class="post-toc-text">2. BoxDecoration</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、变换（Transform）"><span class="post-toc-number">1.2.4.</span> <span class="post-toc-text">4、变换（Transform）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-平移"><span class="post-toc-number">1.2.4.1.</span> <span class="post-toc-text">1. 平移</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-旋转"><span class="post-toc-number">1.2.4.2.</span> <span class="post-toc-text">2. 旋转</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-缩放"><span class="post-toc-number">1.2.4.3.</span> <span class="post-toc-text">3. 缩放</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、Container"><span class="post-toc-number">1.2.5.</span> <span class="post-toc-text">5、Container</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、Scaffold、TabBar、底部导航"><span class="post-toc-number">1.2.6.</span> <span class="post-toc-text">6、Scaffold、TabBar、底部导航</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-Scaffold"><span class="post-toc-number">1.2.6.1.</span> <span class="post-toc-text">1. Scaffold</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-AppBar"><span class="post-toc-number">1.2.6.2.</span> <span class="post-toc-text">2. AppBar</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-TabBar"><span class="post-toc-number">1.2.6.3.</span> <span class="post-toc-text">3. TabBar</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4-TabBarView"><span class="post-toc-number">1.2.6.4.</span> <span class="post-toc-text">4. TabBarView</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#5-抽屉菜单Drawer"><span class="post-toc-number">1.2.6.5.</span> <span class="post-toc-text">5. 抽屉菜单Drawer</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#6-FloatingActionButton"><span class="post-toc-number">1.2.6.6.</span> <span class="post-toc-text">6. FloatingActionButton</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#7、剪裁（Clip）"><span class="post-toc-number">1.2.7.</span> <span class="post-toc-text">7、剪裁（Clip）</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、可滚动组件"><span class="post-toc-number">1.3.</span> <span class="post-toc-text">三、可滚动组件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、简介"><span class="post-toc-number">1.3.1.</span> <span class="post-toc-text">1、简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-Scrollbar"><span class="post-toc-number">1.3.1.1.</span> <span class="post-toc-text">1. Scrollbar</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-ViewPort视口"><span class="post-toc-number">1.3.1.2.</span> <span class="post-toc-text">2. ViewPort视口</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-基于Sliver的延迟构建"><span class="post-toc-number">1.3.1.3.</span> <span class="post-toc-text">3. 基于Sliver的延迟构建</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、SingleChildScrollView"><span class="post-toc-number">1.3.2.</span> <span class="post-toc-text">2、SingleChildScrollView</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、ListView"><span class="post-toc-number">1.3.3.</span> <span class="post-toc-text">3、ListView</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#1-默认构造函数"><span class="post-toc-number">1.3.3.1.</span> <span class="post-toc-text">1. 默认构造函数</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#2-ListView-builder"><span class="post-toc-number">1.3.3.2.</span> <span class="post-toc-text">2. ListView.builder</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#3-ListView-separated"><span class="post-toc-number">1.3.3.3.</span> <span class="post-toc-text">3. ListView.separated</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#4-添加固定列表头"><span class="post-toc-number">1.3.3.4.</span> <span class="post-toc-text">4. 添加固定列表头</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、GridView"><span class="post-toc-number">1.3.4.</span> <span class="post-toc-text">4、GridView</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、CustomScrollView"><span class="post-toc-number">1.3.5.</span> <span class="post-toc-text">5、CustomScrollView</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#6、滚动监听及控制"><span class="post-toc-number">1.3.6.</span> <span class="post-toc-text">6、滚动监听及控制</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Flutter学习日记-log4"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Flutter学习日记-log4</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-03-11 09:31:36" datetime="2020-03-11T01:31:36.000Z"  itemprop="datePublished">2020-03-11</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <blockquote>
+<p><a href="https://flutterchina.club/get-started/install/" target="_blank" rel="noopener"><em>Flutter中文网</em></a></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="一、复习"><a href="#一、复习" class="headerlink" title="一、复习"></a>一、复习</h3><ul>
+<li>如果使用<code>Navigator.push</code>方法传参，那么接收回调参数时，可以使用确定类型例如<code>String</code>等接收，也可以使用<code>var</code>接收，如果使用的命名路由传参，那么只能使用<code>var</code>接收回调参数，否则会报错</li>
+<li><code>=&gt;</code>代表调用无参数的函数，并获取返回值</li>
+</ul>
+<pre><code>&#39;HomePage&#39;: (context) =&gt; HomePage(),
+// 另外写法
+&#39;HomePage&#39;: (context) {
+    return HomePage();
+},
+
+_HomePageState createState() =&gt; _HomePageState();
+// 另外写法
+State&lt;StatefulWidget&gt; createState() {
+    return _HomePageState();
+}</code></pre><h3 id="二、容器类组件"><a href="#二、容器类组件" class="headerlink" title="二、容器类组件"></a>二、容器类组件</h3><ul>
+<li>布局类组件需要一个<code>widget</code>数组<code>（children）</code>，直接或间接继承自（或包含）<code>MultiChildRenderObjectWidget</code>；而容器类组件只需要一个子<code>Widget</code> <code>（child）</code>，直接或间接继承自（或包含）<code>SingleChildRenderObjectWidget</code></li>
+<li>布局类组件是按照一定的排列方式来对其子<code>Widget</code>进行排列；而容器类组件一般只是包装其子<code>Widget</code>，对其添加一些修饰（补白或背景色等）、变换（旋转或剪裁等）、或限制（大小等）</li>
+</ul>
+<h4 id="1、填充（Padding）"><a href="#1、填充（Padding）" class="headerlink" title="1、填充（Padding）"></a>1、填充（Padding）</h4><p><code>EdgeInsets</code>属性</p>
+<ul>
+<li><code>fromLTRB(double left, double top, double right, double bottom)</code>：分别指定四个方向的填充</li>
+<li><code>all(double value)</code>: 所有方向均使用相同数值的填充</li>
+<li><code>only({left, top, right ,bottom })</code>：可以设置具体某个方向的填充(可以同时指定多个方向)</li>
+<li><code>symmetric({ vertical, horizontal })</code>：用于设置对称方向的填充，<code>vertical</code>指<code>top</code>和<code>bottom</code>，<code>horizontal</code>指<code>left</code>和<code>right</code></li>
+</ul>
+<h4 id="2、尺寸限制类容器"><a href="#2、尺寸限制类容器" class="headerlink" title="2、尺寸限制类容器"></a>2、尺寸限制类容器</h4><ul>
+<li><code>ConstrainedBox</code>用于对子组件添加额外的约束</li>
+<li><code>SizedBox</code>用于给子元素指定固定的宽高</li>
+<li><code>UnconstrainedBox</code>不会对子组件产生任何限制，它允许其子组件按照其本身大小绘制，例如去除父级限制</li>
+</ul>
+<h4 id="3、装饰容器"><a href="#3、装饰容器" class="headerlink" title="3、装饰容器"></a>3、装饰容器</h4><h5 id="1-DecoratedBox"><a href="#1-DecoratedBox" class="headerlink" title="1. DecoratedBox"></a>1. DecoratedBox</h5><ul>
+<li><code>decoration</code>：代表将要绘制的装饰，它的类型为<code>Decoration</code>。<code>Decoration</code>是一个抽象类。</li>
+<li><code>position</code>：此属性决定在哪里绘制<code>Decoration</code>，它接收<code>DecorationPosition</code>的枚举类型，该枚举类有两个值：<ul>
+<li><code>background</code>：在子组件之后绘制，即背景装饰</li>
+<li><code>foreground</code>：在子组件之上绘制，即前景</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-BoxDecoration"><a href="#2-BoxDecoration" class="headerlink" title="2. BoxDecoration"></a>2. BoxDecoration</h5><blockquote>
+<p>通常会直接使用<code>BoxDecoration</code>类，它是一个<code>Decoration</code>的子类</p>
+</blockquote>
+<h4 id="4、变换（Transform）"><a href="#4、变换（Transform）" class="headerlink" title="4、变换（Transform）"></a>4、变换（Transform）</h4><p><code>Transform</code>变换是应用在绘制阶段，而并不是应用在布局阶段，所以无论对子组件应用何种变化，其占用空间的大小和在屏幕上的位置都是固定不变的，因为这些是在布局阶段就确定的</p>
+<h5 id="1-平移"><a href="#1-平移" class="headerlink" title="1. 平移"></a>1. 平移</h5><ul>
+<li><code>Transform.translate</code>接收一个<code>offset</code>参数，可以在绘制时沿<code>x、y</code>轴对子组件平移指定的距离</li>
+</ul>
+<h5 id="2-旋转"><a href="#2-旋转" class="headerlink" title="2. 旋转"></a>2. 旋转</h5><ul>
+<li><code>Transform.rotate</code>可以对子组件进行旋转变换</li>
+</ul>
+<h5 id="3-缩放"><a href="#3-缩放" class="headerlink" title="3. 缩放"></a>3. 缩放</h5><ul>
+<li>Transform.scale可以对子组件进行缩小或放大</li>
+</ul>
+<h4 id="5、Container"><a href="#5、Container" class="headerlink" title="5、Container"></a>5、Container</h4><p><code>Container</code>是一个组合类容器，它本身不对应具体的<code>RenderObject</code>，它是<code>DecoratedBox、ConstrainedBox、Transform、Padding、Align</code>等组件组合的一个多功能容器，所以只需通过一个<code>Container</code>组件可以实现同时需要装饰、变换、限制的场景</p>
+<h4 id="6、Scaffold、TabBar、底部导航"><a href="#6、Scaffold、TabBar、底部导航" class="headerlink" title="6、Scaffold、TabBar、底部导航"></a>6、Scaffold、TabBar、底部导航</h4><h5 id="1-Scaffold"><a href="#1-Scaffold" class="headerlink" title="1. Scaffold"></a>1. Scaffold</h5><p><code>Scaffold</code>是一个路由页的骨架，包含导航栏、抽屉菜单以及底部<code>Tab</code>导航菜单等</p>
+<h5 id="2-AppBar"><a href="#2-AppBar" class="headerlink" title="2. AppBar"></a>2. AppBar</h5><ul>
+<li><code>AppBar</code>是一个<code>Material</code>风格的导航栏，可以设置导航栏标题、导航栏菜单、导航栏底部的<code>Tab</code>标题等</li>
+</ul>
+<h5 id="3-TabBar"><a href="#3-TabBar" class="headerlink" title="3. TabBar"></a>3. TabBar</h5><ul>
+<li><code>bottom</code>属性来添加一个导航栏底部<code>Tab</code>按钮组</li>
+</ul>
+<h5 id="4-TabBarView"><a href="#4-TabBarView" class="headerlink" title="4. TabBarView"></a>4. TabBarView</h5><ul>
+<li><code>TabBar</code>我们只能生成一个静态的菜单，我们需要通过<code>TabController</code>去监听<code>Tab</code>菜单的切换去切换<code>Tab</code>页</li>
+</ul>
+<h5 id="5-抽屉菜单Drawer"><a href="#5-抽屉菜单Drawer" class="headerlink" title="5. 抽屉菜单Drawer"></a>5. 抽屉菜单Drawer</h5><ul>
+<li><code>Scaffold</code>的<code>drawer</code>和<code>endDrawer</code>属性可以分别接受一个<code>Widget</code>来作为页面的左、右抽屉菜单</li>
+</ul>
+<h5 id="6-FloatingActionButton"><a href="#6-FloatingActionButton" class="headerlink" title="6. FloatingActionButton"></a>6. FloatingActionButton</h5><ul>
+<li><code>FloatingActionButton</code>是<code>Material</code>设计规范中的一种特殊<code>Button</code>，通常悬浮在页面的某一个位置作为某种常用动作的快捷入口</li>
+</ul>
+<h4 id="7、剪裁（Clip）"><a href="#7、剪裁（Clip）" class="headerlink" title="7、剪裁（Clip）"></a>7、剪裁（Clip）</h4><ul>
+<li><code>CustomClipper</code>自定义剪裁区域</li>
+</ul>
+<h3 id="三、可滚动组件"><a href="#三、可滚动组件" class="headerlink" title="三、可滚动组件"></a>三、可滚动组件</h3><ul>
+<li>当组件内容超过当前显示视口<code>ViewPort</code>时，如果没有特殊处理，<code>Flutter</code>则会提示<code>Overflow</code>错误</li>
+<li><code>Flutter</code>提供了多种可滚动组件用于显示列表和长布局。可滚动组件都直接或间接包含一个<code>Scrollable</code>组件</li>
+</ul>
+<h4 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h4><ul>
+<li><code>axisDirection</code>：滚动方向。</li>
+<li><code>physics</code>：此属性接受一个<code>ScrollPhysics</code>类型的对象，它决定可滚动组件如何响应用户操作，比如用户滑动完抬起手指后，继续执行动画；或者滑动到边界时，如何显示。默认情况下，<code>Flutter</code>会根据具体平台分别使用不同的<code>ScrollPhysics</code>对象，应用不同的显示效果，如当滑动到边界时，继续拖动的话，在<code>iOS</code>上会出现弹性效果，而在<code>Android</code>上会出现微光效果。如果你想在所有平台下使用同一种效果，可以显式指定一个固定的<code>ScrollPhysics</code>，可以直接使用：<ul>
+<li><code>ClampingScrollPhysics</code>：Android下微光效果。</li>
+<li><code>BouncingScrollPhysics</code>：iOS下弹性效果。</li>
+</ul>
+</li>
+<li><code>controller</code>：此属性接受一个<code>ScrollController</code>对象。<code>ScrollController</code>的主要作用是控制滚动位置和监听滚动事件。默认情况下，<code>Widget</code>树中会有一个默认的<code>PrimaryScrollController</code>，如果子树中的可滚动组件没有显式的指定<code>controller</code>，并且<code>primary</code>属性值为<code>true</code>时（默认就为<code>true</code>），可滚动组件会使用这个默认的<code>PrimaryScrollController</code>。这种机制带来的好处是父组件可以控制子树中可滚动组件的滚动行为，例如，<code>Scaffol</code>d正是使用这种机制在<code>iOS</code>中实现了点击导航栏回到顶部的功能。我们将在本章后面“滚动控制”一节详细介绍<code>ScrollController</code>。</li>
+</ul>
+<h5 id="1-Scrollbar"><a href="#1-Scrollbar" class="headerlink" title="1. Scrollbar"></a>1. Scrollbar</h5><ul>
+<li><code>Scrollbar</code>是滚动指示器（滚动条），如果要给可滚动组件添加滚动条，只需将<code>Scrollbar</code>作为可滚动组件的任意一个父级组件即可</li>
+<li><code>CupertinoScrollbar</code>如果你使用的是<code>Scrollbar</code>，那么在<code>iOS</code>平台它会自动切换为<code>CupertinoScrollbar</code></li>
+</ul>
+<h5 id="2-ViewPort视口"><a href="#2-ViewPort视口" class="headerlink" title="2. ViewPort视口"></a>2. ViewPort视口</h5><ul>
+<li>指一个<code>Widget</code>的实际显示区域</li>
+</ul>
+<h5 id="3-基于Sliver的延迟构建"><a href="#3-基于Sliver的延迟构建" class="headerlink" title="3. 基于Sliver的延迟构建"></a>3. 基于Sliver的延迟构建</h5><ul>
+<li><code>Flutter</code>中提出一个<code>Sliver</code>（中文为“薄片”的意思）概念，如果一个可滚动组件支持<code>Sliver</code>模型，那么该滚动可以将子组件分成好多个“薄片”<code>（Sliver）</code>，只有当<code>Sliver</code>出现在视口中时才会去构建它，这种模型也称为“基于<code>Sliver</code>的延迟构建模型”</li>
+</ul>
+<h4 id="2、SingleChildScrollView"><a href="#2、SingleChildScrollView" class="headerlink" title="2、SingleChildScrollView"></a>2、SingleChildScrollView</h4><ul>
+<li>通常<code>SingleChildScrollView</code>只用在不会超过屏幕太多的场景，因为<code>SingleChildScrollView</code>不支持基于<code>Sliver</code>的延迟实例化模型</li>
+</ul>
+<h4 id="3、ListView"><a href="#3、ListView" class="headerlink" title="3、ListView"></a>3、ListView</h4><h5 id="1-默认构造函数"><a href="#1-默认构造函数" class="headerlink" title="1. 默认构造函数"></a>1. 默认构造函数</h5><p>默认构造函数有一个<code>children</code>参数。这种方式适合只有少量的子组件的情况，通过此方式创建的<code>ListView</code>和使用<code>SingleChildScrollView+Column</code>的方式没有本质的区别</p>
+<h5 id="2-ListView-builder"><a href="#2-ListView-builder" class="headerlink" title="2. ListView.builder"></a>2. ListView.builder</h5><p><code>ListView.builder</code>适合列表项比较多（或者无限）的情况，因为只有当子组件真正显示的时候才会被创建，也就说通过该构造函数创建的<code>ListView</code>是支持基于<code>Sliver</code>的懒加载模型的</p>
+<h5 id="3-ListView-separated"><a href="#3-ListView-separated" class="headerlink" title="3. ListView.separated"></a>3. ListView.separated</h5><p><code>ListView.separated</code>可以在生成的列表项之间添加一个分割组件，它比<code>ListView.builder</code>多了一个<code>separatorBuilder</code>参数，该参数是一个分割组件生成器</p>
+<h5 id="4-添加固定列表头"><a href="#4-添加固定列表头" class="headerlink" title="4. 添加固定列表头"></a>4. 添加固定列表头</h5><p>以上示例代码如下：</p>
+<pre><code>import &#39;dart:ffi&#39;;
+import &#39;dart:io&#39;;
+
+import &#39;package:flutter/material.dart&#39;;
+import &#39;package:english_words/english_words.dart&#39;;
+
+int _pageSize = 20;
+int _pageIndex = 1;
+List&lt;String&gt; _dataList = [];
+
+void main() =&gt; runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: &#39;上拉下拉刷新&#39;,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(&#39;1111&#39;),
+      ),
+      body: InfiniteListView(),
+    );
+  }
+}
+
+class InfiniteListView extends StatefulWidget {
+  @override
+  _InfiniteListViewState createState() {
+    return _InfiniteListViewState();
+  }
+}
+
+class _InfiniteListViewState extends State&lt;InfiniteListView&gt; {
+  // 下拉刷新
+  void headerRefresh() {
+    _pageSize = 20;
+    _pageIndex = 1;
+    getData(true);
+  }
+
+  // 上拉加载
+  void footerRefresh() {
+    _pageIndex++;
+    getData(false);
+  }
+
+  // 获取数据
+  void getData(bool headerRefresh) {
+    // 模拟接口请求2秒延迟
+    Future.delayed(
+      Duration(seconds: 2),
+    ).then((e) {
+      // 模拟数据，第3页只返回5条
+      List&lt;String&gt; currentPageList = [];
+      if (_pageIndex &lt; 3) {
+        for (int i = ((_pageIndex - 1) * _pageSize);
+            i &lt; (_pageIndex * _pageSize);
+            i++) {
+          currentPageList.add(i.toString());
+        }
+      } else if (_pageIndex == 3) {
+        currentPageList.add(&#39;第三页数据&#39;);
+      }
+
+      if (headerRefresh) {
+        _dataList = [];
+      } else {
+        _dataList.removeLast();
+      }
+      _dataList.addAll(currentPageList);
+
+      if (currentPageList.length == _pageSize) {
+        // 数据满一页
+        _dataList.add(&#39;###FooterRefreshTag###&#39;);
+      } else {
+        // 数据不满一页
+        _dataList.add(&#39;###DataNone###&#39;);
+      }
+
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 初始值
+    _dataList.add(&#39;###HeaderRefreshTag###&#39;);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double _cellHeight = 50;
+
+    return Container(
+      color: Colors.grey[200],
+      child: Scrollbar(
+        child: ListView.separated(
+          itemBuilder: (context, index) {
+            if ((_dataList[index] == &#39;###HeaderRefreshTag###&#39;) ||
+                (_dataList[index] == &#39;###FooterRefreshTag###&#39;)) {
+              if (_dataList[index] == &#39;###HeaderRefreshTag###&#39;) {
+                // 下拉刷新
+                headerRefresh();
+              } else {
+                // 上拉加载
+                footerRefresh();
+              }
+              // 显示loading的样式
+              return Container(
+                height: _cellHeight,
+                child: Center(
+                  child: Container(
+                    width: 25,
+                    height: 25,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation(Colors.blue),
+                    ),
+                  ),
+                ),
+              );
+            } else if (_dataList[index] == &#39;###DataNone###&#39;) {
+              return Container(
+                height: _cellHeight,
+                child: Center(
+                  child: Text(
+                    &#39;没有更多数据了&#39;,
+                    style: TextStyle(
+                      color: Colors.grey,
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return Container(
+                color: Colors.white,
+                height: _cellHeight,
+                // 约束布局
+                child: Container(
+                  child: Flex(
+                    direction: Axis.vertical,
+                    children: &lt;Widget&gt;[
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 16,
+                              top: 4,
+                              right: 8,
+                            ),
+                            child: Text(
+                              &#39;主标题&#39; + index.toString(),
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        flex: 3,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              left: 16,
+                            ),
+                            child: Text(
+                              &#39;副标题&#39;,
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ),
+                        flex: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          },
+          separatorBuilder: (context, index) {
+            return Divider(
+              color: Colors.grey,
+              height: 0.5,
+            );
+          },
+          itemCount: (_dataList.length),
+        ),
+      ),
+    );
+  }
+}
+</code></pre><h4 id="4、GridView"><a href="#4、GridView" class="headerlink" title="4、GridView"></a>4、GridView</h4><p>暂不学习</p>
+<h4 id="5、CustomScrollView"><a href="#5、CustomScrollView" class="headerlink" title="5、CustomScrollView"></a>5、CustomScrollView</h4><p>假设有一个页面，顶部需要一个<code>GridView</code>，底部需要一个<code>ListView</code>，而要求整个页面的滑动效果是统一的，即它们看起来是一个整体。如果使用<code>GridView+ListView</code>来实现的话，就不能保证一致的滑动效果，因为它们的滚动效果是分离的，所以这时就需要一个“胶水”，把这些彼此独立的可滚动组件“粘”起来，而<code>CustomScrollView</code>的功能就相当于“胶水”</p>
+<h4 id="6、滚动监听及控制"><a href="#6、滚动监听及控制" class="headerlink" title="6、滚动监听及控制"></a>6、滚动监听及控制</h4><p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/" rel="tag">学习日记</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/03/06/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log3/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flutter学习日记-log3</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
