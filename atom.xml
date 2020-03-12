@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-03-11T01:32:16.576Z</updated>
+  <updated>2020-03-12T01:58:03.569Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter学习日记-log5</title>
+    <link href="https://andergh.github.io/2020/03/12/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log5/"/>
+    <id>https://andergh.github.io/2020/03/12/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log5/</id>
+    <published>2020-03-12T01:57:21.000Z</published>
+    <updated>2020-03-12T01:58:03.569Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://flutterchina.club/get-started/install/" target="_blank" rel="noopener"><em>Flutter中文网</em></a></p></blockquote><hr><h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="一、复习"><a href="#一、复习" class="headerlink" title="一、复习"></a>一、复习</h3><ul><li><code>Scrollbar</code>添加通知<code>NotificationListener</code>监听后，应该<code>return false;</code>如果返回的是<code>true</code>，那么<code>Scrollbar</code>会消失</li></ul><h3 id="二、功能型组件"><a href="#二、功能型组件" class="headerlink" title="二、功能型组件"></a>二、功能型组件</h3><h4 id="1、导航返回拦截"><a href="#1、导航返回拦截" class="headerlink" title="1、导航返回拦截"></a>1、导航返回拦截</h4><p><code>iOS</code>应该不需要</p><h4 id="2、数据共享（InheritedWidget）"><a href="#2、数据共享（InheritedWidget）" class="headerlink" title="2、数据共享（InheritedWidget）"></a>2、数据共享（InheritedWidget）</h4><p><code>InheritedWidget</code>提供了一种数据在<code>widget</code>树中从上到下传递、共享的方式，比如我们在应用的根<code>widget</code>中通过<code>InheritedWidget</code>共享了一个数据，那么我们便可以在任意子<code>widget</code>中来获取该共享的数据</p><p><code>InheritedWidget</code>和<code>React</code>中的<code>context</code>功能类似，和逐级传递数据相比，它们能实现组件跨级传递数据</p><pre><code>import &#39;dart:ffi&#39;;import &#39;dart:ui&#39;;import &#39;package:flutter/material.dart&#39;;void main() =&gt; runApp(MyApp());class MyApp extends StatelessWidget {  @override  Widget build(BuildContext context) {    return MaterialApp(      title: &#39;InheritedWidget&#39;,      theme: ThemeData(        primarySwatch: Colors.blue,      ),      home: MyHomePage(title: &#39;主页&#39;),    );  }}class MyHomePage extends StatefulWidget {  MyHomePage({Key key, this.title}) : super(key: key);  final String title;  @override  _MyHomePageState createState() =&gt; _MyHomePageState();}class _MyHomePageState extends State&lt;MyHomePage&gt; {  int number = 0;  @override  Widget build(BuildContext context) {    return Scaffold(      appBar: AppBar(        title: Text(widget.title),      ),      body: Center(        child: Column(          mainAxisAlignment: MainAxisAlignment.center,          children: &lt;Widget&gt;[            ShareData(              params: number.toString(),              child: TextWidget(),            ),            RaisedButton(              onPressed: () {                number++;                setState(() {});              },              child: Icon(Icons.add),            ),          ],        ),      ),    );  }}class ShareData extends InheritedWidget {  ShareData({    Key key,    @required this.params,    Widget child,  }) : super(key: key, child: child);  final String params;  @override  bool updateShouldNotify(ShareData oldWidget) {    debugPrint(&#39;updateShouldNotify&#39;);    if (oldWidget.params != params) {      return true;    } else {      return false;    }  }  static ShareData getSharedData(BuildContext context) {    return context.dependOnInheritedWidgetOfExactType();  }}class TextWidget extends StatefulWidget {  _TextWidgetState createState() =&gt; _TextWidgetState();}class _TextWidgetState extends State&lt;TextWidget&gt; {  @override  Widget build(BuildContext context) {    return Text(      ShareData.getSharedData(context).params.toString(),      style: TextStyle(        fontSize: 30,      ),    );  }  @override  void didChangeDependencies() {    super.didChangeDependencies();    debugPrint(&#39;didChangeDependencies&#39;);  }}</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://flutterchina.club/get-started/install/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;em&gt;Flutter中文网&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/blockq
+      
+    
+    </summary>
+    
+    
+      <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+      <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter学习日记-log4</title>
@@ -569,32 +599,6 @@
       
       
         &lt;p&gt;&lt;code&gt;JavaScript&lt;/code&gt;作为一种脚本语言，出现没多久就事实上统一了前端开发，而&lt;code&gt;Node.js&lt;/code&gt;的出现，把&lt;code&gt;JavaScript&lt;/code&gt;也带入到了后端服务的开发，&lt;code&gt;hexo&lt;/code&gt;博客框架就是基于&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="https://andergh.github.io/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://andergh.github.io/tags/hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>代码高亮</title>
-    <link href="https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/"/>
-    <id>https://andergh.github.io/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/</id>
-    <published>2019-04-01T10:47:46.000Z</published>
-    <updated>2020-02-25T03:31:14.656Z</updated>
-    
-    <content type="html"><![CDATA[<p>我的博客用的是<a href="http://forsigner.com/2016/03/10/fexo-doc-zh-cn/" target="_blank" rel="noopener"><code>fexo</code></a>的主题，其中代码部分的显示效果一般，为了解决博文中代码部分高亮的问题，我准备集成<a href="https://highlightjs.org/" target="_blank" rel="noopener"><code>highlight.js</code></a>的开源工具，官网地址：<a href="https://highlightjs.org/" target="_blank" rel="noopener">https://highlightjs.org/</a></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_1.png" alt="image_1" title>                </div>                <div class="image-caption">image_1</div>            </figure><h3 id="一、highlight-js集成"><a href="#一、highlight-js集成" class="headerlink" title="一、highlight.js集成"></a>一、<code>highlight.js</code>集成</h3><p><code>highlight.js</code>的集成非常简单，而且目前已经支持了非常多的语言支持和样式。</p><h4 id="1、方法选择"><a href="#1、方法选择" class="headerlink" title="1、方法选择"></a>1、方法选择</h4><p>点击首页的<code>Get Version</code>按钮，可以看大官网提供了很多集成方式</p><ul><li>Hosted：直接集成官网提供的网络版本，有cdnjs、jsdelivr两种缓存模式</li><li>Custom package：选择所需要支持的语言对应的版本，下载后使用源码集成，一般我们直接下载Common的即可满足大部分面向对象的语言</li><li>Node.js：使用Node.js的npm工具集成</li><li>Source：github下载源码集成</li></ul><p>我采用了第二种，选中我需要的语言支持，下载<code>package</code>压缩包集成</p><h4 id="2、集成过程"><a href="#2、集成过程" class="headerlink" title="2、集成过程"></a>2、集成过程</h4><ol><li>首先关闭<code>hexo</code>博客自带的代码高亮，修改博客根目录下<code>_config.yml</code>配置文件，设置<code>highlight</code>选项为<code>false</code></li></ol><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_2.png" alt="image_2" title>                </div>                <div class="image-caption">image_2</div>            </figure><p>由于是修改的<code>hexo</code>的配置文件，所以需要执行<code>clean</code>命令行方法</p><pre><code>$ hexo clean</code></pre><ol start="2"><li><p>将压缩包解压后得到的<code>highlight</code>文件夹放入<code>fexo</code>的主题的目录下，我是和其他<code>css</code>、<code>js</code>资源文件放在了一起</p></li><li><p>找到<code>fexo</code>主题注入<code>js</code>和<code>css</code>文件的地方，将官网提供的源码写入即可</p></li></ol><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/highlight/styles/xcode.css&quot;&gt;&lt;script src=&quot;/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre><p>此处我使用的是官网提供的<code>xcode.css</code>的样式，此时调试即可查看到代码高亮以及背景的效果了。</p><h3 id="二、个性化"><a href="#二、个性化" class="headerlink" title="二、个性化"></a>二、个性化</h3><p>在下载的所有的<code>css</code>样式中，我所有的样式都试过了一遍，没有什么特别喜欢的，所以我准备仿照提供的样式文件，自己写一个样式。</p><pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/highlight/custom/xcode.css&quot;&gt;&lt;script src=&quot;/highlight/highlight.pack.js&quot;&gt;&lt;/script&gt;&lt;script&gt;hljs.initHighlightingOnLoad();&lt;/script&gt;</code></pre><p>我拷贝一份<code>xcode.css</code>文件，另外存放一个目录，通过浏览器不断调试样式，修改到了最终的结果，集成后感到比较满意</p><h3 id="三、行号"><a href="#三、行号" class="headerlink" title="三、行号"></a>三、行号</h3><p><code>highlight.js</code>使用起来非常简单，但是有个问题，不支持行号显示，网上有一些人在<code>highlight.js</code>基础上个性化了一些版本，可以支持行号，由于我本身不喜欢行号，所以没有集成，感兴趣的推荐进一步集成<a href="https://github.com/wcoder/highlightjs-line-numbers.js" target="_blank" rel="noopener"><code>highlightjs-line-numbers.js</code></a>框架，地址：<a href="https://github.com/wcoder/highlightjs-line-numbers.js" target="_blank" rel="noopener">https://github.com/wcoder/highlightjs-line-numbers.js</a></p><h3 id="四、其他优化"><a href="#四、其他优化" class="headerlink" title="四、其他优化"></a>四、其他优化</h3><p>在完成<code>highlight.js</code>的集成后，我对<code>fexo</code>自带的<code>&lt;code&gt;</code>标签以及<code>&lt;a&gt;</code>标签的颜色也想进行个性化。</p><ol><li>首先，我仍然是使用开放的个性化配置文件进行样式覆盖，<code>fexo</code>主题已提供了个性化样式的入口<code>personal-style.css</code></li></ol><pre><code>&lt;!--标签增加属性--&gt;&lt;style&gt;.article-content a {    color: #0366d6;}code {    background: #F4F4F5;    font-family: SFMono-Regular,Consolas,&quot;Liberation Mono&quot;,Menlo,Courier,monospace;    font-size: 0.8em;}table&gt;thead&gt;tr&gt;th, table&gt;thead&gt;tr&gt;td {    border-bottom-width: 1px;}&lt;/style&gt;</code></pre><p>通过重写属性，使用<code>&lt;style&gt;</code>标签提高优先级，覆盖原属性，达到了我想要的效果</p><ol start="2"><li><p>但是仍然存在一个问题，当<code>&lt;code&gt;</code>标签和<code>&lt;a&gt;</code>标签同时使用时，<code>&lt;code&gt;</code>标签中的颜色会把<code>&lt;a&gt;</code>覆盖</p><ol><li><p>通过浏览器调试，发现<code>&lt;code&gt;</code>标签自带了一个颜色，层级比<code>&lt;a&gt;</code>高，所以无法通过重写样式属性的方式修改，必须要修改源码</p></li><li><p>首先我分析了<code>fexo</code>主题样式部分的代码，发现其所有样式都是通过多个<code>scss</code>编译成一个<code>css</code>的</p><p>关于<a href="http://sass.bootcss.com/docs/sass-reference/" target="_blank" rel="noopener"><code>scss</code></a>，感兴趣的可以看下官网文档，地址：<a href="http://sass.bootcss.com/docs/sass-reference/" target="_blank" rel="noopener">http://sass.bootcss.com/docs/sass-reference/</a></p></li><li><p>通过浏览器修改样式标签，我修改了<code>fexo</code>的源码，最终得到了我想要的效果</p><p>其中<a href="https://ninghao.net/blog/4790" target="_blank" rel="noopener">https://ninghao.net/blog/4790</a>此博客的文章给我提供了方法</p></li></ol></li></ol><h3 id="五、附录"><a href="#五、附录" class="headerlink" title="五、附录"></a>五、附录</h3><p>使用浏览器修改<code>scss</code>样式的方法截图如下</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/image_3.png" alt="image_3" title>                </div>                <div class="image-caption">image_3</div>            </figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;我的博客用的是&lt;a href=&quot;http://forsigner.com/2016/03/10/fexo-doc-zh-cn/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;code&gt;fexo&lt;/code&gt;&lt;/a&gt;的主题，其中代码部分的显示效果一般，为了
       
     
     </summary>
