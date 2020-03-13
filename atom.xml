@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-03-12T01:58:03.569Z</updated>
+  <updated>2020-03-13T00:54:38.137Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter学习日记-log6</title>
+    <link href="https://andergh.github.io/2020/03/13/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log6/"/>
+    <id>https://andergh.github.io/2020/03/13/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log6/</id>
+    <published>2020-03-13T00:54:09.000Z</published>
+    <updated>2020-03-13T00:54:38.137Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p><a href="https://flutterchina.club/get-started/install/" target="_blank" rel="noopener"><em>Flutter中文网</em></a></p></blockquote><hr><h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="一、跨组件状态共享（Provider）"><a href="#一、跨组件状态共享（Provider）" class="headerlink" title="一、跨组件状态共享（Provider）"></a>一、跨组件状态共享（Provider）</h3><p>其实就是对普通写法的一种封装，采用泛型进行封装，提供一个继承于<code>Widget</code>的组件，将保存共享数据的入口和读取的入口封装在里面，对外提供统一的方法<br>此外，还封装了一个修改的方法，修改的方法在数据修改后需要通知主<code>Widget</code>进行刷新，我尝试采用<code>callback</code>回调进行通知，失败，因为静态方法无法访问成员变量，所以无法进行回调<br><code>demo</code>中采用了继承<code>Listenable</code>的监听，当参数发生变化时，通知所有监听的地方，但是这样需要封装一个<code>model</code>的类出来，用来发出通知</p><p>文档中代码报错，无法运行，关于<code>Listenable</code>监听的逻辑以后再研究</p><pre><code>import &#39;dart:ffi&#39;;import &#39;package:flutter/material.dart&#39;;void main() =&gt; runApp(MyApp());class MyApp extends StatelessWidget {  @override  Widget build(BuildContext context) {    return MaterialApp(      title: &#39;provider&#39;,      theme: ThemeData(        primarySwatch: Colors.blue,      ),      home: MyHomePage(title: &#39;主页&#39;),    );  }}class MyHomePage extends StatefulWidget {  MyHomePage({Key key, this.title}) : super(key: key);  final String title;  @override  _MyHomePageState createState() =&gt; _MyHomePageState();}class _MyHomePageState extends State&lt;MyHomePage&gt; {  var _counter = 0;  @override  Widget build(BuildContext context) {    return Scaffold(      appBar: AppBar(        title: Text(widget.title),      ),      body: Provider(        data: _counter,        child: Center(          child: Column(            mainAxisAlignment: MainAxisAlignment.center,            children: &lt;Widget&gt;[              Builder(builder: (builder) {                return Text(                  // 普通类型可以直接使用                  Provider.of(builder).toString(),                );              }),              Builder(builder: (builder) {                return RaisedButton(                  onPressed: () {                    // 直接修改参数，然后通知状态变化                    _counter++;                    setState(() {});                  },                  child: Icon(Icons.add),                );              }),            ],          ),        ),        changedCallBack: () {          return null;        },      ),    );  }}// 声明一个通知类，里面包含一个通知的方法class ProviderChangeedNotifier implements Listenable {  void notifyListeners() {    // 通知所有监听器，触发回调    print(&#39;notifyListeners&#39;);  }  @override  void addListener(listener) {    print(&#39;addListener&#39;);  }  @override  void removeListener(listener) {    print(&#39;removeListener&#39;);  }}// 继承通知类，负责保存数据参数和修改后进行通知class ProviderModel extends ProviderChangeedNotifier {  var data = 0;  change&lt;T extends ProviderChangeedNotifier&gt;(params) {    data = params;    notifyListeners();  }}typedef ProviderSharedDataChangedCallBack = Future Function();class Provider&lt;T extends ProviderChangeedNotifier&gt; extends StatefulWidget {  Provider({    Key key,    @required this.data,    this.child,    @required this.changedCallBack,  }) : super(key: key);  final T data;  final Widget child;  final ProviderSharedDataChangedCallBack changedCallBack;  @override  _ProviderState createState() =&gt; _ProviderState();  // 获取共享参数的方法  static T of&lt;T extends ProviderChangeedNotifier&gt;(context) {    return SharedData.of(context).data;  }  // 修改共享参数的方法  static void changeSharedData(data) {    // 此处无法调用changedCallBack属性进行回调操作    // changedCallBack();  }}class _ProviderState&lt;T extends ProviderChangeedNotifier&gt; extends State&lt;Provider&lt;T&gt;&gt; {  @override  Widget build(BuildContext context) {    return SharedData(      data: widget.data,      child: widget.child,    );  }}class SharedData&lt;T extends ProviderChangeedNotifier&gt; extends InheritedWidget {  SharedData({    Key key,    @required this.data,    Widget child,  }) : super(key: key, child: child);  final T data;  @override  bool updateShouldNotify(SharedData oldWidget) {    if (oldWidget.data == data) {      return false;    } else {      return true;    }  }  // 获取共享组件的方法  static SharedData of(BuildContext context) {    return context.dependOnInheritedWidgetOfExactType();  }}</code></pre><h3 id="二、颜色和主题"><a href="#二、颜色和主题" class="headerlink" title="二、颜色和主题"></a>二、颜色和主题</h3><h3 id="三、异步UI更新（FutureBuilder、StreamBuilder）"><a href="#三、异步UI更新（FutureBuilder、StreamBuilder）" class="headerlink" title="三、异步UI更新（FutureBuilder、StreamBuilder）"></a>三、异步UI更新（FutureBuilder、StreamBuilder）</h3><h3 id="四、对话框"><a href="#四、对话框" class="headerlink" title="四、对话框"></a>四、对话框</h3><p><span style="color: lightgray;"><em>未完待续</em></span></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://flutterchina.club/get-started/install/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;&lt;em&gt;Flutter中文网&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/blockq
+      
+    
+    </summary>
+    
+    
+      <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+      <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter学习日记-log5</title>
@@ -582,32 +612,6 @@
       <category term="html" scheme="https://andergh.github.io/tags/html/"/>
     
       <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何在macOS系统下搭建hexo博客</title>
-    <link href="https://andergh.github.io/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/"/>
-    <id>https://andergh.github.io/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/</id>
-    <published>2019-04-11T14:54:17.000Z</published>
-    <updated>2020-02-25T03:37:57.145Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>JavaScript</code>作为一种脚本语言，出现没多久就事实上统一了前端开发，而<code>Node.js</code>的出现，把<code>JavaScript</code>也带入到了后端服务的开发，<code>hexo</code>博客框架就是基于<code>node.js</code>开发的工具。</p><h4 id="一、安装node-js环境"><a href="#一、安装node-js环境" class="headerlink" title="一、安装node.js环境"></a>一、安装<code>node.js</code>环境</h4><p><code>node.js</code>有中文官网，地址：<a href="https://nodejs.org/zh-cn/" target="_blank" rel="noopener">https://nodejs.org/zh-cn/</a>，<code>macOS</code>系统下直接下载安装包安装即可，官网建议使用<code>LTS</code>的稳定版本</p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/image_1.png" alt="image_1.png" title>                </div>                <div class="image-caption">image_1.png</div>            </figure><h4 id="二、node-js包管理工具npm"><a href="#二、node-js包管理工具npm" class="headerlink" title="二、node.js包管理工具npm"></a>二、<code>node.js</code>包管理工具<code>npm</code></h4><p>当越来越多的开发者使用<code>node.js</code>环境开发时，此时就需要一个统一管理这些开源包的工具，<code>npm</code>是世界上最大的软件注册表，基本上所有基于<code>node.js</code>的开源软件开发者都在使用<code>npm</code>互相分享，关于<code>npm</code>的介绍请参考<a href="https://www.npmjs.com.cn/" target="_blank" rel="noopener">官网</a>，地址：<a href="https://www.npmjs.com.cn/" target="_blank" rel="noopener">https://www.npmjs.com.cn/</a>。</p><p>而从刚才<code>node.js</code>官网中可以看到，我们安装的<code>node.js</code>安装包中已经包含了<code>npm</code>工具，可以直接开始使用。</p><h4 id="三、node-js版本管理工具Node-version-managers"><a href="#三、node-js版本管理工具Node-version-managers" class="headerlink" title="三、node.js版本管理工具Node version managers"></a>三、<code>node.js</code>版本管理工具<code>Node version managers</code></h4><p>一般情况下，我们安装完<code>node.js</code>后就可以直接使用了，但是会经常碰到一个权限的报错，官网也对这个问题进行了收录，地址：<a href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally" target="_blank" rel="noopener">https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally</a>，官网给出了两个方法，推荐使用<code>Node version managers</code>重新安装<code>npm</code></p><p><code>Node version managers</code>简称<code>nvm</code>，就是用来管理<code>node.js</code>和<code>npm</code>的版本的，我们可以直接访问<code>github</code>上<code>manOS</code>版本的代码以及文档，地址：<a href="https://github.com/creationix/nvm" target="_blank" rel="noopener">https://github.com/creationix/nvm</a>，根据文档说明使用如下命令行进行<code>nvm</code>的安装</p><pre><code>$ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash</code></pre><p>注意：安装完之后，根据文档和终端弹出的提示，<code>nvm</code>启动需要如下的命令（不同的版本可能需要的命令有差别，请以终端弹出的提示为准）</p><pre><code>$ export NVM_DIR=&quot;$HOME/.nvm&quot;$ [ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; \. &quot;$NVM_DIR/nvm.sh&quot;//第三行命令是我的电脑上终端提示的，官方文档只有上面两条$ [ -s &quot;$NVM_DIR/bash_completion&quot; ] &amp;&amp; \. &quot;$NVM_DIR/bash_completion&quot;</code></pre><p>每次重启终端的，打开新的终端页面，都需要再次启动<code>nvm</code>命令，所以官方文档建议我们将命令配置到<code>nvm</code>的隐藏文件中，每次打开终端可以直接使用，我按照文档修改了<code>~/.bash_profile</code>文件，写入了以上的启动命令，保存后每次打开终端就可以直接使用<code>nvm</code>命令了。</p><p>安装完<code>nvm</code>后重新安装或更新<code>npm</code>，已经没有权限的报错了。</p><h4 id="四、淘宝镜像cnpm"><a href="#四、淘宝镜像cnpm" class="headerlink" title="四、淘宝镜像cnpm"></a>四、淘宝镜像<code>cnpm</code></h4><p>由于<code>npm</code>工具是国外的服务器，所以淘宝提供了一个国内的镜像版本，地址：<a href="https://npm.taobao.org/" target="_blank" rel="noopener">https://npm.taobao.org/</a>，该网站上有使用文档，命令行简单引用即可，其他用法请自行参考。</p><pre><code>$ npm install -g cnpm --registry=https://registry.npm.taobao.org</code></pre><h4 id="五、hexo博客框架搭建"><a href="#五、hexo博客框架搭建" class="headerlink" title="五、hexo博客框架搭建"></a>五、<code>hexo</code>博客框架搭建</h4><p>所有的环境安装结束后，开始生成<code>hexo</code>博客，<code>hexo</code>中文官网地址：<a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p><h5 id="1-导入hexo代码"><a href="#1-导入hexo代码" class="headerlink" title="1. 导入hexo代码"></a>1. 导入<code>hexo</code>代码</h5><pre><code>$ npm install hexo-cli -g</code></pre><p>注意：官网要求导入的是<code>hexo-cli</code>，而不是<code>hexo</code>，这两者是有区别的，<code>hexo-cli</code>负责使用<code>init</code>等命令创建<code>hexo</code>工程，创建好了之后，工程由<code>hexo</code>模块负责真正的项目工作（生成静态页面、预览等）。</p><h5 id="2-创建本地hexo工程"><a href="#2-创建本地hexo工程" class="headerlink" title="2. 创建本地hexo工程"></a>2. 创建本地<code>hexo</code>工程</h5><p>首先创建博客本地工程文件夹，我的文件夹名称就叫<code>MyBlog</code>，打开终端，<code>cd</code>命令到<code>MyBlog</code>文件夹后，使用<code>init</code>命令创建工程，当然也可以按照官网的命令行，效果一致。</p><pre><code>$ hexo init</code></pre><p>等待<code>init</code>结束，<code>hexo</code>博客工程就已经创建好了</p><h5 id="3-hexo的常用命令"><a href="#3-hexo的常用命令" class="headerlink" title="3. hexo的常用命令"></a>3. <code>hexo</code>的常用命令</h5><pre><code>/** 新建一篇markdown格式的文章 新建的文章目录是MyBlog/source/_posts */$ hexo new &lt;title&gt;/** 可直接缩写成首字母g，代表生成操作 hexo框架会将本地的markdown文档和你的其他配置项生成一套完整的静态页面，页面生成路径为MyBlog/public子目录 */$ hexo generate/** 可缩写成首字母d，代表将生成的静态网站页面部署到服务器上 */$ hexo deploy/** 可缩写成首字母s，代表使用本机预览生成好的网站 默认本机预览地址http://localhost:4000/ */$ hexo server/** 清除缓存文件（db.json）和已生成的静态文件（public） 某些涉及网站、主题等的配置，可能需要执行clean命令重新生成 */$ hexo clean</code></pre><h4 id="六、关联Github"><a href="#六、关联Github" class="headerlink" title="六、关联Github"></a>六、关联<code>Github</code></h4><p>创建<code>github</code>账号，新建仓库，仓库名称写法为固定写法<code>用户名.github.io</code>，例如我的博客名称<code>AnderGH.github.io</code></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/image_2.png" alt="image_2.png" title>                </div>                <div class="image-caption">image_2.png</div>            </figure><p>将完整的仓库地址配置在博客配置文件<code>_config.yml</code></p><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/04/11/%E5%A6%82%E4%BD%95%E5%9C%A8macOS%E7%B3%BB%E7%BB%9F%E4%B8%8B%E6%90%AD%E5%BB%BAhexo%E5%8D%9A%E5%AE%A2/image_3.png" alt="image_3.png" title>                </div>                <div class="image-caption">image_3.png</div>            </figure><h4 id="七、其他问题"><a href="#七、其他问题" class="headerlink" title="七、其他问题"></a>七、其他问题</h4><ul><li>执行<code>hexo g</code>后报错</li></ul><blockquote><p>ERROR Deployer not found: git</p></blockquote><p>根据官方文档知道<code>hexo</code>框架升级到<code>3.0</code>版本之后需要安装<code>git</code>环境，如下命令</p><pre><code>$ npm install hexo-deployer-git --save</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;&lt;code&gt;JavaScript&lt;/code&gt;作为一种脚本语言，出现没多久就事实上统一了前端开发，而&lt;code&gt;Node.js&lt;/code&gt;的出现，把&lt;code&gt;JavaScript&lt;/code&gt;也带入到了后端服务的开发，&lt;code&gt;hexo&lt;/code&gt;博客框架就是基于&lt;
-      
-    
-    </summary>
-    
-    
-      <category term="hexo" scheme="https://andergh.github.io/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="https://andergh.github.io/tags/hexo/"/>
     
   </entry>
   
