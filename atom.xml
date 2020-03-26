@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-03-26T01:59:21.554Z</updated>
+  <updated>2020-03-26T08:32:32.011Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter全局捕获报错信息</title>
+    <link href="https://andergh.github.io/2020/03/26/Flutter%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/"/>
+    <id>https://andergh.github.io/2020/03/26/Flutter%E5%85%A8%E5%B1%80%E6%8D%95%E8%8E%B7%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF/</id>
+    <published>2020-03-26T08:30:23.000Z</published>
+    <updated>2020-03-26T08:32:32.011Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、系统方法"><a href="#一、系统方法" class="headerlink" title="一、系统方法"></a>一、系统方法</h4><pre><code>import &#39;dart:async&#39;;import &#39;package:demo_error/Page1.dart&#39;;import &#39;package:flutter/material.dart&#39;;GlobalKey&lt;NavigatorState&gt; navigatorKey = GlobalKey&lt;NavigatorState&gt;();void main() {  _reportError(dynamic error, dynamic stackTrace) async {    showDeleteConfirmDialog1(error.toString() + stackTrace.toString());  }  // 捕获同步代码的报错  FlutterError.onError = (FlutterErrorDetails details) async {    await _reportError(details.exception, details.stack);  };  runZoned(() async {    runApp(MyApp());  }, onError: (error, stackTrace) async {    // 捕获异步代码的报错    await _reportError(error, stackTrace);  });}// 弹出对话框Future&lt;bool&gt; showDeleteConfirmDialog1(String content) {  return showDialog&lt;bool&gt;(    context: navigatorKey.currentState.overlay.context,    builder: (context) {      return AlertDialog(        title: Text(&quot;提示&quot;),        content: Text(content),        actions: &lt;Widget&gt;[          FlatButton(            child: Text(&quot;确定&quot;),            onPressed: () {              Navigator.of(context).pop();            },          ),        ],      );    },  );}class MyApp extends StatelessWidget {  @override  Widget build(BuildContext context) {    return MaterialApp(      navigatorKey: navigatorKey,      title: &#39;Error&#39;,      theme: ThemeData(        primarySwatch: Colors.blue,      ),      home: MyHomePage(title: &#39;主页&#39;),    );  }}class MyHomePage extends StatefulWidget {  MyHomePage({Key key, this.title}) : super(key: key);  final String title;  @override  _MyHomePageState createState() =&gt; _MyHomePageState();}class _MyHomePageState extends State&lt;MyHomePage&gt; {  @override  Widget build(BuildContext context) {    return Scaffold(      appBar: AppBar(        title: Text(widget.title),      ),      body: Center(        child: Column(          children: &lt;Widget&gt;[            RaisedButton(              child: Text(&#39;同步数组越界&#39;),              onPressed: () {                List&lt;int&gt; a = [1, 2];                int i = a[2];                print(i);              },            ),            RaisedButton(              child: Text(&#39;异步数组越界&#39;),              onPressed: () {                Future.delayed(Duration(seconds: 2)).then((value) {                  List&lt;int&gt; a = [1, 2];                  int i = a[2];                  print(i);                });              },            ),          ],        ),      ),    );  }}</code></pre><ol><li><code>main()</code>中两个方法分别对应同步的报错和异步的报错</li><li>为了将报错信息使用弹窗弹出，所以用<code>GlobalKey</code>来获取全局的<code>context</code></li><li>如果直接运行<code>flutter</code>工程，从<code>main()</code>启动，是无法看到效果的，必须使用<code>Xcode</code>或者<code>Android Studio</code>运行<code>ios</code>或<code>android</code>目录下的原生工程才能看到效果，具体原因暂不清楚</li></ol><h4 id="二、第三方插件catcher"><a href="#二、第三方插件catcher" class="headerlink" title="二、第三方插件catcher"></a>二、第三方插件<code>catcher</code></h4><p><a href="https://pub.dev/packages/catcher" target="_blank" rel="noopener"><code>https://pub.dev/packages/catcher</code></a></p><p>同样需要运行原生工程才有效果，此插件底层用的仍是上面的官方方法，在外层进行了封装，封装了其他非弹窗形式的提醒效果</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;一、系统方法&quot;&gt;&lt;a href=&quot;#一、系统方法&quot; class=&quot;headerlink&quot; title=&quot;一、系统方法&quot;&gt;&lt;/a&gt;一、系统方法&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;import &amp;#39;dart:async&amp;#39;;
+import &amp;#39;packa
+      
+    
+    </summary>
+    
+    
+      <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="捕获报错" scheme="https://andergh.github.io/tags/%E6%8D%95%E8%8E%B7%E6%8A%A5%E9%94%99/"/>
+    
+      <category term="catcher" scheme="https://andergh.github.io/tags/catcher/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter中Redux框架使用简介</title>
@@ -582,35 +611,6 @@
       <category term="css" scheme="https://andergh.github.io/tags/css/"/>
     
       <category term="javascript" scheme="https://andergh.github.io/tags/javascript/"/>
-    
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端学习日记-log1</title>
-    <link href="https://andergh.github.io/2019/04/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log1/"/>
-    <id>https://andergh.github.io/2019/04/19/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log1/</id>
-    <published>2019-04-19T07:52:18.000Z</published>
-    <updated>2019-06-24T09:12:08.200Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><em>现在网上有很多学习编程的网站和资料，例如<a href="http://www.w3school.com.cn/index.html" target="_blank" rel="noopener">W3school</a>、<a href="http://www.runoob.com/" target="_blank" rel="noopener">菜鸟教程</a>，我选择的是<a href="https://www.imooc.com" target="_blank" rel="noopener">慕课网</a></em></p></blockquote><blockquote><p><em>我决定先从<code>html</code>基础开始，免费课程：<a href="https://www.imooc.com/learn/9" target="_blank" rel="noopener">初识HTML+CSS</a></em></p></blockquote><hr><h3 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h3><h5 id="1-html基础的标签知识"><a href="#1-html基础的标签知识" class="headerlink" title="1. html基础的标签知识"></a>1. <code>html</code>基础的标签知识</h5><p>基础的标签其实大学里面都学习过了，复习一下</p><h5 id="2-css样式属性"><a href="#2-css样式属性" class="headerlink" title="2. css样式属性"></a>2. <code>css</code>样式属性</h5><p>内联、嵌入、外部三种写法，优先级：内联&gt;嵌入&gt;外部</p><h5 id="3-css调用，标签选择、类选择、ID选择、子选择等"><a href="#3-css调用，标签选择、类选择、ID选择、子选择等" class="headerlink" title="3. css调用，标签选择、类选择、ID选择、子选择等"></a>3. <code>css</code>调用，标签选择、类选择、ID选择、子选择等</h5><p>熟练调用，合并相同属性，简化写法</p><h5 id="4-元素分类，盒子模型"><a href="#4-元素分类，盒子模型" class="headerlink" title="4. 元素分类，盒子模型"></a>4. 元素分类，盒子模型</h5><p>块状元素、内联元素（行内元素）、内联块状元素</p><p>常用的块状元素：<code>&lt;div&gt;、&lt;p&gt;、&lt;h1&gt;...&lt;h6&gt;、&lt;ol&gt;、&lt;ul&gt;、&lt;dl&gt;、&lt;table&gt;、&lt;address&gt;、&lt;blockquote&gt; 、&lt;form&gt;</code></p><p>常用的内联元素：<code>&lt;a&gt;、&lt;span&gt;、&lt;br&gt;、&lt;i&gt;、&lt;em&gt;、&lt;strong&gt;、&lt;label&gt;、&lt;q&gt;、&lt;var&gt;、&lt;cite&gt;、&lt;code&gt;</code></p><p>常用的内联块状元素：<code>&lt;img&gt;、&lt;input&gt;</code></p><h5 id="5-盒子模型"><a href="#5-盒子模型" class="headerlink" title="5. 盒子模型"></a>5. 盒子模型</h5><p>盒子模型：<code>margin、border、padding</code></p><h5 id="6-css布局模型"><a href="#6-css布局模型" class="headerlink" title="6. css布局模型"></a><span style="color: red;">6. <code>css</code>布局模型</span></h5><ul><li>流动模型</li></ul><p>流动（<code>Flow</code>）是默认的网页布局模式，也就是说网页在默认状态下的<code>HTML</code>网页元素都是根据流动模型来分布网页内容的。</p><p>典型的特征：</p><p>第一点，块状元素都会在所处的包含元素内自上而下按顺序垂直延伸分布，因为在默认状态下，块状元素的宽度都为100%。实际上，块状元素都会以行的形式占据位置。如右侧代码编辑器中三个块状元素标签<code>(div，h1，p)</code>宽度显示为100%。</p><p>第二点，在流动模型下，内联元素都会在所处的包含元素内从左到右水平分布显示。（内联元素可不像块状元素这么霸道独占一行）</p><ul><li>浮动模型</li></ul><p>任何元素在默认情况下是不能浮动的，但可以用<code>css</code>定义为浮动，如<code>div、p、table、img</code>等元素都可以被定义为浮动。</p><pre><code>float:left;float:right;</code></pre><h5 id="7-层模型"><a href="#7-层模型" class="headerlink" title="7. 层模型"></a><span style="color: red;">7. 层模型</span></h5><p>层布局模型就像是图像软件PhotoShop中非常流行的图层编辑功能一样，每个图层能够精确定位操作</p><ul><li>绝对定位<code>(position: absolute)</code></li></ul><p>这条语句的作用将元素从文档流中拖出来，然后使用<code>left、right、top、bottom</code>属性相对于其最接近的一个具有定位属性的父包含块进行绝对定位。如果不存在这样的包含块，则相对于<code>body</code>元素，即相对于浏览器窗口。</p><ul><li>相对定位<code>(position: relative)</code></li></ul><p>相对定位完成的过程是首先按<code>static(float)</code>方式生成一个元素(并且元素像层一样浮动了起来)，然后相对于以前的位置移动，移动的方向和幅度由<code>left、right、top、bottom</code>属性确定，偏移前的位置保留不动。</p><ul><li>固定定位<code>(position: fixed)</code></li></ul><p>由于视图本身是固定的，它不会随浏览器窗口的滚动条滚动而变化，除非你在屏幕中移动浏览器窗口的屏幕位置，或改变浏览器窗口的显示大小，因此固定定位的元素会始终位于浏览器窗口内视图的某个位置，不会受文档流动影响</p><p>练习：box4在box3标签内，把box4定位到box3的底部。</p><p>代码如下，通过相对定位<code>(position: relative)</code>和绝对定位<code>(position: absolute)</code>配合达到效果</p><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;head&gt;        &lt;meta charset=&quot;utf-8&quot; /&gt;        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;        &lt;title&gt;&lt;/title&gt;        &lt;style type=&quot;text/css&quot;&gt;            #box3 {                width: 200px;                height: 200px;                background-color: red;                position: relative;            }            #box4 {                border: 1px solid black;                width: 100%;                position: absolute;                bottom: 0;            }        &lt;/style&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;div id=&quot;box3&quot;&gt;            &lt;div id=&quot;box4&quot;&gt;测试文字&lt;/div&gt;        &lt;/div&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;现在网上有很多学习编程的网站和资料，例如&lt;a href=&quot;http://www.w3school.com.cn/index.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;W3school&lt;/a&gt;、&lt;a href=
-      
-    
-    </summary>
-    
-    
-      <category term="前端学习日记" scheme="https://andergh.github.io/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-    
-      <category term="css" scheme="https://andergh.github.io/tags/css/"/>
     
       <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
