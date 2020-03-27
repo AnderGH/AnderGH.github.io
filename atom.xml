@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-03-26T08:32:32.011Z</updated>
+  <updated>2020-03-27T01:05:44.708Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Dart单例模式</title>
+    <link href="https://andergh.github.io/2020/03/27/Dart%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+    <id>https://andergh.github.io/2020/03/27/Dart%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</id>
+    <published>2020-03-27T01:04:15.000Z</published>
+    <updated>2020-03-27T01:05:44.708Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="一、几个知识点"><a href="#一、几个知识点" class="headerlink" title="一、几个知识点"></a>一、几个知识点</h4><ul><li>当使用<code>factory</code>关键词修饰构造函数时，这个构造函数不会创建类的实例</li><li>使用<code>new</code>语句来构造一个类，构造函数的名字可能是<code>ClassName</code>，也可以是<code>ClassName.otherName</code>，关键字<code>new</code>可以省略</li><li><code>Dart</code>没有关键字<code>public</code>、<code>protected</code>和<code>private</code>，如果标识符以下划线<code>_</code>开头，则它相对于库是私有的，每个<code>.dart</code>文件都是一个库</li></ul><h4 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h4><pre><code>class SingletonClass {  // 单例中的参数  String params1;  // 静态变量  static SingletonClass _instance;  // 使用factory修饰无名构造函数，不创建新的实例，直接导向sharedInstance方法，也可以直接删除无名构造函数的方法  factory SingletonClass() {    return SingletonClass.sharedInstance();  }  // 指定私有构造函数作为唯一初始化入口  SingletonClass._init();  // 再提供工厂单例构造函数，用来标识该类为单例类  factory SingletonClass.sharedInstance() {    if (_instance == null) {      // 调用私有构造函数创建实例，并赋值给静态变量      _instance = SingletonClass._init();      // 可以在此处设置参数默认值      _instance.params1 = &#39;1&#39;;    }    return _instance;  }}</code></pre><blockquote><p>说明：</p></blockquote><ol><li>单例需要在整个<code>APP</code>内存中保持只被创建一次，所以需要使用静态变量</li><li>为了标识某个类为单例类，增加可读性，所以建议使用统一格式或者统一关键字的有名构造函数，无名构造函数可以不提供</li><li>提供私有构造函数来初始化实例对象，防止其他库直接访问该初始化方法</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;一、几个知识点&quot;&gt;&lt;a href=&quot;#一、几个知识点&quot; class=&quot;headerlink&quot; title=&quot;一、几个知识点&quot;&gt;&lt;/a&gt;一、几个知识点&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;当使用&lt;code&gt;factory&lt;/code&gt;关键词修饰构造函数时，这个构造函数不会创建
+      
+    
+    </summary>
+    
+    
+      <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="dart" scheme="https://andergh.github.io/tags/dart/"/>
+    
+      <category term="单例" scheme="https://andergh.github.io/tags/%E5%8D%95%E4%BE%8B/"/>
+    
+  </entry>
   
   <entry>
     <title>Flutter全局捕获报错信息</title>
@@ -579,40 +608,6 @@ import &amp;#39;packa
       <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
       <category term="dom" scheme="https://andergh.github.io/tags/dom/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端学习日记-log2</title>
-    <link href="https://andergh.github.io/2019/04/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/"/>
-    <id>https://andergh.github.io/2019/04/24/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/</id>
-    <published>2019-04-24T01:55:47.000Z</published>
-    <updated>2019-06-24T09:11:55.167Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><em>继续上次的地方继续往下学习</em></p></blockquote><hr><h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="8-单位"><a href="#8-单位" class="headerlink" title="8. 单位"></a>8. 单位</h3><ul><li><code>px</code>：像素</li></ul><p>我们用的最多的就是像素，一般移动端切图什么的都是使用像素作为单位，原生开发也一样</p><ul><li><p><code>em</code>：倍数</p></li><li><p>百分号：百分比</p></li></ul><h3 id="9-水平居中和垂直居中"><a href="#9-水平居中和垂直居中" class="headerlink" title="9. 水平居中和垂直居中"></a>9. 水平居中和垂直居中</h3><p>可以看教程，也可以自己理解，毕竟前面已经看了很多概念了</p><hr><blockquote><p><em><a href="https://www.imooc.com" target="_blank" rel="noopener">慕课网</a>上第二篇课程<a href="https://www.imooc.com/learn/36" target="_blank" rel="noopener">JavaScript入门篇</a></em></p></blockquote><hr><h2 id="日志随笔-1"><a href="#日志随笔-1" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="1-引用js"><a href="#1-引用js" class="headerlink" title="1. 引用js"></a>1. 引用<code>js</code></h3><p><code>javascript</code>作为一种脚本语言可以放在<code>html</code>页面中任何位置，但是浏览器解释<code>html</code>时是按先后顺序的，所以前面的就先被执行。比如进行页面显示初始化的<code>js</code>必须放在<code>head</code>里面，因为初始化都要求提前进行（如给页面<code>body</code>设置<code>css</code>等）；而如果是通过事件调用执行的<code>function</code>那么对位置没什么要求的</p><h3 id="2-变量和数据类型，这点w3school上讲的更清楚"><a href="#2-变量和数据类型，这点w3school上讲的更清楚" class="headerlink" title="2. 变量和数据类型，这点w3school上讲的更清楚"></a>2. 变量和数据类型，这点<a href="http://www.w3school.com.cn/js/js_datatypes.asp" target="_blank" rel="noopener"><code>w3school</code></a>上讲的更清楚</h3><p><code>JavaScript</code>拥有动态类型，这点和<code>OC</code>很不一样，类型错误是没有提示的，要自己去排查。</p><p>布尔值、数组、字典写法差不多</p><p><code>Undefined</code>和<code>Null</code>，<code>Undefined</code>这个值表示变量不含有值,可以通过将变量的值设置为<code>null</code>来清空变量</p><h3 id="3-对象"><a href="#3-对象" class="headerlink" title="3. 对象"></a>3. 对象</h3><p><code>JavaScript</code>中的所有事物都是对象：字符串、数字、数组、日期，等等，对象是拥有属性和方法的数据</p><h3 id="4-函数方法"><a href="#4-函数方法" class="headerlink" title="4. 函数方法"></a>4. 函数方法</h3><p>方法使用及作用域基本一致，写法稍有区别，其他一些循环语句等设计都是一样的</p><h3 id="5-各种弹出窗口"><a href="#5-各种弹出窗口" class="headerlink" title="5. 各种弹出窗口"></a>5. 各种弹出窗口</h3><p><code>alert</code>、<code>confirm</code>、<code>prompt</code>都是原生系统浏览器对<code>html</code>的支持，其他window的方法也是<code>window.open</code>，<code>window.close</code></p><p><code>window</code>层的方法也是对原生容器开放的，原生可以直接触发，参考我的其他文章</p><hr><blockquote><p><em><a href="https://www.imooc.com/learn/488" target="_blank" rel="noopener">DOM探索之基础详解篇</a></em></p></blockquote><hr><h3 id="1-DOM热身案例——滑动门特效"><a href="#1-DOM热身案例——滑动门特效" class="headerlink" title="1. DOM热身案例——滑动门特效"></a>1. <code>DOM</code>热身案例——滑动门特效</h3><pre><code>&lt;!-- html --&gt;&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;head&gt;        &lt;meta charset=&quot;utf-8&quot; /&gt;        &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;        &lt;title&gt;&lt;/title&gt;        &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/test1.css&quot; /&gt;        &lt;script src=&quot;js/test1.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;div id=&quot;container&quot;&gt;            &lt;div id=&quot;image1&quot; class=&quot;size&quot;&gt;&lt;/div&gt;            &lt;div id=&quot;image2&quot; class=&quot;size&quot;&gt;&lt;/div&gt;            &lt;div id=&quot;image3&quot; class=&quot;size&quot;&gt;&lt;/div&gt;            &lt;div id=&quot;image4&quot; class=&quot;size&quot;&gt;&lt;/div&gt;        &lt;/div&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><pre><code>// test1.jswindow.onload = function() {    //获取image数组    var container = document.getElementById(&quot;container&quot;);    var imgs = container.getElementsByTagName(&quot;div&quot;);    //图片宽度    var imageWidth = imgs[0].offsetWidth;    //设置边缘露出的堆叠宽度    var gapWidth = 30;    //整个容器宽度    var containerWidth = imageWidth + (imgs.length - 1) * gapWidth;    container.style.width = containerWidth + &#39;px&#39;;    //初始位置    function setImgsPos() {        for (var i = 1; i &lt; imgs.length; i++) {            imgs[i].style.left = imageWidth + gapWidth * (i - 1) + &#39;px&#39;;        }    }    setImgsPos();    //左侧距离    var leftGap = imageWidth - gapWidth;    //设置四张图片的鼠标焦点方法    imgs[0].onmouseover = function() {        setImgsPos();    }    imgs[1].onmouseover = function() {        setImgsPos();        imgs[1].style.left = gapWidth + &#39;px&#39;;        parseInt()    }    imgs[2].onmouseover = function() {        setImgsPos();        imgs[1].style.left = gapWidth + &#39;px&#39;;        imgs[2].style.left = gapWidth * 2 + &#39;px&#39;;    }    imgs[3].onmouseover = function() {        setImgsPos();        imgs[1].style.left = gapWidth + &#39;px&#39;;        imgs[2].style.left = gapWidth * 2 + &#39;px&#39;;        imgs[3].style.left = gapWidth * 3 + &#39;px&#39;;    }    //方法二，使用闭包设置四张图片的鼠标焦点方法    // for (var i = 0; i &lt; imgs.length; i++) {    //     (function(i) {    //         imgs[i].onmouseover = function() {    //             setImgsPos();    //                 //             for (var j = 1; j &lt;= i; j++) {    //                 imgs[j].style.left = gapWidth * j + &#39;px&#39;;    //             }    //         }    //     })(i)    // }};</code></pre><pre><code>/* test1.css */#container {    height: 300px;    margin: 0 auto;    border: 1px solid red;    overflow: hidden;    position: relative;}.size {    width: 100px;    height: 100px;    position: absolute;    display: block;    left: 0;}#image1 {    background-color: lightgray;}#image2 {    background-color: darkgray;}#image3 {    background-color: gray;}#image4 {    background-color: black;}</code></pre><p><span style="color: lightgray;"><em>未完待续</em></span></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;继续上次的地方继续往下学习&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;日志随笔&quot;&gt;&lt;a href=&quot;#日志随笔&quot; class=&quot;headerlink&quot; title=&quot;日志随笔&quot;&gt;&lt;/a&gt;日志随笔&lt;/h2&gt;&lt;h3
-      
-    
-    </summary>
-    
-    
-      <category term="前端学习日记" scheme="https://andergh.github.io/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-    
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-      <category term="css" scheme="https://andergh.github.io/tags/css/"/>
-    
-      <category term="javascript" scheme="https://andergh.github.io/tags/javascript/"/>
     
   </entry>
   
