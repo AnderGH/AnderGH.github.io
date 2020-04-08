@@ -20,7 +20,7 @@
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="dart,单例">
+    <meta name="keywords" content="dart,Flutter,单例">
     <meta name="description" content="一、几个知识点 当使用factory关键词修饰构造函数时，这个构造函数不会创建类的实例 使用new语句来构造一个类，构造函数的名字可能是ClassName，也可以是ClassName.otherName，关键字new可以省略 Dart没有关键字public、protected和private，如果标识符以下划线_开头，则它相对于库是私有的，每个.dart文件都是一个库  二、代码 class Si">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dart单例模式">
@@ -29,9 +29,10 @@
 <meta property="og:description" content="一、几个知识点 当使用factory关键词修饰构造函数时，这个构造函数不会创建类的实例 使用new语句来构造一个类，构造函数的名字可能是ClassName，也可以是ClassName.otherName，关键字new可以省略 Dart没有关键字public、protected和private，如果标识符以下划线_开头，则它相对于库是私有的，每个.dart文件都是一个库  二、代码 class Si">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-03-27T01:04:15.000Z">
-<meta property="article:modified_time" content="2020-03-27T01:05:44.708Z">
+<meta property="article:modified_time" content="2020-04-08T09:01:37.826Z">
 <meta property="article:author" content="AnderGH">
 <meta property="article:tag" content="dart">
+<meta property="article:tag" content="Flutter">
 <meta property="article:tag" content="单例">
 <meta name="twitter:card" content="summary">
     
@@ -172,7 +173,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、几个知识点"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、几个知识点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、代码"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、代码</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#一、几个知识点"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、几个知识点</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#二、代码"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、代码</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#三、使用单例进行通知"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、使用单例进行通知</span></a></li></ol>
         </nav>
     </aside>
 
@@ -231,6 +232,63 @@ class SingletonClass {
 <li>为了标识某个类为单例类，增加可读性，所以建议使用统一格式或者统一关键字的有名构造函数，无名构造函数可以不提供</li>
 <li>提供私有构造函数来初始化实例对象，防止其他库直接访问该初始化方法</li>
 </ol>
+<h4 id="三、使用单例进行通知"><a href="#三、使用单例进行通知" class="headerlink" title="三、使用单例进行通知"></a>三、使用单例进行通知</h4><pre><code>
+typedef void NotiCallback&lt;T&gt;(params);
+
+class EventBus {
+  // 静态变量
+  static EventBus _instance;
+  // 默认无名构造方法
+  factory EventBus() {
+    return EventBus.sharedInstance();
+  }
+  // 私有构造方法
+  EventBus._init();
+  // 单例对外提供的构造方法
+  factory EventBus.sharedInstance() {
+    if (_instance == null) {
+      _instance = EventBus._init();
+    }
+    return _instance;
+  }
+
+  // 保存callback的参数
+  Map&lt;String, NotiCallback&gt; _notiMap = Map();
+
+  // 对外提供添加，删除，触发的方法
+  // 添加
+  void add&lt;String, NotiCallback&gt;(eventName, callback) {
+    if (eventName == null) {
+      return;
+    }
+    if (eventName.length == 0) {
+      return;
+    }
+    _notiMap[eventName] = callback;
+  }
+  // 移除
+  void remove&lt;String, NotiCallback&gt;(eventName, callback) {
+    if (eventName == null) {
+      return;
+    }
+    if (eventName.length == 0) {
+      return;
+    }
+    _notiMap[eventName] = null;
+  }
+  // 触发
+  void emit&lt;String, T&gt;(eventName, params) {
+    if (eventName == null) {
+      return;
+    }
+    if (eventName.length == 0) {
+      return;
+    }
+    NotiCallback callback = _notiMap[eventName];
+    callback(params);
+  }
+}
+</code></pre><p>使用<code>callback</code>进行传参，在单例中一对一保存<code>callback</code>，如果是一对多的场景，可在单例中保存<code>list</code>数据</p>
 
         </div>
 
@@ -249,7 +307,7 @@ class SingletonClass {
 
         <div class="post-footer">
             
-	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dart/" rel="tag">dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%95%E4%BE%8B/" rel="tag">单例</a></li></ul>
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dart/" rel="tag">dart</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8D%95%E4%BE%8B/" rel="tag">单例</a></li></ul>
 
 
             

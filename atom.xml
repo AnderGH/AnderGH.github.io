@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-03-27T01:05:44.708Z</updated>
+  <updated>2020-04-08T09:01:37.826Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://andergh.github.io/2020/03/27/Dart%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
     <id>https://andergh.github.io/2020/03/27/Dart%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/</id>
     <published>2020-03-27T01:04:15.000Z</published>
-    <updated>2020-03-27T01:05:44.708Z</updated>
+    <updated>2020-04-08T09:01:37.826Z</updated>
     
-    <content type="html"><![CDATA[<h4 id="一、几个知识点"><a href="#一、几个知识点" class="headerlink" title="一、几个知识点"></a>一、几个知识点</h4><ul><li>当使用<code>factory</code>关键词修饰构造函数时，这个构造函数不会创建类的实例</li><li>使用<code>new</code>语句来构造一个类，构造函数的名字可能是<code>ClassName</code>，也可以是<code>ClassName.otherName</code>，关键字<code>new</code>可以省略</li><li><code>Dart</code>没有关键字<code>public</code>、<code>protected</code>和<code>private</code>，如果标识符以下划线<code>_</code>开头，则它相对于库是私有的，每个<code>.dart</code>文件都是一个库</li></ul><h4 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h4><pre><code>class SingletonClass {  // 单例中的参数  String params1;  // 静态变量  static SingletonClass _instance;  // 使用factory修饰无名构造函数，不创建新的实例，直接导向sharedInstance方法，也可以直接删除无名构造函数的方法  factory SingletonClass() {    return SingletonClass.sharedInstance();  }  // 指定私有构造函数作为唯一初始化入口  SingletonClass._init();  // 再提供工厂单例构造函数，用来标识该类为单例类  factory SingletonClass.sharedInstance() {    if (_instance == null) {      // 调用私有构造函数创建实例，并赋值给静态变量      _instance = SingletonClass._init();      // 可以在此处设置参数默认值      _instance.params1 = &#39;1&#39;;    }    return _instance;  }}</code></pre><blockquote><p>说明：</p></blockquote><ol><li>单例需要在整个<code>APP</code>内存中保持只被创建一次，所以需要使用静态变量</li><li>为了标识某个类为单例类，增加可读性，所以建议使用统一格式或者统一关键字的有名构造函数，无名构造函数可以不提供</li><li>提供私有构造函数来初始化实例对象，防止其他库直接访问该初始化方法</li></ol>]]></content>
+    <content type="html"><![CDATA[<h4 id="一、几个知识点"><a href="#一、几个知识点" class="headerlink" title="一、几个知识点"></a>一、几个知识点</h4><ul><li>当使用<code>factory</code>关键词修饰构造函数时，这个构造函数不会创建类的实例</li><li>使用<code>new</code>语句来构造一个类，构造函数的名字可能是<code>ClassName</code>，也可以是<code>ClassName.otherName</code>，关键字<code>new</code>可以省略</li><li><code>Dart</code>没有关键字<code>public</code>、<code>protected</code>和<code>private</code>，如果标识符以下划线<code>_</code>开头，则它相对于库是私有的，每个<code>.dart</code>文件都是一个库</li></ul><h4 id="二、代码"><a href="#二、代码" class="headerlink" title="二、代码"></a>二、代码</h4><pre><code>class SingletonClass {  // 单例中的参数  String params1;  // 静态变量  static SingletonClass _instance;  // 使用factory修饰无名构造函数，不创建新的实例，直接导向sharedInstance方法，也可以直接删除无名构造函数的方法  factory SingletonClass() {    return SingletonClass.sharedInstance();  }  // 指定私有构造函数作为唯一初始化入口  SingletonClass._init();  // 再提供工厂单例构造函数，用来标识该类为单例类  factory SingletonClass.sharedInstance() {    if (_instance == null) {      // 调用私有构造函数创建实例，并赋值给静态变量      _instance = SingletonClass._init();      // 可以在此处设置参数默认值      _instance.params1 = &#39;1&#39;;    }    return _instance;  }}</code></pre><blockquote><p>说明：</p></blockquote><ol><li>单例需要在整个<code>APP</code>内存中保持只被创建一次，所以需要使用静态变量</li><li>为了标识某个类为单例类，增加可读性，所以建议使用统一格式或者统一关键字的有名构造函数，无名构造函数可以不提供</li><li>提供私有构造函数来初始化实例对象，防止其他库直接访问该初始化方法</li></ol><h4 id="三、使用单例进行通知"><a href="#三、使用单例进行通知" class="headerlink" title="三、使用单例进行通知"></a>三、使用单例进行通知</h4><pre><code>typedef void NotiCallback&lt;T&gt;(params);class EventBus {  // 静态变量  static EventBus _instance;  // 默认无名构造方法  factory EventBus() {    return EventBus.sharedInstance();  }  // 私有构造方法  EventBus._init();  // 单例对外提供的构造方法  factory EventBus.sharedInstance() {    if (_instance == null) {      _instance = EventBus._init();    }    return _instance;  }  // 保存callback的参数  Map&lt;String, NotiCallback&gt; _notiMap = Map();  // 对外提供添加，删除，触发的方法  // 添加  void add&lt;String, NotiCallback&gt;(eventName, callback) {    if (eventName == null) {      return;    }    if (eventName.length == 0) {      return;    }    _notiMap[eventName] = callback;  }  // 移除  void remove&lt;String, NotiCallback&gt;(eventName, callback) {    if (eventName == null) {      return;    }    if (eventName.length == 0) {      return;    }    _notiMap[eventName] = null;  }  // 触发  void emit&lt;String, T&gt;(eventName, params) {    if (eventName == null) {      return;    }    if (eventName.length == 0) {      return;    }    NotiCallback callback = _notiMap[eventName];    callback(params);  }}</code></pre><p>使用<code>callback</code>进行传参，在单例中一对一保存<code>callback</code>，如果是一对多的场景，可在单例中保存<code>list</code>数据</p>]]></content>
     
     <summary type="html">
     
@@ -40,6 +40,8 @@
     
     
       <category term="dart" scheme="https://andergh.github.io/tags/dart/"/>
+    
+      <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
     
       <category term="单例" scheme="https://andergh.github.io/tags/%E5%8D%95%E4%BE%8B/"/>
     
@@ -127,9 +129,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -157,9 +159,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -187,9 +189,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -217,9 +219,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -247,9 +249,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
@@ -279,9 +281,9 @@ import &amp;#39;packa
       <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
     
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
       <category term="Flutter" scheme="https://andergh.github.io/tags/Flutter/"/>
+    
+      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
