@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andergh.github.io/"/>
-  <updated>2020-04-14T02:41:53.847Z</updated>
+  <updated>2020-04-16T08:32:51.629Z</updated>
   <id>https://andergh.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flutter通知Notification</title>
+    <link href="https://andergh.github.io/2020/04/16/Flutter%E9%80%9A%E7%9F%A5Notification/"/>
+    <id>https://andergh.github.io/2020/04/16/Flutter%E9%80%9A%E7%9F%A5Notification/</id>
+    <published>2020-04-16T08:31:47.000Z</published>
+    <updated>2020-04-16T08:32:51.629Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="一、基本概念"><a href="#一、基本概念" class="headerlink" title="一、基本概念"></a>一、基本概念</h3><ul><li>在<code>widget</code>树中，每一个节点都可以分发通知</li><li>通知会沿着当前节点向上传递，所有父节点都可以通过<code>NotificationListener</code>来监听通知</li><li><code>Flutter</code>中将这种由子向父的传递通知的机制称为通知冒泡<code>Notification Bubbling</code></li><li>通知冒泡和用户触摸事件冒泡是相似的，但有一点不同：通知冒泡可以中止，但用户触摸事件不行</li></ul><h3 id="二、系统通知"><a href="#二、系统通知" class="headerlink" title="二、系统通知"></a>二、系统通知</h3><h4 id="1、接收系统通知"><a href="#1、接收系统通知" class="headerlink" title="1、接收系统通知"></a>1、接收系统通知</h4><blockquote><p>例如：接收<code>ListView</code>的通知</p></blockquote><ol><li><p>首先找到<code>ListView</code>文档，<code>ListView</code>提供了<code>ScrollNotification</code>的通知类，同时有五个子类继承，分别是<code>ScrollStartNotification</code>、<code>ScrollUpdateNotification</code>、<code>OverscrollNotification</code>、<code>ScrollEndNotification</code>、<code>UserScrollNotification</code>，</p></li><li><p>根据如下<code>NotificationListener</code>的注释，可以直接对父类<code>ScrollNotification</code>进行监听，也可以单独对某个通知子类型进行监听</p></li></ol><pre><code>class NotificationListener&lt;T extends Notification&gt; extends StatelessWidget {  /// Creates a widget that listens for notifications.  const NotificationListener({    Key key,    @required this.child,    this.onNotification,  }) : super(key: key);  ...  final Widget child;  ...}</code></pre><ol start="3"><li><p><code>onNotification</code>回调为通知处理的回调，需要有返回值，如果有多层<code>NotificationListener</code>监听，那么当返回值为<code>true</code>时，阻止冒泡，其父级<code>NotificationListener</code>将不再收到子级监听的通知类型，当返回值为<code>false</code>时继续向上冒泡通知</p></li><li><p>代码如下</p></li></ol><pre><code>class _MyHomePageState extends State&lt;MyHomePage&gt; {  @override  Widget build(BuildContext context) {    return Scaffold(      appBar: AppBar(        title: Text(widget.title),      ),      body: NotificationListener&lt;ScrollStartNotification&gt;(        onNotification: (notification) {          print(&#39;父级监听开始滚动&#39;);          return true;        },        child: NotificationListener&lt;ScrollStartNotification&gt;(          onNotification: (notification) {            print(&#39;子级监听开始滚动&#39;);            return true;          },          child: ListView.builder(            itemBuilder: (context, index) {              return ListTile(                title: Text(index.toString()),              );            },            itemCount: 100,          ),        ),      ),    );  }}</code></pre><h4 id="2、自定义通知"><a href="#2、自定义通知" class="headerlink" title="2、自定义通知"></a>2、自定义通知</h4><pre><code>class Page1 extends StatefulWidget {  @override  _Page1State createState() =&gt; _Page1State();}class _Page1State extends State&lt;Page1&gt; {  String _msg = &quot;&quot;;  @override  Widget build(BuildContext context) {    return Scaffold(      appBar: AppBar(        title: Text(&#39;page1&#39;),      ),      body: NotificationListener&lt;MyNotification&gt;(        onNotification: (notification) {          setState(() {            _msg += notification.msg + &quot;  &quot;;          });          return true;        },        child: Center(          child: Column(            mainAxisSize: MainAxisSize.min,            children: &lt;Widget&gt;[              Text(_msg),              Builder(                builder: (context) {                  return RaisedButton(                    // 按钮点击时分发通知                    onPressed: () {                      MyNotification(&quot;Hi&quot;).dispatch(context);                    },                    child: Text(&quot;Send Notification&quot;),                  );                },              ),            ],          ),        ),      ),    );  }}class MyNotification extends Notification {  MyNotification(this.msg);  final String msg;}</code></pre><ul><li>需要顶一个继承于<code>Notification</code>的通知类型</li><li>使用<code>NotificationListener</code>对自定义的通知类型进行监听</li><li>使用<code>dispatch</code>方法触发通知，此方法中的<code>BuildContext</code>参数必须是当前节点，不能使用超过<code>NotificationListener</code>的父节点</li></ul><h3 id="三、通知冒泡原理"><a href="#三、通知冒泡原理" class="headerlink" title="三、通知冒泡原理"></a>三、通知冒泡原理</h3><pre><code>  bool _dispatch(Notification notification, Element element) {    // 如果通知监听器不为空，并且当前通知类型是该NotificationListener    // 监听的通知类型，则调用当前NotificationListener的onNotification    if (onNotification != null &amp;&amp; notification is T) {      final bool result = onNotification(notification);      // 返回值决定是否继续向上遍历      return result == true;     }    return false;  }</code></pre><p>可以看到<code>NotificationListener</code>的<code>onNotification</code>回调最终是在<code>_dispatch</code>方法中执行的，然后会根据返回值来确定是否继续向上冒泡，此处不再深究</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;一、基本概念&quot;&gt;&lt;a href=&quot;#一、基本概念&quot; class=&quot;headerlink&quot; title=&quot;一、基本概念&quot;&gt;&lt;/a&gt;一、基本概念&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;在&lt;code&gt;widget&lt;/code&gt;树中，每一个节点都可以分发通知&lt;/li&gt;
+&lt;li&gt;通知会
+      
+    
+    </summary>
+    
+    
+      <category term="Flutter学习日记" scheme="https://andergh.github.io/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
+    
+    
+      <category term="Notification" scheme="https://andergh.github.io/tags/Notification/"/>
+    
+  </entry>
   
   <entry>
     <title>武汉32张感恩海报</title>
@@ -574,38 +602,6 @@ import &amp;#39;packa
       <category term="html" scheme="https://andergh.github.io/tags/html/"/>
     
       <category term="domready" scheme="https://andergh.github.io/tags/domready/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>前端学习日记-log4</title>
-    <link href="https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/"/>
-    <id>https://andergh.github.io/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/</id>
-    <published>2019-06-04T07:34:21.000Z</published>
-    <updated>2020-02-25T03:32:46.485Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p><em>继续上次的地方继续往下学习</em></p></blockquote><hr><h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="5-浏览器渲染流程"><a href="#5-浏览器渲染流程" class="headerlink" title="5. 浏览器渲染流程"></a>5. 浏览器渲染流程</h3><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_1.png" alt="image_1.png" title>                </div>                <div class="image-caption">image_1.png</div>            </figure><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_2.png" alt="image_2.png" title>                </div>                <div class="image-caption">image_2.png</div>            </figure><h3 id="6-domReady实现"><a href="#6-domReady实现" class="headerlink" title="6. domReady实现"></a>6. domReady实现</h3><p><code>domReady</code>实际上就是获取浏览器渲染过程中<code>DOM</code>树构建完成的时间，在此时间引入<code>js</code>脚本，这样实现页面的无缝渲染</p><ul><li><p><code>setTimeout</code>定时器，定时器制定一个固定时间，来渲染页面</p></li><li><p><code>window.onload</code>方法，资源加载完成后才会触发，包括外部资源，外部资源较多时，等待时间较长，效果不好</p></li><li><p><code>$(document).ready</code>方法，<code>jqurey</code>框架中的方法，此处暂时没有学到这个框架</p></li><li><p><code>DOMContentLoaded</code>方法</p></li></ul><pre><code>&lt;!DOCTYPE html&gt;&lt;html&gt;    &lt;head&gt;        &lt;meta charset=&quot;utf-8&quot; /&gt;        &lt;title&gt;&lt;/title&gt;        &lt;script src=&quot;js/myDomReady.js&quot; type=&quot;text/javascript&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;        &lt;script type=&quot;text/javascript&quot;&gt;            myReady(function() {                document.getElementById(&#39;header&#39;).style.color = &#39;red&#39;;            });        &lt;/script&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;h1 id=&quot;header&quot;&gt;字体颜色&lt;/h1&gt;    &lt;/body&gt;&lt;/html&gt;</code></pre><pre><code>// myDomReady.jsfunction myReady(fn) {    // 区分浏览器    if (document.addEventListener) {        // 现代浏览器        document.addEventListener(&#39;DOMContentLoaded&#39;, fn, false);    } else{        IEContentReady(fn);    }    //IE模拟    function IEContentReady(fn) {        var d = window.document;        var done = false;        // 只执行一次的回调函数        var init = function() {            if (!done) {                done = true;                fn();            }        }        (function() {            try {                // dom树未创建之前，调用doScroll的方法会报错                d.documentElement.doScroll(&#39;left&#39;);            } catch (e) {                //TODO handle the exception                // 延时再试一次                // arguments.callee 完成递归方法                setTimeout(arguments.callee, 50);                return;            }            // 没有错误表示dom树创建完毕            init();        })();        // 监听document的加载状态        d.onreadystatechange = function() {            // 如果用户在ready之后绑定的函数，则立马执行            if (d.readyState == &#39;complete&#39;) {                d.onratechange = null;                init();            }        }    }}</code></pre><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="/2019/06/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/image_3.png" alt="image_3.png" title>                </div>                <div class="image-caption">image_3.png</div>            </figure><p>各主流框架DOMReady实现：<a href="https://www.cnblogs.com/JulyZhang/archive/2011/02/12/1952484.html" target="_blank" rel="noopener">https://www.cnblogs.com/JulyZhang/archive/2011/02/12/1952484.html</a></p><p><span style="color: lightgray;"><em>未完待续</em></span></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;继续上次的地方继续往下学习&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;日志随笔&quot;&gt;&lt;a href=&quot;#日志随笔&quot; class=&quot;headerlink&quot; title=&quot;日志随笔&quot;&gt;&lt;/a&gt;日志随笔&lt;/h2&gt;&lt;h3
-      
-    
-    </summary>
-    
-    
-      <category term="前端学习日记" scheme="https://andergh.github.io/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-    
-      <category term="学习日记" scheme="https://andergh.github.io/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/"/>
-    
-      <category term="dom" scheme="https://andergh.github.io/tags/dom/"/>
     
   </entry>
   
