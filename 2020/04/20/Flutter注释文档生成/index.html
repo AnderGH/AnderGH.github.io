@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Flutter注释文档生成 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="dartdoc">
+    <meta name="description" content="一、注释类别Dart支持单行注释、多行注释和文档注释，官方提供了相关注释的说明文档Effective Dart   &#x2F;&#x2F; 单行注释    &#x2F;*   多行注释   *&#x2F;    由于历史原因，dartdoc支持两种文档注释语法，（&#x2F;&#x2F;&#x2F; “ C＃样式”）和&#x2F;** ... *&#x2F;（“ JavaDoc样式”），推荐适用&#x2F;&#x2F;&#x2F;   &#x2F;&#x2F;&#x2F; 文档注释 单行注释用法简单，适用于方法、类等内部实现使用，推荐作为内部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flutter注释文档生成">
+<meta property="og:url" content="https://andergh.github.io/2020/04/20/Flutter%E6%B3%A8%E9%87%8A%E6%96%87%E6%A1%A3%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="一、注释类别Dart支持单行注释、多行注释和文档注释，官方提供了相关注释的说明文档Effective Dart   &#x2F;&#x2F; 单行注释    &#x2F;*   多行注释   *&#x2F;    由于历史原因，dartdoc支持两种文档注释语法，（&#x2F;&#x2F;&#x2F; “ C＃样式”）和&#x2F;** ... *&#x2F;（“ JavaDoc样式”），推荐适用&#x2F;&#x2F;&#x2F;   &#x2F;&#x2F;&#x2F; 文档注释 单行注释用法简单，适用于方法、类等内部实现使用，推荐作为内部">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-04-20T08:39:18.000Z">
+<meta property="article:modified_time" content="2020-04-20T08:40:23.741Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="dartdoc">
+<meta name="twitter:card" content="summary">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!--个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/custom/highlightjs-line-numbers.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Flutter注释文档生成</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Flutter注释文档生成</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-04-20T08:39:18.000Z" itemprop="datePublished" class="page-time">
+  2020-04-20
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、注释类别"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、注释类别</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、注释文档生成"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、注释文档生成</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Flutter注释文档生成"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Flutter注释文档生成</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-04-20 16:39:18" datetime="2020-04-20T08:39:18.000Z"  itemprop="datePublished">2020-04-20</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">Flutter学习日记</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h3 id="一、注释类别"><a href="#一、注释类别" class="headerlink" title="一、注释类别"></a>一、注释类别</h3><p><code>Dart</code>支持单行注释、多行注释和文档注释，官方提供了相关注释的说明文档<a href="https://dart.dev/guides/language/effective-dart/documentation/" target="_blank" rel="noopener"><code>Effective Dart</code></a></p>
+<pre><code>  // 单行注释
+
+  /*
+  多行注释
+  */
+
+  由于历史原因，dartdoc支持两种文档注释语法，（/// “ C＃样式”）和/** ... */（“ JavaDoc样式”），推荐适用///
+  /// 文档注释</code></pre><ul>
+<li>单行注释用法简单，适用于方法、类等内部实现使用，推荐作为内部补充说明</li>
+<li>多行注释一般用于大段说明文字等，不推荐适用</li>
+<li>文档注释以///开头，推荐适用于类、方法等</li>
+</ul>
+<h3 id="二、注释文档生成"><a href="#二、注释文档生成" class="headerlink" title="二、注释文档生成"></a>二、注释文档生成</h3><p><a href="https://dart.cn/tools/dartdoc/" target="_blank" rel="noopener"><code>dartdoc</code></a>脚本可以从<code>Dart</code>源代码中提取文档注释生成<code>API</code>参考文档</p>
+<ol>
+<li><code>dart sdk</code>环境</li>
+</ol>
+<p>需要保证本地<code>dart</code>环境正常，如果本地能执行<code>flutter doctor</code>命令，那么就能正常使用<code>dartdoc</code>命令</p>
+<ol start="2">
+<li>路径</li>
+</ol>
+<p><code>dartdoc</code>脚本在<code>sdk</code>安装包中的路径如下：<code>~/flutter/bin/cache/dart-sdk/bin/dartdoc</code>，请对照本地部署包得到实际路径</p>
+<ol start="3">
+<li>执行如下命令行</li>
+</ol>
+<pre><code>// 进入flutter工程目录下
+$ cd ~/Desktop/demo_dartdoc</code></pre><pre><code>// 直接调用sdk中的dartdoc工具
+$ ~/flutter/bin/cache/dart-sdk/bin/dartdoc</code></pre><ol start="4">
+<li>打开生成的<code>doc</code>文件夹，可以找到所有生成好的注释文档，其中<code>library</code>即为工程中个性化的类的相关注释说明，或者按照文件夹目录直接打开对应的<code>html</code>文件也可</li>
+</ol>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dartdoc/" rel="tag">dartdoc</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/16/Flutter%E9%80%9A%E7%9F%A5Notification/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flutter通知Notification</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
