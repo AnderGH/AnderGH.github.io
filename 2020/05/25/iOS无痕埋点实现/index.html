@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>iOS无痕埋点实现 | AnderGH&#39;s blogs | 风轻云淡，于事安然。</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="swift,AOP">
+    <meta name="description" content="参考文章：iOS 无痕埋点解决方案—— AOP 篇（1） 一、AOP面向切面编程AOP全称叫Aspect-Oriented Programming，中文名叫面向切面编程，在iOS平台中，AOP一般使用Runtime实现 二、代码实现本文demo 在UIKit提供的用户交互接口里，主要可以分为两种：  Delegate类UITableView、UICollectionView的点击事件，特点是方法名">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS无痕埋点实现">
+<meta property="og:url" content="https://andergh.github.io/2020/05/25/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="AnderGH&#39;s blogs">
+<meta property="og:description" content="参考文章：iOS 无痕埋点解决方案—— AOP 篇（1） 一、AOP面向切面编程AOP全称叫Aspect-Oriented Programming，中文名叫面向切面编程，在iOS平台中，AOP一般使用Runtime实现 二、代码实现本文demo 在UIKit提供的用户交互接口里，主要可以分为两种：  Delegate类UITableView、UICollectionView的点击事件，特点是方法名">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://andergh.github.io/2020/05/25/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/image_1.png">
+<meta property="article:published_time" content="2020-05-25T01:43:54.000Z">
+<meta property="article:modified_time" content="2020-05-25T01:45:06.190Z">
+<meta property="article:author" content="AnderGH">
+<meta property="article:tag" content="swift">
+<meta property="article:tag" content="AOP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://andergh.github.io/2020/05/25/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/image_1.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="AnderGH&#39;s blogs" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/img/your's%20name.JPG">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+
+    <!--个性化代码高亮 -->
+    <link rel="stylesheet" href="/highlight/custom/xcode.css">
+    <script src="/highlight/highlight.pack.js"></script>
+    <script src="/highlight/highlightjs-line-numbers/custom/highlightjs-line-numbers.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>hljs.initLineNumbersOnLoad();</script>
+
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand" style="text-align: center;">
+        <a href="/" class="avatar waves-effect waves-circle waves-light" style="margin-left: 60px;">
+          <img src="/img/your's%20name.JPG">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">AnderGH</h5>
+          <a href="mailto:guanhaodev@163.com" title="guanhaodev@163.com" class="mail">guanhaodev@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                HomePage
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about"  >
+                <i class="icon icon-lg icon-user"></i>
+                About
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/andergh" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">iOS无痕埋点实现</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">iOS无痕埋点实现</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2020-05-25T01:43:54.000Z" itemprop="datePublished" class="page-time">
+  2020-05-25
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、AOP面向切面编程"><span class="post-toc-number">1.</span> <span class="post-toc-text">一、AOP面向切面编程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、代码实现"><span class="post-toc-number">2.</span> <span class="post-toc-text">二、代码实现</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、Delegate类的交互"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">1、Delegate类的交互</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、Target-Action类的交互"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">2、Target-Action类的交互</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、第三方库"><span class="post-toc-number">3.</span> <span class="post-toc-text">三、第三方库</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-iOS无痕埋点实现"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">iOS无痕埋点实现</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2020-05-25 09:43:54" datetime="2020-05-25T01:43:54.000Z"  itemprop="datePublished">2020-05-25</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/iOS/">iOS</a></li></ul>
+
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>参考文章：<a href="https://www.jianshu.com/p/2c68896aeb9b" target="_blank" rel="noopener">iOS 无痕埋点解决方案—— AOP 篇（1）</a></p>
+<h3 id="一、AOP面向切面编程"><a href="#一、AOP面向切面编程" class="headerlink" title="一、AOP面向切面编程"></a>一、AOP面向切面编程</h3><p><code>AOP</code>全称叫<code>Aspect-Oriented Programming</code>，中文名叫面向切面编程，在<code>iOS</code>平台中，<code>AOP</code>一般使用<code>Runtime</code>实现</p>
+<h3 id="二、代码实现"><a href="#二、代码实现" class="headerlink" title="二、代码实现"></a>二、代码实现</h3><p>本文<a href="https://github.com/AnderGH/AOPDemo" target="_blank" rel="noopener"><code>demo</code></a></p>
+<p>在<code>UIKit</code>提供的用户交互接口里，主要可以分为两种：</p>
+<ul>
+<li><code>Delegate</code>类<code>UITableView、UICollectionView</code>的点击事件，特点是方法名定死，使用<code>weak</code>属性持有响应对象</li>
+<li><code>Target-Action</code>类<code>UIControl、UIGestureRecognizer</code>的回调事件，特点是方法名可自定义，方法参数可有可无，使用<code>weak</code>属性持有响应对象，支持多个响应者</li>
+</ul>
+<h4 id="1、Delegate类的交互"><a href="#1、Delegate类的交互" class="headerlink" title="1、Delegate类的交互"></a>1、Delegate类的交互</h4><p>通常会拦截<code>setDelegate:</code>的方法，此时拦截到的<code>delegate</code>对象即为响应对象，再通过判断该响应对象是否实现了相应的代理方法，构建相同的方法进行交换，网上百度到的大部分都是这种实现的逻辑</p>
+<p>但此方案存在如下问题：</p>
+<ul>
+<li>如果父类实现了<code>setDelegate:</code>和相应的代理方法，而具体的业务逻辑是由子类<code>override</code>重写的代理方法，那么判断到的埋点数据有可能存在问题</li>
+<li>如果同一个页面有多个<code>UITableView</code>，那么<code>setDelegate:</code>方法也会实现多次，此时需要防止出现多重交换的情况</li>
+</ul>
+<p>参考文章中给出了其他方案：</p>
+<ol>
+<li>拦截<code>setDelegate:</code>方法，重新创建一个<code>proxy</code>类绑定代理并实现相应的代理方法，并将该<code>proxy</code>类的对象交换给系统的<code>delegate</code></li>
+<li>使用<code>Runtime</code>将自定义的<code>proxy</code>类的对象添加到控件中持有</li>
+<li>当触发代理方法时，系统实际持有<code>delegate</code>属性是<code>proxy</code>类的对应，会将触发方法发送到<code>proxy</code>类中，此时就可以进一步判断是否需要将代理方法继续转发到业务层</li>
+</ol>
+<pre><code>import UIKit
+
+/// 使用此类替代系统的delegate
+class GHUITableViewDelegateProxy: NSObject, UITableViewDelegate {
+
+    weak var delegate: UITableViewDelegate?
+
+    override func responds(to aSelector: Selector!) -&gt; Bool {
+        var hasSelector: Bool = false
+        if self.delegate == nil {
+            return hasSelector
+        }
+        hasSelector = self.delegate?.responds(to: aSelector) ?? true
+        return hasSelector
+    }
+
+    override func forwardingTarget(for aSelector: Selector!) -&gt; Any? {
+        if self.delegate == nil {
+            return super.forwardingTarget(for: aSelector)
+        }
+        if self.delegate?.responds(to: aSelector) == false {
+            return super.forwardingTarget(for: aSelector)
+        }
+        return self.delegate
+    }
+
+    // MARK: UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        if self.delegate == nil {
+            return
+        }
+        if (self.delegate?.responds(to: #selector(tableView(_:didSelectRowAt:)))) == false {
+            return
+        }
+
+        UITableViewTrack.shared.trackTableView(tableView, didSelectRowAt: indexPath)
+
+        self.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+    }
+}
+
+private func swizzle(_ tableView: UITableView.Type) {
+    let selectors: Array&lt;Array&lt;Selector&gt;&gt; = [
+        [
+            #selector(setter: tableView.delegate),
+            #selector(tableView.gh_setDelegate(_:))
+        ],
+    ]
+    for item in selectors {
+        let originalSelector: Selector = item[0]
+        let swizzledSelector: Selector = item[1]
+
+        let originalMethod: Method? = class_getInstanceMethod(tableView, originalSelector)
+        let swizzledMethod: Method? = class_getInstanceMethod(tableView, swizzledSelector)
+
+        if originalMethod == nil {
+            continue
+        }
+
+        let didAddMethod: Bool = class_addMethod(tableView, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
+        if didAddMethod {
+            class_replaceMethod(tableView, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
+        } else {
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
+        }
+    }
+}
+
+var ghUITableViewDelegateProxyKey = &quot;GHUITableViewDelegateProxyKey&quot;
+
+extension UITableView {
+
+    var ghUITableViewDelegateProxy: GHUITableViewDelegateProxy? {
+        set {
+            objc_setAssociatedObject(self, &amp;ghUITableViewDelegateProxyKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        }
+        get {
+            return objc_getAssociatedObject(self, &amp;ghUITableViewDelegateProxyKey) as? GHUITableViewDelegateProxy
+        }
+    }
+
+    private static let dispatchOnceTime: Void = {
+        swizzle(UITableView.self)
+    }()
+
+    @objc open class func startAOP() {
+        guard self === UITableView.self else { return }
+        UITableView.dispatchOnceTime
+    }
+
+    // MARK: 交换的方法
+
+    // 交换setdelegate的方法
+    @objc func gh_setDelegate(_ delegate: UITableViewDelegate?) {
+
+        // 使用GHUITableViewDelegateProxy替代原来系统的UITableViewDelegate
+        self.ghUITableViewDelegateProxy = GHUITableViewDelegateProxy()
+        self.ghUITableViewDelegateProxy?.delegate = delegate
+
+        self.gh_setDelegate(self.ghUITableViewDelegateProxy)
+    }
+}
+</code></pre><h4 id="2、Target-Action类的交互"><a href="#2、Target-Action类的交互" class="headerlink" title="2、Target-Action类的交互"></a>2、Target-Action类的交互</h4><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="/2020/05/25/iOS%E6%97%A0%E7%97%95%E5%9F%8B%E7%82%B9%E5%AE%9E%E7%8E%B0/image_1.png" alt="image_1.png" title>
+                </div>
+                <div class="image-caption">image_1.png</div>
+            </figure>
+
+<p>按照参考文章中上图的逻辑设计代码如下：</p>
+<pre><code>import UIKit
+
+/// 自定义一个action类，由此类的实例对象替代外部传入的action
+class GHUITapGestureRecognizerAction: NSObject {
+
+    // 弱应用，防止循环应用
+    weak var target: UIResponder?
+    var action: Selector?
+
+    @objc func ghGestureRecognizerAction(sender: UIGestureRecognizer?) -&gt; Void {
+        if self.target == nil {
+            return
+        }
+        if self.action == nil {
+            return
+        }
+
+        UITapGestureRecognizerTrack.shared.trackGRAction(sender as? UITapGestureRecognizer, action: self.action!, target: self.target)
+
+        if ((target?.responds(to: action)) == true) {
+            target?.perform(action, with: sender)
+        }
+    }
+}
+
+var ghGestureActionsKey: String = &quot;GHGestureActionsKey&quot;
+
+extension UIResponder {
+    /// 使用runtime给UIResponder扩展一个属性
+    var ghGestureActions: Array&lt;GHUITapGestureRecognizerAction&gt;? {
+        set {
+            objc_setAssociatedObject(self, &amp;ghGestureActionsKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        }
+        get {
+            return objc_getAssociatedObject(self, &amp;ghGestureActionsKey) as? Array&lt;GHUITapGestureRecognizerAction&gt;
+        }
+    }
+}
+
+private func swizzle(_ gesture: UITapGestureRecognizer.Type) {
+    let selectors: Array&lt;Array&lt;Selector&gt;&gt; = [
+        [
+            #selector(UITapGestureRecognizer.init(target:action:)),
+            #selector(gesture.gh_init(target:action:))
+        ],
+        [
+            #selector(gesture.addTarget(_:action:)),
+            #selector(gesture.gh_addTarget(_:action:))
+        ],
+    ]
+    for item in selectors {
+        let originalSelector: Selector = item[0]
+        let swizzledSelector: Selector = item[1]
+
+        let originalMethod: Method? = class_getInstanceMethod(gesture, originalSelector)
+        let swizzledMethod: Method? = class_getInstanceMethod(gesture, swizzledSelector)
+
+        if originalMethod == nil {
+            continue
+        }
+
+        let didAddMethod: Bool = class_addMethod(gesture, originalSelector, method_getImplementation(swizzledMethod!), method_getTypeEncoding(swizzledMethod!))
+        if didAddMethod {
+            class_replaceMethod(gesture, swizzledSelector, method_getImplementation(originalMethod!), method_getTypeEncoding(originalMethod!))
+        } else {
+            method_exchangeImplementations(originalMethod!, swizzledMethod!)
+        }
+    }
+}
+
+extension UITapGestureRecognizer {
+    private static let dispatchOnceTime: Void = {
+        swizzle(UITapGestureRecognizer.self)
+    }()
+
+    @objc open class func startAOP() {
+        guard self === UITapGestureRecognizer.self else { return }
+        UITapGestureRecognizer.dispatchOnceTime
+    }
+
+    // MARK: 交换的方法
+
+    @objc func gh_init(target: Any?, action: Selector?) -&gt; UIGestureRecognizer {
+        if target == nil {
+            return self.gh_init(target: target, action: action);
+        }
+        if (target as? UIResponder) == nil {
+            return self.gh_init(target: target, action: action);
+        }
+
+        // 初始化判断
+        if (target as? UIResponder)?.ghGestureActions == nil {
+            (target as? UIResponder)?.ghGestureActions = []
+        }
+
+        // 一个手势对应一个GHUITapGestureRecognizerAction属性，再由target去强制有所有的GHUITapGestureRecognizerAction
+        let ghAction = GHUITapGestureRecognizerAction()
+        ghAction.target = (target as? UIResponder)
+        ghAction.action = action
+
+        (target as? UIResponder)?.ghGestureActions?.append(ghAction)
+
+        return self.gh_init(target: ghAction, action: #selector(ghAction.ghGestureRecognizerAction(sender:)))
+    }
+
+    @objc func gh_addTarget(_ target: Any, action: Selector) {
+        if (target as? UIResponder) == nil {
+            return self.gh_addTarget(target, action: action);
+        }
+
+        if (target as? UIResponder)?.ghGestureActions == nil {
+            (target as? UIResponder)?.ghGestureActions = []
+        }
+
+        let ghAction = GHUITapGestureRecognizerAction()
+        ghAction.target = (target as? UIResponder)
+        ghAction.action = action
+
+        (target as? UIResponder)?.ghGestureActions?.append(ghAction)
+
+        return self.gh_addTarget(ghAction, action: #selector(ghAction.ghGestureRecognizerAction(sender:)))
+    }
+}
+</code></pre><h3 id="三、第三方库"><a href="#三、第三方库" class="headerlink" title="三、第三方库"></a>三、第三方库</h3><p>很多第三方库也有功能强大的<code>AOP</code>逻辑，本文主要是轻量级的代码实现，其他第三方库暂不做介绍</p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <footer>
+        <a href="https://andergh.github.io">
+            <img src="/img/your's%20name.JPG" alt="AnderGH">
+            AnderGH
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AOP/" rel="tag">AOP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift/" rel="tag">swift</a></li></ul>
+
+
+            
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2020/04/20/Flutter%E6%B3%A8%E9%87%8A%E6%96%87%E6%A1%A3%E7%94%9F%E6%88%90/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Flutter注释文档生成</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p>
+        	
+				<span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+			
+
+        	<span>AnderGH &copy; 2018 - 2020</span>
+
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+    <script>
+var BLOG = { ROOT: '/', SHARE: false, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
