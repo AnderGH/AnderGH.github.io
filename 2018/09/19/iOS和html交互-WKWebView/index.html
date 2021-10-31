@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/myImg/favicon.png">
+  <link rel="icon" href="/myImg/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="风轻云淡，于事安然。">
+  <meta name="author" content="AnderGH">
+  <meta name="keywords" content="">
+  
+  <title>iOS和html交互-WKWebView - AnderGH&#39;s blogs</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"andergh.github.io","root":"/","version":"1.8.9-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":false,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>AnderGH's blogs</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/myImg/lineargradient.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="iOS和html交互-WKWebView">
+              
+                iOS和html交互-WKWebView
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-19 17:10" pubdate>
+        2018年9月19日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">iOS和html交互-WKWebView</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>在<code>html5</code>的标准确立后，随着手机性能的提升和对<code>h5</code>标准的推广支持，原生开发容器，<code>h5</code>开发内容的方式成为了新的开发方式，这种混合开发带来了更高的开发效率，更高的代码复用率，更好的体验方式。而自<code>iOS 2</code>就开始使用的<code>UIWebView</code>也逐渐显示出不足，例如加载速度慢、内存消耗多等问题。</p>
+<p>在<code>iOS 8</code>之后，苹果推出了新的<code>web</code>框架<code>WebKit</code>，新框架中的<code>WKWebView</code>可以用来替换<code>UIWebView</code>，苹果对<code>WKWebView</code>进行了很大的优化，全面提升了对<code>web</code>页面的支持。</p>
+<p>首先我们看下<code>WKWebView</code>的属性，<code>WKWebView</code>中提供了一个<code>WKWebViewConfiguration</code>的属性，该属性有许多设置，可以达到不同的效果，除此还提供了两个代理<code>WKNavigationDelegate</code>和<code>WKUIDelegate</code>，分别对应不同的代理，感兴趣的可以自己查阅下官方文档。</p>
+<h3 id="web调用原生的方法"><a href="#web调用原生的方法" class="headerlink" title="web调用原生的方法"></a><code>web</code>调用原生的方法</h3><p>在使用<code>WKWebView</code>与<code>web</code>页面进行交互时，我们最常使用到的应该就是<code>WKWebViewConfiguration</code>中的<code>userContentController</code>属性，如下：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">//iOS代码</span><br>- (<span class="hljs-keyword">void</span>)viewDidLoad &#123;<br>    [<span class="hljs-keyword">super</span> viewDidLoad];<br>    <span class="hljs-comment">// Do any additional setup after loading the view from its nib.</span><br>    <span class="hljs-comment">//创建wkwebview</span><br>    <span class="hljs-built_in">WKWebViewConfiguration</span> *configuration = [[<span class="hljs-built_in">WKWebViewConfiguration</span> alloc] init];<br>    configuration.userContentController = [[<span class="hljs-built_in">WKUserContentController</span> alloc] init];<br>    [configuration.userContentController addScriptMessageHandler:<span class="hljs-keyword">self</span> name:<span class="hljs-string">@&quot;GHWebViewJavascriptBridge&quot;</span>];<br>    <br>    <span class="hljs-built_in">WKWebView</span> *webView = [[<span class="hljs-built_in">WKWebView</span> alloc] initWithFrame:<span class="hljs-built_in">CGRectMake</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, [<span class="hljs-built_in">UIScreen</span> mainScreen].bounds.size.width, [<span class="hljs-built_in">UIScreen</span> mainScreen].bounds.size.height) configuration:configuration];<br>    webView.backgroundColor = [<span class="hljs-built_in">UIColor</span> whiteColor];<br>    [<span class="hljs-keyword">self</span>.view addSubview:webView];<br>    _webView = webView;<br>    <br>    <span class="hljs-comment">//加载页面</span><br>    <span class="hljs-built_in">NSString</span> *urlStr = <span class="hljs-string">@&quot;http://xxxxxxxxxxxxx&quot;</span>;<br>    urlStr = [urlStr stringByAddingPercentEncodingWithAllowedCharacters:[<span class="hljs-built_in">NSCharacterSet</span> URLQueryAllowedCharacterSet]];<br>    <br>    <span class="hljs-built_in">NSURLRequest</span> *request = [<span class="hljs-built_in">NSURLRequest</span> requestWithURL:[<span class="hljs-built_in">NSURL</span> URLWithString:urlStr]];<br>    [webView loadRequest:request];<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)userContentController:(<span class="hljs-built_in">WKUserContentController</span> *)userContentController didReceiveScriptMessage:(<span class="hljs-built_in">WKScriptMessage</span> *)message &#123;<br>    <span class="hljs-keyword">if</span> ([message.name isEqualToString:<span class="hljs-string">@&quot;GHWebViewJavascriptBridge&quot;</span>]) &#123;<br>        <span class="hljs-built_in">NSString</span> *body = message.body;<br>        <span class="hljs-keyword">if</span> (body &amp;&amp; [body isEqualToString:<span class="hljs-string">@&quot;closePage&quot;</span>]) &#123;<br>            [<span class="hljs-keyword">self</span>.navigationController popToRootViewControllerAnimated:<span class="hljs-literal">YES</span>];<br>        &#125;<br>    &#125;<br>&#125;<br><br>- (<span class="hljs-keyword">void</span>)dealloc &#123;<br>    [<span class="hljs-keyword">self</span>.webView.configuration.userContentController removeScriptMessageHandlerForName:<span class="hljs-string">@&quot;GHWebViewJavascriptBridge&quot;</span>];<br>    [<span class="hljs-keyword">self</span>.webView.configuration.userContentController removeAllUserScripts];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs xml">//html页面<br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;mui-btn&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;closePage()&quot;</span>&gt;</span>点击关闭页面<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><br><span class="javascript">            <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">closePage</span>(<span class="hljs-params"></span>) </span>&#123;</span><br><span class="javascript">                <span class="hljs-built_in">window</span>.webkit.messageHandlers.GHWebViewJavascriptBridge.postMessage(<span class="hljs-string">&#x27;closePage&#x27;</span>);</span><br>            &#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
+<p>通过<code>userContentController</code>的<code>addScriptMessageHandler</code>方法，将当前<code>controller</code>以名称<code>GHWebViewJavascriptBridge</code>绑定到<code>WKWebView</code>中，在<code>userContentController</code>通过<code>addScriptMessageHandler</code>方法绑定的类中实现<code>userContentController:didReceiveScriptMessage:</code>的方法，通过此方法可以和<code>web</code>页面进行通信，当然如果需要传参的话，<code>html</code>中<code>postMessage</code>里面的字符串可以按照约定好的格式进行拼接参数</p>
+<h3 id="原生调用web的方法"><a href="#原生调用web的方法" class="headerlink" title="原生调用web的方法"></a>原生调用<code>web</code>的方法</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">//iOS代码</span><br><span class="hljs-built_in">NSString</span> *jsStr = [<span class="hljs-built_in">NSString</span> stringWithFormat:<span class="hljs-string">@&quot;getCodeString(&#x27;%@&#x27;)&quot;</span>, <span class="hljs-string">@&quot;二维码&quot;</span>];<br>[<span class="hljs-keyword">self</span>.webView evaluateJavaScript:jsStr completionHandler:^(<span class="hljs-keyword">id</span> _Nullable result, <span class="hljs-built_in">NSError</span> * _Nullable error) &#123;<br>    <br>&#125;];<br></code></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//js代码</span><br><span class="hljs-built_in">window</span>.getCodeString = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">codeStr</span>) </span>&#123;<br>    alert(<span class="hljs-string">&#x27;二维码字符串&#x27;</span> + codeStr);<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p><code>WKWebView</code>提供了和<code>UIWebView</code>类似的方法<code>evaluateJavaScript:completionHandler:</code>的方法，通过此方法直接调用<code>web</code>页面中的<code>window</code>层的方法，此方法还能有回调，通过回调我们能够判断<code>js</code>方法有没有调用成功</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/iOS/">iOS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iOS/">iOS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/WKWebView/">WKWebView</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/01/29/iOS%E7%9A%84%E8%A7%A6%E6%91%B8%E4%BA%8B%E4%BB%B6/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">iOS的触摸事件</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2018/09/14/iOS%E5%92%8Chtml%E4%BA%A4%E4%BA%92-UIWebView/">
+                        <span class="hidden-mobile">iOS和html交互-UIWebView</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

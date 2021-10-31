@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/myImg/favicon.png">
+  <link rel="icon" href="/myImg/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="风轻云淡，于事安然。">
+  <meta name="author" content="AnderGH">
+  <meta name="keywords" content="">
+  
+  <title>Flutter学习日记-log3 - AnderGH&#39;s blogs</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"andergh.github.io","root":"/","version":"1.8.9-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":false,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>AnderGH's blogs</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/myImg/lineargradient.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Flutter学习日记-log3">
+              
+                Flutter学习日记-log3
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-06 17:58" pubdate>
+        2020年3月6日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flutter学习日记-log3</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <blockquote>
+<p><a target="_blank" rel="noopener" href="https://flutterchina.club/get-started/install/"><em>Flutter中文网</em></a></p>
+</blockquote>
+<hr>
+<h2 id="日志随笔"><a href="#日志随笔" class="headerlink" title="日志随笔"></a>日志随笔</h2><h3 id="一、复习"><a href="#一、复习" class="headerlink" title="一、复习"></a>一、复习</h3><ul>
+<li>命名路由</li>
+<li>路由传参</li>
+</ul>
+<h3 id="二、状态管理"><a href="#二、状态管理" class="headerlink" title="二、状态管理"></a>二、状态管理</h3><ul>
+<li><code>Widget</code>管理自身状态</li>
+<li>父<code>Widget</code>管理子<code>Widget</code>状态，在子<code>Widget</code>上包裹一层父<code>Widget</code>，子<code>Widget</code>把状态调整的方法对外提供成参数给父<code>Widget</code><ul>
+<li><code>GestureDetector</code>手势，<code>onTap</code>等方法</li>
+<li><code>Container</code>绘制矩形区域，<code>decoration</code>属性设置背景、边框等，<code>decoration</code>里面<code>color</code>字段和<code>Container</code>本身的<code>color</code>字段不能同时设置，会报错，使用<code>padding</code>调整位置，或者使用<code>Center</code>包裹居中</li>
+</ul>
+</li>
+<li>混合管理状态</li>
+<li>全局状态管理，例如国际化等操作，此处暂不学习</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-symbol">&#x27;package</span>:flutter/material.dart&#x27;;<br><br>void main() =&gt; runApp(<span class="hljs-type">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">MaterialApp</span>(<br>      title: &#x27;状态管理&#x27;,<br>      theme: <span class="hljs-type">ThemeData</span>(<br>        primarySwatch: <span class="hljs-type">Colors</span>.blue,<br>      ),<br>      initialRoute: <span class="hljs-symbol">&#x27;HomePag</span>e&#x27;,<br>      routes: &#123;<br>        <span class="hljs-symbol">&#x27;HomePag</span>e&#x27;: (context) =&gt; <span class="hljs-type">HomePage</span>(),<br>      &#125;,<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Scaffold</span>(<br>      appBar: <span class="hljs-type">AppBar</span>(<br>        title: <span class="hljs-type">Text</span>(&#x27;首页&#x27;),<br>      ),<br>      body: <span class="hljs-type">Center</span>(<br>        child: <span class="hljs-type">Column</span>(<br>          mainAxisAlignment: <span class="hljs-type">MainAxisAlignment</span>.start,<br>          children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>            <span class="hljs-type">Text</span>(<br>              &#x27;这是首页&#x27;,<br>              style: <span class="hljs-type">TextStyle</span>(<br>                color: <span class="hljs-type">Colors</span>.blue,<br>                fontSize: <span class="hljs-number">20</span>,<br>              ),<br>            ),<br>            <span class="hljs-type">TapboxA</span>(),<br>            <span class="hljs-type">ParentWidget</span>(),<br>            <span class="hljs-type">ParentWidgetC</span>(),<br>          ],<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// TapboxA 管理自身状态.</span><br><br><span class="hljs-comment">//------------------------- TapboxA ----------------------------------</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TapboxA</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  _TapboxAState createState() =&gt; _TapboxAState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TapboxAState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;TapboxA&gt;</span> </span>&#123;<br>  bool _active = <span class="hljs-literal">false</span>;<br>  void _handleTap() &#123;<br>    setState(() &#123;<br>      _active = !_active;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">GestureDetector</span>(<br>      child: <span class="hljs-type">Container</span>(<br>        child: <span class="hljs-type">Center</span>(<br>          child: <span class="hljs-type">Text</span>(<br>            _active ? <span class="hljs-symbol">&#x27;0</span>0&#x27; : <span class="hljs-symbol">&#x27;9</span>9&#x27;,<br>            style: <span class="hljs-type">TextStyle</span>(<br>              fontSize: <span class="hljs-number">100</span>,<br>              color: <span class="hljs-type">Colors</span>.white,<br>              backgroundColor: _active ? <span class="hljs-type">Colors</span>.red : <span class="hljs-type">Colors</span>.blue,<br>            ),<br>          ),<br>        ),<br>        width: <span class="hljs-number">200</span>,<br>        height: <span class="hljs-number">200</span>,<br>        padding: <span class="hljs-type">EdgeInsets</span>.only(left: <span class="hljs-number">20</span>),<br>        decoration: <span class="hljs-type">BoxDecoration</span>(<br>          color: <span class="hljs-type">Colors</span>.orange,<br>          border: <span class="hljs-type">Border</span>(<br>              top: <span class="hljs-type">BorderSide</span>(<br>            color: <span class="hljs-type">Colors</span>.black,<br>            width: <span class="hljs-number">10</span>,<br>            style: <span class="hljs-type">BorderStyle</span>.solid,<br>          )),<br>          <span class="hljs-comment">// border: Border.all(</span><br>          <span class="hljs-comment">//   color: Colors.black,</span><br>          <span class="hljs-comment">//   width: 10,</span><br>          <span class="hljs-comment">//   style: BorderStyle.solid,</span><br>          <span class="hljs-comment">// ),</span><br>        ),<br>      ),<br>      onTap: _handleTap,<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">// ParentWidget 为 TapboxB 管理状态.</span><br><br><span class="hljs-comment">//------------------------ ParentWidget --------------------------------</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ParentWidget</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  _ParentWidgetState createState() =&gt; _ParentWidgetState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_ParentWidgetState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;ParentWidget&gt;</span> </span>&#123;<br>  bool _active = <span class="hljs-literal">false</span>;<br><br>  void _handleTapboxChanged(bool newValue) &#123;<br>    setState(() &#123;<br>      _active = newValue;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">Container</span>(<br>      child: <span class="hljs-keyword">new</span> <span class="hljs-type">TapboxB</span>(<br>        active: _active,<br>        onChanged: _handleTapboxChanged,<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//------------------------- TapboxB ----------------------------------</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TapboxB</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-keyword">final</span> bool active;<br>  <span class="hljs-keyword">final</span> <span class="hljs-type">ValueChanged</span>&lt;bool&gt; onChanged;<br><br>  <span class="hljs-type">TapboxB</span>(&#123;<br>    <span class="hljs-type">Key</span> key, <br>    <span class="hljs-keyword">this</span>.active: <span class="hljs-literal">false</span>, <br>    <span class="hljs-meta">@required</span> <span class="hljs-keyword">this</span>.onChanged<br>  &#125;): <span class="hljs-keyword">super</span>(key: key);<br><br>  void _handleTap() &#123;<br>    onChanged(!active);<br>  &#125;<br><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">GestureDetector</span>(<br>      onTap: _handleTap,<br>      child: <span class="hljs-keyword">new</span> <span class="hljs-type">Container</span>(<br>        child: <span class="hljs-keyword">new</span> <span class="hljs-type">Center</span>(<br>          child: <span class="hljs-keyword">new</span> <span class="hljs-type">Text</span>(<br>            active ? <span class="hljs-symbol">&#x27;Activ</span>e&#x27; : <span class="hljs-symbol">&#x27;Inactiv</span>e&#x27;,<br>            style: <span class="hljs-keyword">new</span> <span class="hljs-type">TextStyle</span>(fontSize: <span class="hljs-number">32.0</span>, color: <span class="hljs-type">Colors</span>.white),<br>          ),<br>        ),<br>        width: <span class="hljs-number">200.0</span>,<br>        height: <span class="hljs-number">200.0</span>,<br>        decoration: <span class="hljs-keyword">new</span> <span class="hljs-type">BoxDecoration</span>(<br>          color: active ? <span class="hljs-type">Colors</span>.lightGreen[<span class="hljs-number">700</span>] : <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">600</span>],<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//---------------------------- ParentWidget ----------------------------</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ParentWidgetC</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  _ParentWidgetCState createState() =&gt; <span class="hljs-keyword">new</span> _ParentWidgetCState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_ParentWidgetCState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;ParentWidgetC&gt;</span> </span>&#123;<br>  bool _active = <span class="hljs-literal">false</span>;<br><br>  void _handleTapboxChanged(bool newValue) &#123;<br>    setState(() &#123;<br>      _active = newValue;<br>    &#125;);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">Container</span>(<br>      child: <span class="hljs-keyword">new</span> <span class="hljs-type">TapboxC</span>(<br>        active: _active,<br>        onChanged: _handleTapboxChanged,<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-comment">//----------------------------- TapboxC ------------------------------</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TapboxC</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-type">TapboxC</span>(&#123;<span class="hljs-type">Key</span> key, <span class="hljs-keyword">this</span>.active: <span class="hljs-literal">false</span>, <span class="hljs-meta">@required</span> <span class="hljs-keyword">this</span>.onChanged&#125;)<br>      : <span class="hljs-keyword">super</span>(key: key);<br><br>  <span class="hljs-keyword">final</span> bool active;<br>  <span class="hljs-keyword">final</span> <span class="hljs-type">ValueChanged</span>&lt;bool&gt; onChanged;<br><br>  <span class="hljs-meta">@override</span><br>  _TapboxCState createState() =&gt; <span class="hljs-keyword">new</span> _TapboxCState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_TapboxCState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;TapboxC&gt;</span> </span>&#123;<br>  bool _highlight = <span class="hljs-literal">false</span>;<br><br>  void _handleTapDown(<span class="hljs-type">TapDownDetails</span> details) &#123;<br>    setState(() &#123;<br>      _highlight = <span class="hljs-literal">true</span>;<br>    &#125;);<br>  &#125;<br><br>  void _handleTapUp(<span class="hljs-type">TapUpDetails</span> details) &#123;<br>    setState(() &#123;<br>      _highlight = <span class="hljs-literal">false</span>;<br>    &#125;);<br>  &#125;<br><br>  void _handleTapCancel() &#123;<br>    setState(() &#123;<br>      _highlight = <span class="hljs-literal">false</span>;<br>    &#125;);<br>  &#125;<br><br>  void _handleTap() &#123;<br>    widget.onChanged(!widget.active);<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-comment">// 在按下时添加绿色边框，当抬起时，取消高亮  </span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">GestureDetector</span>(<br>      onTapDown: _handleTapDown, <span class="hljs-comment">// 处理按下事件</span><br>      onTapUp: _handleTapUp, <span class="hljs-comment">// 处理抬起事件</span><br>      onTap: _handleTap,<br>      onTapCancel: _handleTapCancel,<br>      child: <span class="hljs-keyword">new</span> <span class="hljs-type">Container</span>(<br>        child: <span class="hljs-keyword">new</span> <span class="hljs-type">Center</span>(<br>          child: <span class="hljs-keyword">new</span> <span class="hljs-type">Text</span>(widget.active ? <span class="hljs-symbol">&#x27;Activ</span>e&#x27; : <span class="hljs-symbol">&#x27;Inactiv</span>e&#x27;,<br>              style: <span class="hljs-keyword">new</span> <span class="hljs-type">TextStyle</span>(fontSize: <span class="hljs-number">32.0</span>, color: <span class="hljs-type">Colors</span>.white)),<br>        ),<br>        width: <span class="hljs-number">200.0</span>,<br>        height: <span class="hljs-number">200.0</span>,<br>        decoration: <span class="hljs-keyword">new</span> <span class="hljs-type">BoxDecoration</span>(<br>          color: widget.active ? <span class="hljs-type">Colors</span>.lightGreen[<span class="hljs-number">700</span>] : <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">600</span>],<br>          border: _highlight<br>              ? <span class="hljs-keyword">new</span> <span class="hljs-type">Border</span>.all(<br>                  color: <span class="hljs-type">Colors</span>.teal[<span class="hljs-number">700</span>],<br>                  width: <span class="hljs-number">10.0</span>,<br>                )<br>              : <span class="hljs-literal">null</span>,<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="三、组件和组件样式"><a href="#三、组件和组件样式" class="headerlink" title="三、组件和组件样式"></a>三、组件和组件样式</h3><h4 id="1、文本"><a href="#1、文本" class="headerlink" title="1、文本"></a>1、文本</h4><ul>
+<li>基础样式：<code>textAlign</code>、<code>maxLines</code>、<code>overflow</code>、<code>textScaleFactor</code>等</li>
+<li>高级一点的直接定制<code>TextStyle</code>属性</li>
+<li><code>TextSpan</code>实现富文本样式</li>
+<li><code>DefaultTextStyle</code>样式继承</li>
+<li>字体：使用<a target="_blank" rel="noopener" href="https://fonts.google.com/"><code>Google Fonts</code></a>中的字体，首先在<code>pubspec.yaml</code>中声明，然后通过<code>TextStyle</code>属性使用</li>
+</ul>
+<h4 id="2、按钮"><a href="#2、按钮" class="headerlink" title="2、按钮"></a>2、按钮</h4><blockquote>
+<p>此处学习基于<code>Android</code>端的<code>Material</code>组件，所有<code>Material</code> 库中的按钮都是直接或间接的<code>RawMaterialButton</code>组件的包装定制，都有如下相同点：</p>
+<ol>
+<li>按下时都会有“水波动画”（又称“涟漪动画”，就是点击时按钮上会出现水波荡漾的动画）</li>
+<li>有一个<code>onPressed</code>属性来设置点击回调，当按钮按下时会执行该回调，如果不提供该回调则按钮会处于禁用状态，禁用状态不响应用户点击</li>
+</ol>
+</blockquote>
+<ul>
+<li><code>RaisedButton</code>漂浮按钮，文字+图标</li>
+<li><code>FlatButton</code>扁平按钮，文字+图标<ul>
+<li><code>highlightColor</code>和<code>splashColor</code>冲突，前者设置后，后者的效果就没了，暂不研究</li>
+<li><code>shape</code>属性是<code>ShapeBorder</code>类的，但<code>ShapeBorder</code>不直接使用，应该使用该类的子类，子类提供了具体的样式效果<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-keyword">const</span> FlatButton(&#123;<br>  ...  <br>  <span class="hljs-meta">@required</span> <span class="hljs-keyword">this</span>.onPressed, <span class="hljs-comment">//按钮点击回调</span><br>  <span class="hljs-keyword">this</span>.textColor, <span class="hljs-comment">//按钮文字颜色</span><br>  <span class="hljs-keyword">this</span>.disabledTextColor, <span class="hljs-comment">//按钮禁用时的文字颜色</span><br>  <span class="hljs-keyword">this</span>.color, <span class="hljs-comment">//按钮背景颜色</span><br>  <span class="hljs-keyword">this</span>.disabledColor,<span class="hljs-comment">//按钮禁用时的背景颜色</span><br>  <span class="hljs-keyword">this</span>.highlightColor, <span class="hljs-comment">//按钮按下时的背景颜色</span><br>  <span class="hljs-keyword">this</span>.splashColor, <span class="hljs-comment">//点击时，水波动画中水波的颜色</span><br>  <span class="hljs-keyword">this</span>.colorBrightness,<span class="hljs-comment">//按钮主题，默认是浅色主题 </span><br>  <span class="hljs-keyword">this</span>.padding, <span class="hljs-comment">//按钮的填充</span><br>  <span class="hljs-keyword">this</span>.shape, <span class="hljs-comment">//外形</span><br>  <span class="hljs-meta">@required</span> <span class="hljs-keyword">this</span>.child, <span class="hljs-comment">//按钮的内容</span><br>&#125;)<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><code>OutlineButton</code>边框按钮，文字+图标</li>
+<li><code>IconButton</code>图标按钮，没有文字</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-symbol">&#x27;package</span>:flutter/material.dart&#x27;;<br><br>void main() =&gt; runApp(<span class="hljs-type">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-comment">// This widget is the root of your application.</span><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">MaterialApp</span>(<br>      title: &#x27;控件样式&#x27;,<br>      theme: <span class="hljs-type">ThemeData</span>(<br>        primarySwatch: <span class="hljs-type">Colors</span>.blue,<br>      ),<br>      initialRoute: <span class="hljs-symbol">&#x27;HomePag</span>e&#x27;,<br>      routes: &#123;<br>        <span class="hljs-symbol">&#x27;HomePag</span>e&#x27;: (context) =&gt; <span class="hljs-type">HomePage</span>(),<br>      &#125;,<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  void _onPressed() &#123;&#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-type">String</span> icons = <span class="hljs-string">&quot;&quot;</span>;<br>    <span class="hljs-comment">// accessible: &amp;#xE914; or 0xE914 or E914</span><br>    icons += <span class="hljs-string">&quot;\uE914&quot;</span>;<br>    <span class="hljs-comment">// error: &amp;#xE000; or 0xE000 or E000</span><br>    icons += <span class="hljs-string">&quot; \uE000&quot;</span>;<br>    <span class="hljs-comment">// fingerprint: &amp;#xE90D; or 0xE90D or E90D</span><br>    icons += <span class="hljs-string">&quot; \uE90D&quot;</span>;<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Scaffold</span>(<br>      appBar: <span class="hljs-type">AppBar</span>(<br>        title: <span class="hljs-type">Text</span>(&#x27;首页&#x27;),<br>      ),<br>      body: <span class="hljs-type">Column</span>(<br>        children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>          <span class="hljs-type">Container</span>(<br>            child: <span class="hljs-type">Row</span>(<br>              children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>                <span class="hljs-type">RaisedButton</span>(<br>                  child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;RaisedButton&quot;</span>),<br>                  onPressed: () &#123;&#125;,<br>                ),<br>                <span class="hljs-type">FlatButton</span>(<br>                  child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;FlatButton&quot;</span>),<br>                  onPressed: () &#123;&#125;,<br>                ),<br>                <span class="hljs-type">OutlineButton</span>(<br>                  child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;normal&quot;</span>),<br>                  onPressed: () &#123;&#125;,<br>                ),<br>                <span class="hljs-type">IconButton</span>(<br>                  icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.thumb_up),<br>                  onPressed: () &#123;&#125;,<br>                ),<br>              ],<br>            ),<br>          ),<br>          <span class="hljs-type">Container</span>(<br>            child: <span class="hljs-type">Row</span>(<br>              children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>                <span class="hljs-type">RaisedButton</span>.icon(<br>                  icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.send),<br>                  label: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;发送&quot;</span>),<br>                  onPressed: _onPressed,<br>                ),<br>                <span class="hljs-type">FlatButton</span>.icon(<br>                  icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.info),<br>                  label: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;详情&quot;</span>),<br>                  onPressed: _onPressed,<br>                ),<br>                <span class="hljs-type">OutlineButton</span>.icon(<br>                  icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.add),<br>                  label: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;添加&quot;</span>),<br>                  onPressed: _onPressed,<br>                ),<br>              ],<br>            ),<br>          ),<br>          <span class="hljs-type">Container</span>(<br>            child: <span class="hljs-type">Row</span>(<br>              children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>                <span class="hljs-type">FlatButton</span>(<br>                  onPressed: _onPressed,<br>                  child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;提交&quot;</span>),<br>                  color: <span class="hljs-type">Colors</span>.blue,<br>                  textColor: <span class="hljs-type">Colors</span>.white,<br>                  <span class="hljs-comment">// highlightColor: Colors.blue[700],</span><br>                  <span class="hljs-comment">// splashColor: Colors.grey,</span><br>                  shape: <span class="hljs-type">RoundedRectangleBorder</span>(<br>                    borderRadius: <span class="hljs-type">BorderRadius</span>.circular(<span class="hljs-number">20.0</span>),<br>                  ),<br>                ),<br>                <span class="hljs-type">RaisedButton</span>(<br>                  onPressed: _onPressed,<br>                  child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;提交&quot;</span>),<br>                  color: <span class="hljs-type">Colors</span>.blue,<br>                  textColor: <span class="hljs-type">Colors</span>.white,<br>                  <span class="hljs-comment">// highlightColor: Colors.blue[700],</span><br>                  <span class="hljs-comment">// splashColor: Colors.grey,</span><br>                  shape: <span class="hljs-type">RoundedRectangleBorder</span>(<br>                    borderRadius: <span class="hljs-type">BorderRadius</span>.circular(<span class="hljs-number">20.0</span>),<br>                  ),<br>                ),<br>              ],<br>            ),<br>          ),<br>        ],<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="3、图片和图标"><a href="#3、图片和图标" class="headerlink" title="3、图片和图标"></a>3、图片和图标</h4><h5 id="1-图片"><a href="#1-图片" class="headerlink" title="1. 图片"></a>1. 图片</h5><ul>
+<li><code>ImageProvider</code>是一个抽象类，从不同的数据源获取图片使用不同的方法，从<code>Asset</code>中加载图片使用<code>AssetImage</code>，从网络加载图片使用<code>NetworkImage</code></li>
+<li><code>fit</code>属性<ul>
+<li><code>fill</code>：会拉伸填充满显示空间，图片本身长宽比会发生变化，图片会变形。</li>
+<li><code>cover</code>：会按图片的长宽比放大后居中填满显示空间，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>contain</code>：这是图片的默认适应规则，图片会在保证图片本身长宽比不变的情况下缩放以适应当前显示空间，图片不会变形。</li>
+<li><code>fitWidth</code>：图片的宽度会缩放到显示空间的宽度，高度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>fitHeight</code>：图片的高度会缩放到显示空间的高度，宽度会按比例缩放，然后居中显示，图片不会变形，超出显示空间部分会被剪裁。</li>
+<li><code>none</code>：图片没有适应策略，会在显示空间内显示图片，如果图片比显示空间大，则显示空间只会显示图片中间部分。</li>
+</ul>
+</li>
+</ul>
+<p><img src="image_1.png" srcset="/img/loading.gif" lazyload alt="image_1"></p>
+<ul>
+<li><code>Flutter</code>框架对加载过的图片是有缓存的（内存），默认最大缓存数量是<code>1000</code>，最大缓存空间为<code>100M</code>，此处暂不学习</li>
+</ul>
+<h5 id="2-图标"><a href="#2-图标" class="headerlink" title="2. 图标"></a>2. 图标</h5><p><code>Flutter</code>默认包含了一套<code>Material Design</code>的字体图标<code>iconfont</code>，<code>pubspec.yaml</code>文件中配置默认打开，官网地址：<a target="_blank" rel="noopener" href="https://material.io/tools/icons/"><code>https://material.io/tools/icons/</code></a></p>
+<h4 id="4、单选和复选框"><a href="#4、单选和复选框" class="headerlink" title="4、单选和复选框"></a>4、单选和复选框</h4><ul>
+<li><code>Switch</code></li>
+<li><code>Checkbox</code></li>
+</ul>
+<h4 id="5、输入框"><a href="#5、输入框" class="headerlink" title="5、输入框"></a>5、输入框</h4><ul>
+<li><code>onChange</code>方法通知输入框文本发生变化</li>
+<li>创建<code>TextEditingController</code>控制器，绑定输入框<ul>
+<li>设置占位文本，比输入框本身的属性优先级高</li>
+<li>获取绑定的输入框内的文本</li>
+<li>创建<code>FocusNode</code>，绑定输入框，来控制键盘焦点</li>
+</ul>
+</li>
+</ul>
+<h4 id="6、Form表单"><a href="#6、Form表单" class="headerlink" title="6、Form表单"></a>6、<code>Form</code>表单</h4><p><code>Form</code>表单是基于输入框封装的一个功能更完善的控件，需要对应<code>TextFormField</code>的使用，可以实现<code>validate</code>方法对所有输入框条件的一键验证</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-symbol">&#x27;package</span>:flutter/material.dart&#x27;;<br><br>void main() =&gt; runApp(<span class="hljs-type">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-comment">// This widget is the root of your application.</span><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">MaterialApp</span>(<br>      title: &#x27;表单&#x27;,<br>      theme: <span class="hljs-type">ThemeData</span>(<br>        primarySwatch: <span class="hljs-type">Colors</span>.blue,<br>      ),<br>      home: <span class="hljs-type">FormTestRoute</span>(),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FormTestRoute</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  _FormTestRouteState createState() =&gt; <span class="hljs-keyword">new</span> _FormTestRouteState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_FormTestRouteState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;FormTestRoute&gt;</span> </span>&#123;<br>  <span class="hljs-type">TextEditingController</span> _unameController = <span class="hljs-keyword">new</span> <span class="hljs-type">TextEditingController</span>();<br>  <span class="hljs-type">TextEditingController</span> _pwdController = <span class="hljs-keyword">new</span> <span class="hljs-type">TextEditingController</span>();<br>  <span class="hljs-type">GlobalKey</span> _formKey = <span class="hljs-keyword">new</span> <span class="hljs-type">GlobalKey</span>&lt;<span class="hljs-type">FormState</span>&gt;();<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Scaffold</span>(<br>      appBar: <span class="hljs-type">AppBar</span>(<br>        title: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;Form Test&quot;</span>),<br>      ),<br>      body: <span class="hljs-type">Padding</span>(<br>        padding: const <span class="hljs-type">EdgeInsets</span>.symmetric(vertical: <span class="hljs-number">16.0</span>, horizontal: <span class="hljs-number">24.0</span>),<br>        child: <span class="hljs-type">Form</span>(<br>          key: _formKey, <span class="hljs-comment">//设置globalKey，用于后面获取FormState</span><br>          autovalidate: <span class="hljs-literal">true</span>, <span class="hljs-comment">//开启自动校验</span><br>          child: <span class="hljs-type">Column</span>(<br>            children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>              <span class="hljs-type">TextFormField</span>(<br>                  autofocus: <span class="hljs-literal">true</span>,<br>                  controller: _unameController,<br>                  decoration: <span class="hljs-type">InputDecoration</span>(<br>                      labelText: <span class="hljs-string">&quot;用户名&quot;</span>,<br>                      hintText: <span class="hljs-string">&quot;用户名或邮箱&quot;</span>,<br>                      icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.person)),<br>                  <span class="hljs-comment">// 校验用户名</span><br>                  validator: (v) &#123;<br>                    <span class="hljs-keyword">return</span> v.trim().length &gt; <span class="hljs-number">0</span> ? <span class="hljs-literal">null</span> : <span class="hljs-string">&quot;用户名不能为空&quot;</span>;<br>                  &#125;),<br>              <span class="hljs-type">TextFormField</span>(<br>                  controller: _pwdController,<br>                  decoration: <span class="hljs-type">InputDecoration</span>(<br>                      labelText: <span class="hljs-string">&quot;密码&quot;</span>,<br>                      hintText: <span class="hljs-string">&quot;您的登录密码&quot;</span>,<br>                      icon: <span class="hljs-type">Icon</span>(<span class="hljs-type">Icons</span>.lock)),<br>                  obscureText: <span class="hljs-literal">true</span>,<br>                  <span class="hljs-comment">//校验密码</span><br>                  validator: (v) &#123;<br>                    <span class="hljs-keyword">return</span> v.trim().length &gt; <span class="hljs-number">5</span> ? <span class="hljs-literal">null</span> : <span class="hljs-string">&quot;密码不能少于6位&quot;</span>;<br>                  &#125;),<br>              <span class="hljs-comment">// 登录按钮</span><br>              <span class="hljs-type">Padding</span>(<br>                padding: const <span class="hljs-type">EdgeInsets</span>.only(top: <span class="hljs-number">28.0</span>),<br>                child: <span class="hljs-type">Row</span>(<br>                  children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>                    <span class="hljs-type">Expanded</span>(<br>                      child: <span class="hljs-type">RaisedButton</span>(<br>                        padding: <span class="hljs-type">EdgeInsets</span>.all(<span class="hljs-number">15.0</span>),<br>                        child: <span class="hljs-type">Text</span>(<span class="hljs-string">&quot;登录&quot;</span>),<br>                        color: <span class="hljs-type">Theme</span>.of(context).primaryColor,<br>                        textColor: <span class="hljs-type">Colors</span>.white,<br>                        onPressed: () &#123;<br>                          <span class="hljs-comment">//在这里不能通过此方式获取FormState，context不对</span><br>                          <span class="hljs-comment">//print(Form.of(context));</span><br><br>                          <span class="hljs-comment">// 通过_formKey.currentState 获取FormState后，</span><br>                          <span class="hljs-comment">// 调用validate()方法校验用户名密码是否合法，校验</span><br>                          <span class="hljs-comment">// 通过后再提交数据。</span><br>                          <span class="hljs-keyword">if</span> ((_formKey.currentState as <span class="hljs-type">FormState</span>).validate()) &#123;<br>                            <span class="hljs-comment">//验证通过提交数据</span><br>                            debugPrint(&#x27;通过&#x27;);<br>                          &#125;<br>                        &#125;,<br>                      ),<br>                    ),<br>                  ],<br>                ),<br>              )<br>            ],<br>          ),<br>        ),<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h4 id="7、进度条指示器"><a href="#7、进度条指示器" class="headerlink" title="7、进度条指示器"></a>7、进度条指示器</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">import</span> <span class="hljs-symbol">&#x27;package</span>:flutter/material.dart&#x27;;<br><br>void main() =&gt; runApp(<span class="hljs-type">MyApp</span>());<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyApp</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatelessWidget</span> </span>&#123;<br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">MaterialApp</span>(<br>      title: &#x27;进度条控件&#x27;,<br>      theme: <span class="hljs-type">ThemeData</span>(<br>        primarySwatch: <span class="hljs-type">Colors</span>.blue,<br>      ),<br>      home: <span class="hljs-type">MyHomePage</span>(),<br>    );<br>  &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyHomePage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">StatefulWidget</span> </span>&#123;<br>  _MyHomePageState createState() =&gt; _MyHomePageState();<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_MyHomePageState</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">State&lt;MyHomePage&gt;</span></span><br><span class="hljs-class">    <span class="hljs-keyword">with</span> <span class="hljs-title">SingleTickerProviderStateMixin</span> </span>&#123;<br>  <span class="hljs-type">AnimationController</span> _animationController;<br><br>  <span class="hljs-meta">@override</span><br>  void initState() &#123;<br>    <span class="hljs-comment">//动画执行时间3秒</span><br>    _animationController =<br>        <span class="hljs-keyword">new</span> <span class="hljs-type">AnimationController</span>(vsync: <span class="hljs-keyword">this</span>, duration: <span class="hljs-type">Duration</span>(seconds: <span class="hljs-number">3</span>));<br>    _animationController.forward();<br>    _animationController.addListener(() =&gt; setState(() =&gt; &#123;&#125;));<br>    <span class="hljs-keyword">super</span>.initState();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  void dispose() &#123;<br>    _animationController.dispose();<br>    <span class="hljs-keyword">super</span>.dispose();<br>  &#125;<br><br>  <span class="hljs-meta">@override</span><br>  <span class="hljs-type">Widget</span> build(<span class="hljs-type">BuildContext</span> context) &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-type">Scaffold</span>(<br>      appBar: <span class="hljs-type">AppBar</span>(<br>        title: <span class="hljs-type">Text</span>(&#x27;主页&#x27;),<br>      ),<br>      body: <span class="hljs-type">Column</span>(<br>        children: &lt;<span class="hljs-type">Widget</span>&gt;[<br>          <span class="hljs-type">LinearProgressIndicator</span>(<br>            backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>            valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>          ),<br>          <span class="hljs-comment">//进度条显示50%</span><br>          <span class="hljs-type">LinearProgressIndicator</span>(<br>            backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>            valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>            value: <span class="hljs-number">.5</span>,<br>          ),<br>          <span class="hljs-comment">// 模糊进度条(会执行一个旋转动画)</span><br>          <span class="hljs-type">CircularProgressIndicator</span>(<br>            backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>            valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>          ),<br>          <span class="hljs-comment">//进度条显示50%，会显示一个半圆</span><br>          <span class="hljs-type">CircularProgressIndicator</span>(<br>            backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>            valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>            value: <span class="hljs-number">.5</span>,<br>          ),<br>          <span class="hljs-comment">// 线性进度条高度指定为3</span><br>          <span class="hljs-type">SizedBox</span>(<br>            height: <span class="hljs-number">3</span>,<br>            child: <span class="hljs-type">LinearProgressIndicator</span>(<br>              backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>              valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>              value: <span class="hljs-number">.5</span>,<br>            ),<br>          ),<br>          <span class="hljs-comment">// 圆形进度条直径指定为100</span><br>          <span class="hljs-type">SizedBox</span>(<br>            height: <span class="hljs-number">100</span>,<br>            width: <span class="hljs-number">100</span>,<br>            child: <span class="hljs-type">CircularProgressIndicator</span>(<br>              backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>              valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>              value: <span class="hljs-number">.7</span>,<br>            ),<br>          ),<br>          <span class="hljs-comment">// 宽高不等</span><br>          <span class="hljs-type">SizedBox</span>(<br>            height: <span class="hljs-number">100</span>,<br>            width: <span class="hljs-number">130</span>,<br>            child: <span class="hljs-type">CircularProgressIndicator</span>(<br>              backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>              valueColor: <span class="hljs-type">AlwaysStoppedAnimation</span>(<span class="hljs-type">Colors</span>.blue),<br>              value: <span class="hljs-number">.7</span>,<br>            ),<br>          ),<br>          <span class="hljs-type">LinearProgressIndicator</span>(<br>            backgroundColor: <span class="hljs-type">Colors</span>.grey[<span class="hljs-number">200</span>],<br>            valueColor: <span class="hljs-type">ColorTween</span>(begin: <span class="hljs-type">Colors</span>.grey, end: <span class="hljs-type">Colors</span>.blue)<br>                .animate(_animationController), <span class="hljs-comment">// 从灰色变成蓝色</span><br>            value: _animationController.value,<br>          ),<br>        ],<br>      ),<br>    );<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="四、布局"><a href="#四、布局" class="headerlink" title="四、布局"></a>四、布局</h3><h4 id="1、线性布局（Row和Column）"><a href="#1、线性布局（Row和Column）" class="headerlink" title="1、线性布局（Row和Column）"></a>1、线性布局（<code>Row</code>和<code>Column</code>）</h4><ul>
+<li><code>Row</code>和<code>Column</code>会在主轴方向占用尽可能大的空间，而纵轴的长度则取决于他们最大子元素的长度</li>
+<li>如果<code>Row</code>里面嵌套<code>Row</code>，或者<code>Column</code>里面再嵌套<code>Column</code>，那么只有最外面的<code>Row</code>或<code>Column</code>会占用尽可能大的空间，里面<code>Row</code>或<code>Column</code>所占用的空间为实际大小</li>
+</ul>
+<h4 id="2、弹性布局（Flex）"><a href="#2、弹性布局（Flex）" class="headerlink" title="2、弹性布局（Flex）"></a>2、弹性布局（<code>Flex</code>）</h4><ul>
+<li><code>Row</code>和<code>Column</code>都继承自<code>Flex</code></li>
+<li><code>Expanded</code>可以按比例“扩伸”<code>Row</code>、<code>Column</code>和<code>Flex</code>子组件所占用的空间</li>
+<li><code>Spacer</code>的功能是占用指定比例的空间</li>
+</ul>
+<h4 id="3、流式布局（Wrap和Flow）"><a href="#3、流式布局（Wrap和Flow）" class="headerlink" title="3、流式布局（Wrap和Flow）"></a>3、流式布局（<code>Wrap</code>和<code>Flow</code>）</h4><ul>
+<li>超出屏幕显示范围会自动折行的布局称为流式布局</li>
+<li>一般很少会使用<code>Flow</code></li>
+</ul>
+<h4 id="4、层叠布局（Stack和Positioned）"><a href="#4、层叠布局（Stack和Positioned）" class="headerlink" title="4、层叠布局（Stack和Positioned）"></a>4、层叠布局（<code>Stack</code>和<code>Positioned</code>）</h4><ul>
+<li><code>Stack</code>允许子组件堆叠</li>
+<li><code>Positioned</code>用于根据<code>Stack</code>的四个角来确定子组件的位置</li>
+<li><code>Stack</code>和<code>Positioned</code>最好一起搭配使用</li>
+</ul>
+<h4 id="5、对齐与相对定位（Align）"><a href="#5、对齐与相对定位（Align）" class="headerlink" title="5、对齐与相对定位（Align）"></a>5、对齐与相对定位（<code>Align</code>）</h4><h5 id="1-Alignment"><a href="#1-Alignment" class="headerlink" title="1. Alignment"></a>1. <code>Alignment</code></h5><ul>
+<li><code>Alignment</code>会以矩形的中心点作为坐标原点，即<code>Alignment(0.0, 0.0)</code>，<code>x</code>、<code>y</code>的值从<code>-1</code>到<code>1</code>分别代表矩形左边到右边的距离和顶部到底边的距离</li>
+<li>计算公式：<code>(Alignment.x*childWidth/2+childWidth/2, Alignment.y*childHeight/2+childHeight/2)</code></li>
+</ul>
+<h5 id="2-FractionalOffset"><a href="#2-FractionalOffset" class="headerlink" title="2. FractionalOffset"></a>2. <code>FractionalOffset</code></h5><ul>
+<li><code>FractionalOffset</code>继承自<code>Alignment</code>，它和<code>Alignment</code>唯一的区别就是坐标原点不同，<code>FractionalOffset</code>的坐标原点为矩形的左侧顶点</li>
+<li>计算公式：<code>实际偏移 = (FractionalOffse.x * childWidth, FractionalOffse.y * childHeight)</code></li>
+</ul>
+<h5 id="3-Align和Stack对比"><a href="#3-Align和Stack对比" class="headerlink" title="3. Align和Stack对比"></a>3. <code>Align</code>和<code>Stack</code>对比</h5><ul>
+<li>定位参考系统不同</li>
+<li><code>Stack</code>可以有多个子元素，并且子元素可以堆叠，而<code>Align</code>只能有一个子元素，不存在堆叠</li>
+<li><code>Center</code>继承自<code>Align</code>，可以认为<code>Center</code>组件其实是对齐方式确定<code>（Alignment.center）</code>了的<code>Align</code></li>
+</ul>
+<p><span style="color: lightgray;"><em>未完待续</em></span></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/flutter/">flutter</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/flutter/">flutter</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0/">学习日记</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/11/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log4/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flutter学习日记-log4</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/05/Flutter%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0-log2/">
+                        <span class="hidden-mobile">Flutter学习日记-log2</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

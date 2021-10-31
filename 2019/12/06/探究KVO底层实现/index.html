@@ -1,0 +1,453 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/myImg/favicon.png">
+  <link rel="icon" href="/myImg/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="风轻云淡，于事安然。">
+  <meta name="author" content="AnderGH">
+  <meta name="keywords" content="">
+  
+  <title>探究KVO底层实现 - AnderGH&#39;s blogs</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"andergh.github.io","root":"/","version":"1.8.9-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":false,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>AnderGH's blogs</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/myImg/lineargradient.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="探究KVO底层实现">
+              
+                探究KVO底层实现
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-12-06 14:22" pubdate>
+        2019年12月6日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">探究KVO底层实现</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>本文参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0aa83ac521ba">《iOS窥探KVO底层实现原理篇》</a></p>
+<h4 id="一、定义"><a href="#一、定义" class="headerlink" title="一、定义"></a>一、定义</h4><blockquote>
+<p><code>KVO</code>全称为<code>Key Value Observing</code>，键值观察机制，由<code>NSKeyValueObserving</code>协议提供支持，<code>NSObject</code>类继承了该协议，所以<code>NSObject</code>的子类都可使用该方法</p>
+</blockquote>
+<h4 id="二、方法"><a href="#二、方法" class="headerlink" title="二、方法"></a>二、方法</h4><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">/* Register or deregister as an observer of the value at a key path relative to the receiver. The options determine what is included in observer notifications and when they&#x27;re sent, as described above, and the context is passed in observer notifications as described above. You should use -removeObserver:forKeyPath:context: instead of -removeObserver:forKeyPath: whenever possible because it allows you to more precisely specify your intent. When the same observer is registered for the same key path multiple times, but with different context pointers each time, -removeObserver:forKeyPath: has to guess at the context pointer when deciding what exactly to remove, and it can guess wrong.</span><br><span class="hljs-comment">在相对于接收者的关键路径上注册或注销该值的观察者。 这些选项确定观察者通知中包括的内容以及何时发送它们，如上所述，并且上下文如上所述在观察者通知中传递上下文。 您应尽可能使用removeObserver:forKeyPath:context：而不是removeObserver:forKeyPath:，因为它可以让您更精确地指定意图。 当同一观察者多次注册相同的KeyPath路径，但每次都使用不同的上下文指针时，removeObserver:forKeyPath:在确定要删除的对象时必须猜测上下文指针，并且可能会猜错。</span><br><span class="hljs-comment">*/</span><br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">addObserver</span>:(NSObject *)<span class="hljs-selector-tag">observer</span> <span class="hljs-selector-tag">forKeyPath</span>:(NSString *)<span class="hljs-selector-tag">keyPath</span> <span class="hljs-selector-tag">options</span>:(NSKeyValueObservingOptions)<span class="hljs-selector-tag">options</span> <span class="hljs-selector-tag">context</span>:(nullable void *)<span class="hljs-selector-tag">context</span>;<br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">removeObserver</span>:(NSObject *)<span class="hljs-selector-tag">observer</span> <span class="hljs-selector-tag">forKeyPath</span>:(NSString *)<span class="hljs-selector-tag">keyPath</span> <span class="hljs-selector-tag">context</span>:(nullable void *)<span class="hljs-selector-tag">context</span> <span class="hljs-selector-tag">API_AVAILABLE</span>(macos(<span class="hljs-number">10.7</span>), ios(<span class="hljs-number">5.0</span>), watchos(<span class="hljs-number">2.0</span>), tvos(<span class="hljs-number">9.0</span>));<br><span class="hljs-selector-tag">-</span> (void)<span class="hljs-selector-tag">removeObserver</span>:(NSObject *)<span class="hljs-selector-tag">observer</span> <span class="hljs-selector-tag">forKeyPath</span>:(NSString *)<span class="hljs-selector-tag">keyPath</span>;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">/* Options for use with -addObserver:forKeyPath:options:context: and -addObserver:toObjectsAtIndexes:forKeyPath:options:context:.</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">NS_OPTIONS</span>(<span class="hljs-built_in">NSUInteger</span>, <span class="hljs-built_in">NSKeyValueObservingOptions</span>) &#123;<br><br>    <span class="hljs-comment">/* Whether the change dictionaries sent in notifications should contain NSKeyValueChangeNewKey and NSKeyValueChangeOldKey entries, respectively.</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-built_in">NSKeyValueObservingOptionNew</span> = <span class="hljs-number">0x01</span>,<br>    <span class="hljs-built_in">NSKeyValueObservingOptionOld</span> = <span class="hljs-number">0x02</span>,<br><br>    <span class="hljs-comment">/* Whether a notification should be sent to the observer immediately, before the observer registration method even returns. The change dictionary in the notification will always contain an NSKeyValueChangeNewKey entry if NSKeyValueObservingOptionNew is also specified but will never contain an NSKeyValueChangeOldKey entry. (In an initial notification the current value of the observed property may be old, but it&#x27;s new to the observer.) You can use this option instead of explicitly invoking, at the same time, code that is also invoked by the observer&#x27;s -observeValueForKeyPath:ofObject:change:context: method. When this option is used with -addObserver:toObjectsAtIndexes:forKeyPath:options:context: a notification will be sent for each indexed object to which the observer is being added.</span><br><span class="hljs-comment">    在观察者注册方法返回之前是否立即将通知发送给观察者。 如果还指定了NSKeyValueObservingOptionNew，则通知中的更改字典将始终包含NSKeyValueChangeNewKey条目，但绝不包含NSKeyValueChangeOldKey条目。 （在初始通知中，observed属性的当前值可能是旧的，但对于观察者来说是新的。）您可以使用此选项，而不是同时显式调用观察者的observeValueForKeyPath:ofObject:change:context:方法。 与addObserver:toObjectsAtIndexes:forKeyPath:options:context一起使用此选项时，将向要添加观察者的每个索引对象发送通知。</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-built_in">NSKeyValueObservingOptionInitial</span> API_AVAILABLE(macos(<span class="hljs-number">10.5</span>), ios(<span class="hljs-number">2.0</span>), watchos(<span class="hljs-number">2.0</span>), tvos(<span class="hljs-number">9.0</span>)) = <span class="hljs-number">0x04</span>,<br><br>    <span class="hljs-comment">/* Whether separate notifications should be sent to the observer before and after each change, instead of a single notification after the change. The change dictionary in a notification sent before a change always contains an NSKeyValueChangeNotificationIsPriorKey entry whose value is [NSNumber numberWithBool:YES], but never contains an NSKeyValueChangeNewKey entry. You can use this option when the observer&#x27;s own KVO-compliance requires it to invoke one of the -willChange... methods for one of its own properties, and the value of that property depends on the value of the observed object&#x27;s property. (In that situation it&#x27;s too late to easily invoke -willChange... properly in response to receiving an -observeValueForKeyPath:ofObject:change:context: message after the change.)</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">When this option is specified, the change dictionary in a notification sent after a change contains the same entries that it would contain if this option were not specified, except for ordered unique to-many relationships represented by NSOrderedSets.  For those, for NSKeyValueChangeInsertion and NSKeyValueChangeReplacement changes, the change dictionary for a will-change notification contains an NSKeyValueChangeIndexesKey (and NSKeyValueChangeOldKey in the case of Replacement where the NSKeyValueObservingOptionOld option was specified at registration time) which give the indexes (and objects) which *may* be changed by the operation.  The second notification, after the change, contains entries reporting what did actually change.  For NSKeyValueChangeRemoval changes, removals by index are precise.</span><br><span class="hljs-comment">    是否应在每次更改之前和之后将单独的通知发送给观察者，而不是在更改之后将单个通知发送给观察者。更改之前发送的通知中的更改字典始终包含NSKeyValueChangeNotificationIsPriorKey条目，其值为[NSNumber numberWithBool:YES]，但从不包含NSKeyValueChangeNewKey条目。当观察者自己的KVO兼容性要求它为其自身的属性之一调用willChange ...方法之一时，可以使用此选项，并且该属性的值取决于所观察对象的属性的值。 （在那种情况下，为响应更改后收到的observeValueForKeyPath:ofObject:change:context:消息，正确地轻松调用willChange ...为时已晚。）</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">指定此选项后，更改后发送的通知中的更改字典包含与未指定此选项时将包含的条目相同的条目，但NSOrderedSets表示的有序唯一对多关系除外。对于这些更改，对于NSKeyValueChangeInsertion和NSKeyValueChangeReplacement更改，遗嘱变更通知的更改字典包含NSKeyValueChangeIndexesKey（在替换的情况下为NSKeyValueChangeChangeOldKey，在注册时指定了NSKeyValueObservingOptionOld选项的情况下），其索引（和对象）可以* *通过操作更改。更改后的第二个通知包含报告实际更改内容的条目。对于NSKeyValueChangeRemoval更改，按索引的删除是精确的。</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-built_in">NSKeyValueObservingOptionPrior</span> API_AVAILABLE(macos(<span class="hljs-number">10.5</span>), ios(<span class="hljs-number">2.0</span>), watchos(<span class="hljs-number">2.0</span>), tvos(<span class="hljs-number">9.0</span>)) = <span class="hljs-number">0x08</span><br><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-keyword">typedef</span> <span class="hljs-built_in">NSString</span> * <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-built_in">NS_STRING_ENUM</span>;<br><span class="hljs-comment">/* Keys for entries in change dictionaries. See the comments for -observeValueForKeyPath:ofObject:change:context: for more information.</span><br><span class="hljs-comment">*/</span><br>FOUNDATION_EXPORT <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSKeyValueChangeKindKey</span>;<br>FOUNDATION_EXPORT <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSKeyValueChangeNewKey</span>;<br>FOUNDATION_EXPORT <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSKeyValueChangeOldKey</span>;<br>FOUNDATION_EXPORT <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSKeyValueChangeIndexesKey</span>;<br>FOUNDATION_EXPORT <span class="hljs-built_in">NSKeyValueChangeKey</span> <span class="hljs-keyword">const</span> <span class="hljs-built_in">NSKeyValueChangeNotificationIsPriorKey</span> API_AVAILABLE(macos(<span class="hljs-number">10.5</span>), ios(<span class="hljs-number">2.0</span>), watchos(<span class="hljs-number">2.0</span>), tvos(<span class="hljs-number">9.0</span>));<br></code></pre></td></tr></table></figure>
+
+<h4 id="三、代码测试"><a href="#三、代码测试" class="headerlink" title="三、代码测试"></a>三、代码测试</h4><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">#import <span class="hljs-string">&quot;ViewController.h&quot;</span><br>#import <span class="hljs-string">&quot;AObject.h&quot;</span><br>#import &lt;objc/runtime.h&gt;<br><br>@implementation ViewController<br><br>- (void)viewDidLoad &#123;<br>    <span class="hljs-literal">[<span class="hljs-identifier">super</span> <span class="hljs-identifier">viewDidLoad</span>]</span>;<br>    <span class="hljs-comment">// Do any additional setup after loading the view.</span><br>    <br>    AObject *a1 = <span class="hljs-literal">[[AO<span class="hljs-identifier">bject</span> <span class="hljs-identifier">alloc</span>]</span> init];<br>    AObject *a2 = <span class="hljs-literal">[[AO<span class="hljs-identifier">bject</span> <span class="hljs-identifier">alloc</span>]</span> init];<br>    <br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;内存：%p，%p&quot;</span>, <span class="hljs-params">a1</span>, <span class="hljs-params">a2</span>)</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;类：%@，%@&quot;</span>, <span class="hljs-params">a1</span>.<span class="hljs-params">class</span>, <span class="hljs-params">a2</span>.<span class="hljs-params">class</span>)</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;isa：%@ %@&quot;</span>, <span class="hljs-params">object_getClass</span>(<span class="hljs-params">a1</span>)</span>, <span class="hljs-keyword">object</span><span class="hljs-constructor">_getClass(<span class="hljs-params">a2</span>)</span>);<br>    <br>    SEL sel = @selector(setP:);<br>    IMP imp1 = <span class="hljs-literal">[<span class="hljs-identifier">a1</span> <span class="hljs-identifier">methodForSelector</span>:<span class="hljs-identifier">sel</span>]</span>;<br>    IMP imp2 = <span class="hljs-literal">[<span class="hljs-identifier">a2</span> <span class="hljs-identifier">methodForSelector</span>:<span class="hljs-identifier">sel</span>]</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;IMP指针：%p %p&quot;</span>, <span class="hljs-params">imp1</span>, <span class="hljs-params">imp2</span>)</span>;<br>    <br>    <span class="hljs-literal">[<span class="hljs-identifier">a1</span> <span class="hljs-identifier">addObserver</span>:<span class="hljs-identifier">self</span> <span class="hljs-identifier">forKeyPath</span>:@&quot;<span class="hljs-identifier">p</span>&quot; <span class="hljs-identifier">options</span>:(NSK<span class="hljs-identifier">eyValueObservingOptionNew</span>) <span class="hljs-identifier">context</span>:<span class="hljs-identifier">nil</span>]</span>;<br>    <br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;添加KVO后内存：%p，%p&quot;</span>, <span class="hljs-params">a1</span>, <span class="hljs-params">a2</span>)</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;添加KVO后类：%@，%@&quot;</span>, <span class="hljs-params">a1</span>.<span class="hljs-params">class</span>, <span class="hljs-params">a2</span>.<span class="hljs-params">class</span>)</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;添加KVO后isa：%@ %@&quot;</span>, <span class="hljs-params">object_getClass</span>(<span class="hljs-params">a1</span>)</span>, <span class="hljs-keyword">object</span><span class="hljs-constructor">_getClass(<span class="hljs-params">a2</span>)</span>);<br>    <br>    imp1 = <span class="hljs-literal">[<span class="hljs-identifier">a1</span> <span class="hljs-identifier">methodForSelector</span>:<span class="hljs-identifier">sel</span>]</span>;<br>    imp2 = <span class="hljs-literal">[<span class="hljs-identifier">a2</span> <span class="hljs-identifier">methodForSelector</span>:<span class="hljs-identifier">sel</span>]</span>;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;添加KVO后IMP指针：%p %p&quot;</span>, <span class="hljs-params">imp1</span>, <span class="hljs-params">imp2</span>)</span>;<br>    <br>    a1.p = @<span class="hljs-string">&quot;1&quot;</span>;<br>    a2.p = @<span class="hljs-string">&quot;2&quot;</span>;<br>&#125;<br><br>- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)<span class="hljs-keyword">object</span> change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;<br>    <span class="hljs-constructor">NSLog(@<span class="hljs-string">&quot;%@&quot;</span>, <span class="hljs-params">change</span>)</span>;<br>&#125;<br><br>@<span class="hljs-keyword">end</span><br><br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.457732</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 内存：<span class="hljs-number">0x283a0cc70</span>，<span class="hljs-number">0x283a0cc90</span><br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.457797</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 类：AObject，AObject<br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.457821</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> isa：AObject AObject<br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.457839</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> IMP指针：<span class="hljs-number">0x1009e6150</span> <span class="hljs-number">0x1009e6150</span><br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.458057</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 添加KVO后内存：<span class="hljs-number">0x283a0cc70</span>，<span class="hljs-number">0x283a0cc90</span><br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.458084</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 添加KVO后类：AObject，AObject<br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.458106</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 添加KVO后isa：NSKVONotifying_AObject AObject<br><span class="hljs-number">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">13</span>:<span class="hljs-number">56</span>:<span class="hljs-number">30.458124</span>+<span class="hljs-number">0800</span> testKVO<span class="hljs-literal">[<span class="hljs-number">854</span>:<span class="hljs-number">62432</span>]</span> 添加KVO后IMP指针：<span class="hljs-number">0x1842b9020</span> <span class="hljs-number">0x1009e6150</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>添加了<code>KVO</code>之后<code>a1</code>修改<code>p</code>值之后 不再调用<code>AObject</code>的<code>setP:</code>方法 ,而 <code>a2</code>没有添加监听，依然正常调用<code>setP:</code>方法，由此可以得出系统修改了默认方法实现</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs apache">    <span class="hljs-attribute">NSLog</span>(@<span class="hljs-string">&quot;添加KVO后isa：%@ %@&quot;</span>, object_getClass(a<span class="hljs-number">1</span>), object_getClass(a<span class="hljs-number">2</span>));<br>    <span class="hljs-attribute">NSLog</span>(@<span class="hljs-string">&quot;添加KVO后superclass：%@ %@&quot;</span>, class_getSuperclass(object_getClass(a<span class="hljs-number">1</span>)), class_getSuperclass(object_getClass(a<span class="hljs-number">2</span>)));<br>    <br><span class="hljs-attribute">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">14</span>:<span class="hljs-number">04</span>:<span class="hljs-number">00</span>.<span class="hljs-number">196164</span>+<span class="hljs-number">0800</span> testKVO[<span class="hljs-number">881</span>:<span class="hljs-number">64017</span>] 添加KVO后isa：NSKVONotifying_AObject AObject<br><span class="hljs-attribute">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">14</span>:<span class="hljs-number">04</span>:<span class="hljs-number">00</span>.<span class="hljs-number">196194</span>+<span class="hljs-number">0800</span> testKVO[<span class="hljs-number">881</span>:<span class="hljs-number">64017</span>] 添加KVO后superclass：AObject NSObject<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>NSKVONotifying_AObjectn</code>是苹果动态创建的<code>AObject</code>子类</li>
+</ul>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs apache">    <span class="hljs-attribute">NSString</span> *methods<span class="hljs-number">1</span> =<span class="hljs-meta"> [self printMethods:object_getClass(a1)];</span><br><span class="hljs-meta">    NSString *methods2 = [self printMethods:object_getClass(a2)];</span><br><span class="hljs-meta">    NSLog(@&quot;%@&quot;, methods1);</span><br><span class="hljs-meta">    NSLog(@&quot;%@&quot;, methods2);</span><br><span class="hljs-meta">    </span><br><span class="hljs-meta">2019-12-06 14:08:10.447603+0800 testKVO[908:65143] [</span><br><span class="hljs-meta">setP:</span><br><span class="hljs-meta">class</span><br><span class="hljs-meta">dealloc</span><br><span class="hljs-meta">_isKVOA</span><br><span class="hljs-meta">]</span><br><span class="hljs-attribute">2019</span>-<span class="hljs-number">12</span>-<span class="hljs-number">06</span> <span class="hljs-number">14</span>:<span class="hljs-number">08</span>:<span class="hljs-number">10</span>.<span class="hljs-number">447618</span>+<span class="hljs-number">0800</span> testKVO[<span class="hljs-number">908</span>:<span class="hljs-number">65143</span>]<span class="hljs-meta"> [</span><br><span class="hljs-meta">.cxx_destruct</span><br><span class="hljs-meta">p</span><br><span class="hljs-meta">setP:</span><br><span class="hljs-meta">]</span><br></code></pre></td></tr></table></figure>
+
+<p>从输出结果可以看出来<code>NSKVONotifying_AObject</code>内部也有一个<code>setP:</code>方法 还重写了<code>class</code>和<code>dealloc</code>方法，由此，给出如下猜想：</p>
+<ul>
+<li>添加<code>KVO</code>之后，动态创建了一个子类，继承所观察的类，命名<code>NSKVONotifying_*</code>，重写了所观察属性的<code>set</code>方法，并且通过重写<code>class</code>方法隐藏了子类的存在，在<code>dealloc</code>中进行了释放等操作</li>
+<li>属性值发生变化时，触发了<code>NSKVONotifying_*</code>重写的<code>set</code>方法，此时便可以得到原值和新值，并在赋值时触发给定的相应方法</li>
+<li>这就能解释：如果观察的属性不存在<code>set</code>方法（直接创建的实例），那么<code>KVO</code>观察就不会生效</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/iOS/">iOS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iOS/">iOS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/KVO/">KVO</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/02/26/%E5%90%AF%E7%94%A8hexo%E6%96%B0%E4%B8%BB%E9%A2%98indigo/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">启用hexo新主题indigo</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/12/05/iOS%E5%B4%A9%E6%BA%83%E6%8E%92%E6%9F%A5/">
+                        <span class="hidden-mobile">iOS崩溃排查</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

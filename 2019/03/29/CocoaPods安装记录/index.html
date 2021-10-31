@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/myImg/favicon.png">
+  <link rel="icon" href="/myImg/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="风轻云淡，于事安然。">
+  <meta name="author" content="AnderGH">
+  <meta name="keywords" content="">
+  
+  <title>CocoaPods安装记录 - AnderGH&#39;s blogs</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"andergh.github.io","root":"/","version":"1.8.9-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":false,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>AnderGH's blogs</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/myImg/lineargradient.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="CocoaPods安装记录">
+              
+                CocoaPods安装记录
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-03-29 15:33" pubdate>
+        2019年3月29日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CocoaPods安装记录</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><code>CocoaPods</code>是<code>iOS</code>开发进行依赖管理的工具，可以方便开发人员引用和更新<code>Github</code>上的开源代码，本次记录下安装<code>CocoaPods</code>时的过程和遇到的问题。</p>
+<h3 id="一、Ruby环境"><a href="#一、Ruby环境" class="headerlink" title="一、Ruby环境"></a>一、<code>Ruby</code>环境</h3><h4 id="1、Ruby版本"><a href="#1、Ruby版本" class="headerlink" title="1、Ruby版本"></a>1、<code>Ruby</code>版本</h4><p><code>ruby</code>是一种脚本语言，<code>cocoapods</code>就是<code>ruby</code>语言编写的，所以要首先确认<code>ruby</code>环境，打开<code>macOS</code>系统的终端程序，使用以下命令行查看<code>ruby</code>版本</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>ruby -v<br></code></pre></td></tr></table></figure>
+<p>我的两台mac都装了同一个系统，输出结果如下：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-comment">//MacBook Pro (Retina, 15-inch, Mid 2015)</span><br><span class="hljs-selector-tag">ruby</span> <span class="hljs-selector-tag">2</span><span class="hljs-selector-class">.2</span><span class="hljs-selector-class">.2p95</span> (<span class="hljs-number">2015</span>-<span class="hljs-number">04</span>-<span class="hljs-number">13</span> revision <span class="hljs-number">50295</span>) <span class="hljs-selector-attr">[x86_64-darwin14]</span><br><br><span class="hljs-comment">//MacBook Pro (13-inch, 2017, Two Thunderbolt 3 ports)</span><br><span class="hljs-selector-tag">ruby</span> <span class="hljs-selector-tag">2</span><span class="hljs-selector-class">.3</span><span class="hljs-selector-class">.7p456</span> (<span class="hljs-number">2018</span>-<span class="hljs-number">03</span>-<span class="hljs-number">28</span> revision <span class="hljs-number">63024</span>) <span class="hljs-selector-attr">[universal.x86_64-darwin17]</span><br></code></pre></td></tr></table></figure>
+<p>15款的<code>mac</code>是一次一次升级系统升上来的，17款的是全新系统自带的，虽然是同一个系统版本，但是看到<code>ruby</code>不一样，由此可见，每次升级系统时<code>ruby</code>环境并不会随之升级。</p>
+<p>通常情况下系统自带的<code>ruby</code>环境可以直接安装<code>cocoapods</code>，如果觉得<code>ruby</code>环境过低，需要升级<code>ruby</code>环境，那么暴力一点，可以直接抹掉系统重新安装，当然，我们还可以使用正常的方法升级</p>
+<h4 id="2、Ruby升级"><a href="#2、Ruby升级" class="headerlink" title="2、Ruby升级"></a>2、<code>Ruby</code>升级</h4><p><code>Ruby</code>环境有个工具叫版本管理器，英文<code>Ruby Version Manager</code>，简称<code>RVM</code>，主要就是用来管理<code>ruby</code>版本的，<code>macOS</code>系统没有自带这个工具，所以需要先安装此工具。</p>
+<p><code>RVM</code>有官方网站<a target="_blank" rel="noopener" href="https://www.rvm.io/">https://www.rvm.io/</a></p>
+<ol>
+<li>按照官方说明，首先需要安装<code>GPG</code>秘钥，<code>macOS</code>没有安装工具，所以不能直接安装秘钥</li>
+</ol>
+<p>安装<code>GPG</code>组件可以有两种安装方法</p>
+<ul>
+<li>使用<code>Homebrew</code>安装</li>
+<li><code>GPG</code>官网<a target="_blank" rel="noopener" href="https://gpgtools.org/">https://gpgtools.org/</a>已发布安装包，可以直接下载安装</li>
+</ul>
+<p>安装过程中可能出现报错，可以自行搜索解决，我是通过<code>vpn</code>下载了<code>GPG</code>官网的安装包，直接进行的安装，安装完成后根据提示设置即可</p>
+<ol start="2">
+<li><code>GPG</code>安装成功后，再执行<code>RVM</code>官网提供的命令行，既可成功安装<code>rvm</code>工具</li>
+</ol>
+<p>请确保网络环境的正常访问，否则会安装失败，使用命令行查看<code>rvm</code>版本<code>rvm -v</code>，可确认是否安装成功</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">rvm</span> <span class="hljs-number">1</span>.<span class="hljs-number">29</span>.<span class="hljs-number">7</span> (latest) by Michal Papis, Piotr Kuczynski, Wayne E. Seguin<span class="hljs-meta"> [https://rvm.io]</span><br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>安装<code>ruby</code>新版本</li>
+</ol>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-comment">//查看ruby所有版本</span><br>$ rvm list known<br><br># MRI Rubies<br><span class="hljs-selector-attr">[ruby-]</span>1<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.6</span><span class="hljs-selector-attr">[-p420]</span><br><span class="hljs-selector-attr">[ruby-]</span>1<span class="hljs-selector-class">.8</span><span class="hljs-selector-class">.7</span><span class="hljs-selector-attr">[-head]</span> # security released on head<br><span class="hljs-selector-attr">[ruby-]</span>1<span class="hljs-selector-class">.9</span><span class="hljs-selector-class">.1</span><span class="hljs-selector-attr">[-p431]</span><br><span class="hljs-selector-attr">[ruby-]</span>1<span class="hljs-selector-class">.9</span><span class="hljs-selector-class">.2</span><span class="hljs-selector-attr">[-p330]</span><br><span class="hljs-selector-attr">[ruby-]</span>1<span class="hljs-selector-class">.9</span><span class="hljs-selector-class">.3</span><span class="hljs-selector-attr">[-p551]</span><br><span class="hljs-selector-attr">[ruby-]</span>2<span class="hljs-selector-class">.0</span><span class="hljs-selector-class">.0</span><span class="hljs-selector-attr">[-p648]</span><br><span class="hljs-selector-attr">[ruby-]</span>2<span class="hljs-selector-class">.1</span><span class="hljs-selector-attr">[.8]</span><br><span class="hljs-selector-attr">[ruby-]</span>2<span class="hljs-selector-class">.2</span><span class="hljs-selector-attr">[.4]</span><br><span class="hljs-selector-attr">[ruby-]</span>2<span class="hljs-selector-class">.3</span><span class="hljs-selector-attr">[.0]</span><br><span class="hljs-selector-attr">[ruby-]</span>2<span class="hljs-selector-class">.2-head</span><br>ruby-head<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">//</span>安装<span class="hljs-number">2.3</span>.<span class="hljs-number">0</span>版本<br>$ rvm install <span class="hljs-number">2.3</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-comment">//设置为系统默认版本</span><br>$ rvm <span class="hljs-keyword">use</span> <span class="hljs-number">2.3</span><span class="hljs-number">.0</span> --<span class="hljs-keyword">default</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="二、安装CocoaPods环境"><a href="#二、安装CocoaPods环境" class="headerlink" title="二、安装CocoaPods环境"></a>二、安装<code>CocoaPods</code>环境</h3><p><code>RubyGems</code>，简称<code>gems</code>是一个用于对<code>Ruby</code>组件进行打包的<code>Ruby</code>打包系统。<code>macOS</code>系统已集成了<code>gem</code>环境。</p>
+<h4 id="1、使用命令行安装cocoapods"><a href="#1、使用命令行安装cocoapods" class="headerlink" title="1、使用命令行安装cocoapods"></a>1、使用命令行安装<code>cocoapods</code></h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$ sudo gem <span class="hljs-keyword">install</span> cocoapods<br></code></pre></td></tr></table></figure>
+
+<h4 id="2、切换ruby软件源"><a href="#2、切换ruby软件源" class="headerlink" title="2、切换ruby软件源"></a>2、切换<code>ruby</code>软件源</h4><p><code>ruby</code>的默认软件源<a target="_blank" rel="noopener" href="https://rubygems.org/">https://rubygems.org</a>，是亚马逊的服务，国内无法访问，需要切换为国内的镜像<a target="_blank" rel="noopener" href="https://gems.ruby-china.com/">https://gems.ruby-china.com/</a>，按照镜像网站上的命令行切换即可</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vim">$ gem sources --<span class="hljs-built_in">add</span> http<span class="hljs-variable">s:</span>//gems.<span class="hljs-keyword">ruby</span>-china.<span class="hljs-keyword">com</span>/ --<span class="hljs-built_in">remove</span> http<span class="hljs-variable">s:</span>//rubygems.org/<br></code></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>gem sources -l<br></code></pre></td></tr></table></figure>
+<p>使用<code>-l</code>命令确保只有<code>gems.ruby-china.com</code>的软件源</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs vim">*** CURRENT SOURCES ***<br><br>http<span class="hljs-variable">s:</span>//gems.<span class="hljs-keyword">ruby</span>-china.<span class="hljs-keyword">com</span>/<br></code></pre></td></tr></table></figure>
+
+<h4 id="3、镜像索引替换"><a href="#3、镜像索引替换" class="headerlink" title="3、镜像索引替换"></a>3、镜像索引替换</h4><p><code>github</code>上所有的项目的<code>podspec</code>都保存在<a target="_blank" rel="noopener" href="https://github.com/CocoaPods/Specs">https://github.com/CocoaPods/Specs.git</a>，我们需要把保存的所有索引下载到本地，这样才能在执行pod命令时正常获取到github上的资源路径，虽然索引信息不大，只有几百兆，但是由于数量很多，检索起来非常耗时，国内访问<code>github</code>速度非常慢，所以建议使用<a target="_blank" rel="noopener" href="https://gitclub.cn/CocoaPods/Specs">https://gitclub.cn/CocoaPods/Specs.git</a>替换，如下：</p>
+<ul>
+<li>方法一：</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ git clone https:<span class="hljs-regexp">//gi</span>tclub.cn<span class="hljs-regexp">/CocoaPods/</span>Specs.git ~<span class="hljs-regexp">/.cocoapods/</span>repos/master<br></code></pre></td></tr></table></figure>
+<p>使用<code>git clone</code>方法拷贝到本地，后面的<code>~/.cocoapods/repos/master</code>目录是本地的目录，一般我们将<code>cocoapods</code>目录做成隐藏目录，并放在系统根目录下，目录结构<code>repos/master</code>，执行命令行时，会自动在根目录下创建<code>.cocoapods</code>的隐藏目录，使用终端工具可以查看到该隐藏目录。</p>
+<div style="color: red">注意：此命令行较为耗时，请确保网络环境的顺畅，同时建议先排查本机环境配置，争取一次成功，常见报错及配置如下：</div><br/>
+
+<blockquote>
+<p>RPC failed; curl 56 LibreSSL SSL_read: SSL_ERROR_SYSCALL, errno</p>
+</blockquote>
+<p>此系列报错均可以通过配置解决，具体按<code>errno</code>后面的报错码决定，可依次检查以下配置：</p>
+<ol>
+<li>设置<code>postBuffer</code>值大一点，1048576000是1000M<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">$ git <span class="hljs-built_in">config</span> <span class="hljs-comment">--global http.postBuffer 1048576000</span><br></code></pre></td></tr></table></figure></li>
+<li><code>Xcode</code>配置问题</li>
+</ol>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle">sudo xcode-select -<span class="hljs-keyword">switch</span> <span class="hljs-regexp">/Applications/</span>Xcode.app<span class="hljs-regexp">/Contents/</span>Developer<br></code></pre></td></tr></table></figure>
+<p>根据你默认的<code>Xcode</code>来修改在<code>/Applications/和/Contents/Developer</code>中间的<code>app</code>的名字</p>
+<ul>
+<li>方法二：</li>
+</ul>
+<p>如果<code>git clone</code>的命令下载速度很慢，那么可以使用其他下载工具，直接下载<code>zip</code>格式或其他格式压缩包，<code>github</code>和<code>gitclub</code>都提供了压缩包的下载方式，使用第三方客户端下载会比较快速下载完之后，需要手动创建<code>.cocoapods</code>目录，并将压缩包解压后组成完成的目录<code>~/.cocoapods/repos/master</code></p>
+<p><img src="image_1.png" srcset="/img/loading.gif" lazyload alt="image_1.png"></p>
+<h4 id="4、setup指令"><a href="#4、setup指令" class="headerlink" title="4、setup指令"></a>4、<code>setup</code>指令</h4><p><code>git</code>拷贝成功后，需要执行如下命令：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino">$ pod setup<br></code></pre></td></tr></table></figure>
+<p>继续等待一段时间后，<code>cocoapods</code>环境即全部安装成功，<div style="color: red">同样需要注意网络顺畅</div><br/></p>
+<h3 id="三、pod版本修改"><a href="#三、pod版本修改" class="headerlink" title="三、pod版本修改"></a>三、pod版本修改</h3><p>不同版本的cocoapods在应用第三方代码时有不同的地方，有时会导致头文件报错，或者引用失败等情况，通过<code>--version</code>查看安装的pod版本</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ pod <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+<p>上面安装时<code>install</code>命令没有指定版本号，所以默认安装的是最新的版本，通过<code>gem</code>命令查看所有的pod版本</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>gem list<br></code></pre></td></tr></table></figure>
+<p>如下：</p>
+<figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs erlang">*** LOCAL GEMS ***<br><br><span class="hljs-function"><span class="hljs-title">activesupport</span> <span class="hljs-params">(<span class="hljs-number">4.2</span>.<span class="hljs-number">11.1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">atomos</span> <span class="hljs-params">(<span class="hljs-number">0.1</span>.<span class="hljs-number">3</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">bigdecimal</span> <span class="hljs-params">(<span class="hljs-number">1.2</span>.<span class="hljs-number">8</span>)</span></span><br><span class="hljs-function">CFP<span class="hljs-title">ropertyList</span> <span class="hljs-params">(<span class="hljs-number">3.0</span>.<span class="hljs-number">0</span>, <span class="hljs-number">2.2</span>.<span class="hljs-number">8</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">claide</span> <span class="hljs-params">(<span class="hljs-number">1.0</span>.<span class="hljs-number">2</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span> <span class="hljs-params">(<span class="hljs-number">1.6</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">core</span> <span class="hljs-params">(<span class="hljs-number">1.6</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">deintegrate</span> <span class="hljs-params">(<span class="hljs-number">1.0</span>.<span class="hljs-number">3</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">downloader</span> <span class="hljs-params">(<span class="hljs-number">1.2</span>.<span class="hljs-number">2</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">plugins</span> <span class="hljs-params">(<span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">search</span> <span class="hljs-params">(<span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">stats</span> <span class="hljs-params">(<span class="hljs-number">1.1</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">trunk</span> <span class="hljs-params">(<span class="hljs-number">1.6</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">cocoapods</span>-<span class="hljs-title">try</span> <span class="hljs-params">(<span class="hljs-number">1.1</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">colored2</span> <span class="hljs-params">(<span class="hljs-number">3.1</span>.<span class="hljs-number">2</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">concurrent</span>-<span class="hljs-title">ruby</span> <span class="hljs-params">(<span class="hljs-number">1.1</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">did_you_mean</span> <span class="hljs-params">(<span class="hljs-number">1.0</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">escape</span> <span class="hljs-params">(<span class="hljs-number">0.0</span>.<span class="hljs-number">4</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">fourflusher</span> <span class="hljs-params">(<span class="hljs-number">2.2</span>.<span class="hljs-number">0</span>, <span class="hljs-number">2.0</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">fuzzy_match</span> <span class="hljs-params">(<span class="hljs-number">2.0</span>.<span class="hljs-number">4</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">gh_inspector</span> <span class="hljs-params">(<span class="hljs-number">1.1</span>.<span class="hljs-number">3</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">i18n</span> <span class="hljs-params">(<span class="hljs-number">0.9</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">io</span>-<span class="hljs-title">console</span> <span class="hljs-params">(<span class="hljs-number">0.4</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">json</span> <span class="hljs-params">(<span class="hljs-number">1.8</span>.<span class="hljs-number">3.1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">libxml</span>-<span class="hljs-title">ruby</span> <span class="hljs-params">(<span class="hljs-number">2.9</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">minitest</span> <span class="hljs-params">(<span class="hljs-number">5.8</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">molinillo</span> <span class="hljs-params">(<span class="hljs-number">0.6</span>.<span class="hljs-number">6</span>, <span class="hljs-number">0.5</span>.<span class="hljs-number">7</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">nanaimo</span> <span class="hljs-params">(<span class="hljs-number">0.2</span>.<span class="hljs-number">6</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">nap</span> <span class="hljs-params">(<span class="hljs-number">1.1</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">net</span>-<span class="hljs-title">telnet</span> <span class="hljs-params">(<span class="hljs-number">0.1</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">netrc</span> <span class="hljs-params">(<span class="hljs-number">0.11</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">nokogiri</span> <span class="hljs-params">(<span class="hljs-number">1.5</span>.<span class="hljs-number">6</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">power_assert</span> <span class="hljs-params">(<span class="hljs-number">0.2</span>.<span class="hljs-number">6</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">psych</span> <span class="hljs-params">(<span class="hljs-number">2.1</span>.<span class="hljs-number">0.1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">rake</span> <span class="hljs-params">(<span class="hljs-number">10.4</span>.<span class="hljs-number">2</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">rdoc</span> <span class="hljs-params">(<span class="hljs-number">4.2</span>.<span class="hljs-number">1</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">ruby</span>-<span class="hljs-title">macho</span> <span class="hljs-params">(<span class="hljs-number">1.4</span>.<span class="hljs-number">0</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">sqlite3</span> <span class="hljs-params">(<span class="hljs-number">1.3</span>.<span class="hljs-number">11</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">test</span>-<span class="hljs-title">unit</span> <span class="hljs-params">(<span class="hljs-number">3.1</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">thread_safe</span> <span class="hljs-params">(<span class="hljs-number">0.3</span>.<span class="hljs-number">6</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">tzinfo</span> <span class="hljs-params">(<span class="hljs-number">1.2</span>.<span class="hljs-number">5</span>)</span></span><br><span class="hljs-function"><span class="hljs-title">xcodeproj</span> <span class="hljs-params">(<span class="hljs-number">1.8</span>.<span class="hljs-number">1</span>)</span></span><br></code></pre></td></tr></table></figure>
+<p>当前安装的为<code>cocoapods (1.6.1)</code>版本，我们要切换到1.3.1的版本，通过<code>uninstall</code>的命令即可实现</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>gem uninstall cocoapods -v <span class="hljs-number">1.6</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>当移除最后一个版本时，会提示</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">Remove <span class="hljs-built_in">executable</span><span class="hljs-variable">s:</span><br>pod, <span class="hljs-keyword">sandbox</span>-pod<br><br>in addition <span class="hljs-keyword">to</span> the gem? [Yn]<br></code></pre></td></tr></table></figure>
+<p>回车或者Y进行确认，删除<code>pod</code>目录，再安装执行版本即可</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">$ gem <span class="hljs-keyword">install</span> cocoapods -v <span class="hljs-number">1.3</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>注意：如果出现关于文件权限的报错问题，或者删除命令无效，可以使用<code>sudo</code>系统管理员的权限重复操作</p>
+<h3 id="四、附录："><a href="#四、附录：" class="headerlink" title="四、附录："></a>四、附录：</h3><p>摘自<a target="_blank" rel="noopener" href="https://kaqijiang.github.io/mac%E5%B7%A5%E5%85%B7/2018/03/09/Mac%E5%AE%89%E8%A3%85Ruby%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%E5%99%A8-RVM.html">https://kaqijiang.github.io/mac工具/2018/03/09/Mac安装Ruby版本管理器-RVM.html</a></p>
+<ul>
+<li><code>ruby</code>、<code>rvm</code>常用指令</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-variable">$</span> ruby <span class="hljs-literal">-v</span> <span class="hljs-comment"># 查看ruby 版本</span><br><span class="hljs-variable">$</span> rvm list known <span class="hljs-comment"># 列出已知的 ruby 版本</span><br><span class="hljs-variable">$</span> rvm install <span class="hljs-number">2.3</span>.<span class="hljs-number">0</span> <span class="hljs-comment"># 选择指定 ruby 版本进行更新</span><br><span class="hljs-variable">$</span> rvm get stable <span class="hljs-comment"># 更新 rvm</span><br><span class="hljs-variable">$</span> rvm use <span class="hljs-number">2.2</span>.<span class="hljs-number">2</span> <span class="hljs-comment"># 切换到指定 ruby 版本</span><br><span class="hljs-variable">$</span> rvm use <span class="hljs-number">2.2</span>.<span class="hljs-number">2</span> -<span class="hljs-literal">-default</span> <span class="hljs-comment"># 设置指定 ruby 版本为默认版本</span><br><span class="hljs-variable">$</span> rvm list <span class="hljs-comment"># 查询已安装的 ruby 版本</span><br><span class="hljs-variable">$</span> rvm remove <span class="hljs-number">1.9</span>.<span class="hljs-number">2</span> <span class="hljs-comment"># 卸载移除 指定 ruby 版本</span><br><br><span class="hljs-variable">$</span> <span class="hljs-built_in">curl</span> <span class="hljs-literal">-L</span> https://get.rvm.io | bash <span class="hljs-literal">-s</span> stable <span class="hljs-comment"># 安装 rvm 环境</span><br><span class="hljs-variable">$</span> <span class="hljs-built_in">curl</span> <span class="hljs-literal">-sSL</span> https://get.rvm.io | bash <span class="hljs-literal">-s</span> stable -<span class="hljs-literal">-ruby</span> <span class="hljs-comment"># 默认安装 rvm 最新版本</span><br><span class="hljs-variable">$</span> <span class="hljs-built_in">curl</span> <span class="hljs-literal">-sSL</span> https://get.rvm.io | bash <span class="hljs-literal">-s</span> stable -<span class="hljs-literal">-ruby</span>=<span class="hljs-number">2.3</span>.<span class="hljs-number">0</span> <span class="hljs-comment"># 安装 rvm 指定版本</span><br><span class="hljs-variable">$</span> source ~/.rvm/scripts/rvm <span class="hljs-comment"># 载入 rvm</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>gem</code>常用指令</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> gem -v <span class="hljs-comment"># 查看 gem 版本</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem <span class="hljs-built_in">source</span> <span class="hljs-comment"># 查看 gem 配置源</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem <span class="hljs-built_in">source</span> -l <span class="hljs-comment"># 查看 gem 配置源目录</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem sources -a url <span class="hljs-comment"># 添加 gem 配置源（url 需换成网址）</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem sources --add url <span class="hljs-comment"># 添加 gem 配置源（url 需换成网址）</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem sources -r url <span class="hljs-comment"># 删除 gem 配置源（url 需换成网址）</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem sources --remove url <span class="hljs-comment"># 删除 gem 配置源（url 需换成网址）</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem update <span class="hljs-comment"># 更新 所有包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem update --system <span class="hljs-comment"># 更新 Ruby Gems 软件</span></span><br><br><span class="hljs-meta">$</span><span class="bash"> gem install rake <span class="hljs-comment"># 安装 rake，从本地或远程服务器</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem install rake --remote <span class="hljs-comment"># 安装 rake，从远程服务器</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem install watir -v 1.6.2 <span class="hljs-comment"># 安装 指定版本的 watir</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem install watir --version 1.6.2 <span class="hljs-comment"># 安装 指定版本的 watir</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem uninstall rake <span class="hljs-comment"># 卸载 rake 包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem list d <span class="hljs-comment"># 列出 本地以 d 打头的包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem query -n <span class="hljs-string">&#x27;&#x27;</span>[0-9]<span class="hljs-string">&#x27;&#x27;</span> --<span class="hljs-built_in">local</span> <span class="hljs-comment"># 查找 本地含有数字的包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem search <span class="hljs-built_in">log</span> --both <span class="hljs-comment"># 查找 从本地和远程服务器上查找含有 log 字符串的包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem search <span class="hljs-built_in">log</span> --remoter <span class="hljs-comment"># 查找 只从远程服务器上查找含有 log 字符串的包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem search -r <span class="hljs-built_in">log</span> <span class="hljs-comment"># 查找 只从远程服务器上查找含有log字符串的包</span></span><br><br><span class="hljs-meta">$</span><span class="bash"> gem <span class="hljs-built_in">help</span> <span class="hljs-comment"># 提醒式的帮助</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem <span class="hljs-built_in">help</span> install <span class="hljs-comment"># 列出 install 命令 帮助</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem <span class="hljs-built_in">help</span> examples <span class="hljs-comment"># 列出 gem 命令使用一些例子</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem build rake.gemspec <span class="hljs-comment"># 把 rake.gemspec 编译成 rake.gem</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem check -v pkg/rake-0.4.0.gem <span class="hljs-comment"># 检测 rake 是否有效</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem cleanup <span class="hljs-comment"># 清除 所有包旧版本，保留最新版本</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem contents rake <span class="hljs-comment"># 显示 rake 包中所包含的文件</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem dependency rails -v 0.10.1 <span class="hljs-comment"># 列出 与 rails 相互依赖的包</span></span><br><span class="hljs-meta">$</span><span class="bash"> gem environment <span class="hljs-comment"># 查看 gem 的环境</span></span><br><br><span class="hljs-meta">$</span><span class="bash"> sudo gem -v <span class="hljs-comment"># 查看 gem 版本（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem install cocoa pods <span class="hljs-comment"># 安装 CocoaPods（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem install cocoapods <span class="hljs-comment"># 安装 CocoaPods（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem install cocoapods --pre <span class="hljs-comment"># 安装 CocoaPods 至预览版（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem install cocoapods -v 0.39.0 <span class="hljs-comment"># 安装 CocoaPods 指定版本（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem update cocoapods <span class="hljs-comment"># 更新 CocoaPods 至最新版（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem update cocoapods --pre <span class="hljs-comment"># 更新 CocoaPods 至预览版（以管理员权限）</span></span><br><span class="hljs-meta">$</span><span class="bash"> sudo gem uninstall cocoapods -v 0.39.0 <span class="hljs-comment"># 移除 CocoaPods 指定版本（以管理员权限）</span></span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>pod</code>常用指令</li>
+</ul>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elixir"><span class="hljs-variable">$ </span>pod setup <span class="hljs-comment"># CocoaPods 将信息下载到~/.cocoapods/repos 目录下。如果安装 CocoaPods 时不执行此命令，在初次执行 pod intall 命令时，系统也会自动执行该指令</span><br><span class="hljs-variable">$ </span>pod --version <span class="hljs-comment"># 检查 CocoaPods 是否安装成功及其版本号</span><br><span class="hljs-variable">$ </span>pod install <span class="hljs-comment"># 安装 CocoaPods 的配置文件 Podfile</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/iOS/">iOS</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/iOS/">iOS</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Cocoapods/">Cocoapods</a>
+                    
+                      <a class="hover-with-bg" href="/tags/gem/">gem</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">代码高亮</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/29/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+                        <span class="hidden-mobile">正则表达式快速入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

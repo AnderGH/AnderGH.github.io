@@ -1,0 +1,462 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/myImg/favicon.png">
+  <link rel="icon" href="/myImg/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="风轻云淡，于事安然。">
+  <meta name="author" content="AnderGH">
+  <meta name="keywords" content="">
+  
+  <title>如何在macOS系统下搭建hexo博客 - AnderGH&#39;s blogs</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.4.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"andergh.github.io","root":"/","version":"1.8.9-a","typing":{"enable":false,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":false,"image_zoom":{"enable":true},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":6},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>AnderGH's blogs</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/myImg/lineargradient.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何在macOS系统下搭建hexo博客">
+              
+                如何在macOS系统下搭建hexo博客
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-04-11 22:54" pubdate>
+        2019年4月11日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何在macOS系统下搭建hexo博客</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><code>JavaScript</code>作为一种脚本语言，出现没多久就事实上统一了前端开发，而<code>Node.js</code>的出现，把<code>JavaScript</code>也带入到了后端服务的开发，<code>hexo</code>博客框架就是基于<code>node.js</code>开发的工具。</p>
+<h4 id="一、安装node-js环境"><a href="#一、安装node-js环境" class="headerlink" title="一、安装node.js环境"></a>一、安装<code>node.js</code>环境</h4><p><code>node.js</code>有中文官网，地址：<a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/">https://nodejs.org/zh-cn/</a>，<code>macOS</code>系统下直接下载安装包安装即可，官网建议使用<code>LTS</code>的稳定版本</p>
+<p><img src="image_1.png" srcset="/img/loading.gif" lazyload alt="image_1.png"></p>
+<h4 id="二、node-js包管理工具npm"><a href="#二、node-js包管理工具npm" class="headerlink" title="二、node.js包管理工具npm"></a>二、<code>node.js</code>包管理工具<code>npm</code></h4><p>当越来越多的开发者使用<code>node.js</code>环境开发时，此时就需要一个统一管理这些开源包的工具，<code>npm</code>是世界上最大的软件注册表，基本上所有基于<code>node.js</code>的开源软件开发者都在使用<code>npm</code>互相分享，关于<code>npm</code>的介绍请参考<a target="_blank" rel="noopener" href="https://www.npmjs.com.cn/">官网</a>，地址：<a target="_blank" rel="noopener" href="https://www.npmjs.com.cn/">https://www.npmjs.com.cn/</a>。</p>
+<p>而从刚才<code>node.js</code>官网中可以看到，我们安装的<code>node.js</code>安装包中已经包含了<code>npm</code>工具，可以直接开始使用。</p>
+<h4 id="三、node-js版本管理工具Node-version-managers"><a href="#三、node-js版本管理工具Node-version-managers" class="headerlink" title="三、node.js版本管理工具Node version managers"></a>三、<code>node.js</code>版本管理工具<code>Node version managers</code></h4><p>一般情况下，我们安装完<code>node.js</code>后就可以直接使用了，但是会经常碰到一个权限的报错，官网也对这个问题进行了收录，地址：<a target="_blank" rel="noopener" href="https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally">https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally</a>，官网给出了两个方法，推荐使用<code>Node version managers</code>重新安装<code>npm</code></p>
+<p><code>Node version managers</code>简称<code>nvm</code>，就是用来管理<code>node.js</code>和<code>npm</code>的版本的，我们可以直接访问<code>github</code>上<code>manOS</code>版本的代码以及文档，地址：<a target="_blank" rel="noopener" href="https://github.com/creationix/nvm">https://github.com/creationix/nvm</a>，根据文档说明使用如下命令行进行<code>nvm</code>的安装</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ curl -o- https:<span class="hljs-regexp">//</span>raw.githubusercontent.com<span class="hljs-regexp">/creationix/</span>nvm<span class="hljs-regexp">/v0.34.0/i</span>nstall.sh | bash<br></code></pre></td></tr></table></figure>
+
+<p>注意：安装完之后，根据文档和终端弹出的提示，<code>nvm</code>启动需要如下的命令（不同的版本可能需要的命令有差别，请以终端弹出的提示为准）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> <span class="hljs-built_in">export</span> NVM_DIR=<span class="hljs-string">&quot;<span class="hljs-variable">$HOME</span>/.nvm&quot;</span></span><br><span class="hljs-meta">$</span><span class="bash"> [ -s <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/nvm.sh&quot;</span> ] &amp;&amp; \. <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/nvm.sh&quot;</span></span><br><br>//第三行命令是我的电脑上终端提示的，官方文档只有上面两条<br><span class="hljs-meta">$</span><span class="bash"> [ -s <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/bash_completion&quot;</span> ] &amp;&amp; \. <span class="hljs-string">&quot;<span class="hljs-variable">$NVM_DIR</span>/bash_completion&quot;</span></span><br></code></pre></td></tr></table></figure>
+<p>每次重启终端的，打开新的终端页面，都需要再次启动<code>nvm</code>命令，所以官方文档建议我们将命令配置到<code>nvm</code>的隐藏文件中，每次打开终端可以直接使用，我按照文档修改了<code>~/.bash_profile</code>文件，写入了以上的启动命令，保存后每次打开终端就可以直接使用<code>nvm</code>命令了。</p>
+<p>安装完<code>nvm</code>后重新安装或更新<code>npm</code>，已经没有权限的报错了。</p>
+<h4 id="四、淘宝镜像cnpm"><a href="#四、淘宝镜像cnpm" class="headerlink" title="四、淘宝镜像cnpm"></a>四、淘宝镜像<code>cnpm</code></h4><p>由于<code>npm</code>工具是国外的服务器，所以淘宝提供了一个国内的镜像版本，地址：<a target="_blank" rel="noopener" href="https://npm.taobao.org/">https://npm.taobao.org/</a>，该网站上有使用文档，命令行简单引用即可，其他用法请自行参考。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">$ npm install -g cnpm --registry=https:<span class="hljs-regexp">//</span>registry.npm.taobao.org<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="五、hexo博客框架搭建"><a href="#五、hexo博客框架搭建" class="headerlink" title="五、hexo博客框架搭建"></a>五、<code>hexo</code>博客框架搭建</h4><p>所有的环境安装结束后，开始生成<code>hexo</code>博客，<code>hexo</code>中文官网地址：<a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">https://hexo.io/zh-cn/</a></p>
+<h5 id="1-导入hexo代码"><a href="#1-导入hexo代码" class="headerlink" title="1. 导入hexo代码"></a>1. 导入<code>hexo</code>代码</h5><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm">$ npm install hexo-<span class="hljs-keyword">cli</span> -g<br></code></pre></td></tr></table></figure>
+<p>注意：官网要求导入的是<code>hexo-cli</code>，而不是<code>hexo</code>，这两者是有区别的，<code>hexo-cli</code>负责使用<code>init</code>等命令创建<code>hexo</code>工程，创建好了之后，工程由<code>hexo</code>模块负责真正的项目工作（生成静态页面、预览等）。</p>
+<h5 id="2-创建本地hexo工程"><a href="#2-创建本地hexo工程" class="headerlink" title="2. 创建本地hexo工程"></a>2. 创建本地<code>hexo</code>工程</h5><p>首先创建博客本地工程文件夹，我的文件夹名称就叫<code>MyBlog</code>，打开终端，<code>cd</code>命令到<code>MyBlog</code>文件夹后，使用<code>init</code>命令创建工程，当然也可以按照官网的命令行，效果一致。</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">$ hexo <span class="hljs-keyword">init</span><br></code></pre></td></tr></table></figure>
+<p>等待<code>init</code>结束，<code>hexo</code>博客工程就已经创建好了</p>
+<h5 id="3-hexo的常用命令"><a href="#3-hexo的常用命令" class="headerlink" title="3. hexo的常用命令"></a>3. <code>hexo</code>的常用命令</h5><figure class="highlight verilog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs verilog"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> 新建一篇markdown格式的文章</span><br><span class="hljs-comment"> 新建的文章目录是MyBlog/source/_posts</span><br><span class="hljs-comment"> */</span><br>$ hexo <span class="hljs-keyword">new</span> &lt;title&gt;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> 可直接缩写成首字母g，代表生成操作</span><br><span class="hljs-comment"> hexo框架会将本地的markdown文档和你的其他配置项生成一套完整的静态页面，页面生成路径为MyBlog/public子目录</span><br><span class="hljs-comment"> */</span><br>$ hexo <span class="hljs-keyword">generate</span><br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> 可缩写成首字母d，代表将生成的静态网站页面部署到服务器上</span><br><span class="hljs-comment"> */</span><br>$ hexo deploy<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> 可缩写成首字母s，代表使用本机预览生成好的网站</span><br><span class="hljs-comment"> 默认本机预览地址http://localhost:4000/</span><br><span class="hljs-comment"> */</span><br>$ hexo server<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> 清除缓存文件（db.json）和已生成的静态文件（public）</span><br><span class="hljs-comment"> 某些涉及网站、主题等的配置，可能需要执行clean命令重新生成</span><br><span class="hljs-comment"> */</span><br>$ hexo clean<br></code></pre></td></tr></table></figure>
+
+<h4 id="六、关联Github"><a href="#六、关联Github" class="headerlink" title="六、关联Github"></a>六、关联<code>Github</code></h4><p>创建<code>github</code>账号，新建仓库，仓库名称写法为固定写法<code>用户名.github.io</code>，例如我的博客名称<code>AnderGH.github.io</code></p>
+<p><img src="image_2.png" srcset="/img/loading.gif" lazyload alt="image_2.png"></p>
+<p>将完整的仓库地址配置在博客配置文件<code>_config.yml</code></p>
+<p><img src="image_3.png" srcset="/img/loading.gif" lazyload alt="image_3.png"></p>
+<h4 id="七、其他问题"><a href="#七、其他问题" class="headerlink" title="七、其他问题"></a>七、其他问题</h4><ul>
+<li>执行<code>hexo g</code>后报错</li>
+</ul>
+<blockquote>
+<p>ERROR Deployer not found: git</p>
+</blockquote>
+<p>根据官方文档知道<code>hexo</code>框架升级到<code>3.0</code>版本之后需要安装<code>git</code>环境，如下命令</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">$ npm install hexo-deployer-git <span class="hljs-comment">--save</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Hexo/">Hexo</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Hexo/">Hexo</a>
+                    
+                  </div>
+                
+              </div>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/15/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">前端学习计划</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/04/01/%E4%BB%A3%E7%A0%81%E9%AB%98%E4%BA%AE/">
+                        <span class="hidden-mobile">代码高亮</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+    
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.0/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
+
+
+
+
+
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
