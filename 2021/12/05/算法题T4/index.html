@@ -18,7 +18,7 @@
   <meta name="author" content="AnderGH">
   <meta name="keywords" content="">
   
-  <title>单例模式写法和注释 - AnderGH&#39;s blogs</title>
+  <title>算法题T4 - AnderGH&#39;s blogs</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
 
@@ -163,9 +163,9 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="单例模式写法和注释">
+            <span class="h2" id="subtitle" title="算法题T4">
               
-                单例模式写法和注释
+                算法题T4
               
             </span>
 
@@ -175,8 +175,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2018-09-03 08:35" pubdate>
-        2018年9月3日 早上
+      <time datetime="2021-12-05 22:20" pubdate>
+        2021年12月5日 晚上
       </time>
     </span>
   
@@ -212,30 +212,23 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">单例模式写法和注释</h1>
+            <h1 style="display: none">算法题T4</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 个月前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <p>单例的完整写法如下：</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-comment">//.h文件</span><br><span class="hljs-meta">#import <span class="hljs-meta-string">&lt;Foundation/Foundation.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">AObject</span> : <span class="hljs-title">NSObject</span> &lt;<span class="hljs-title">NSCopying</span>, <span class="hljs-title">NSMutableCopying</span>&gt;</span><br><br>+ (<span class="hljs-keyword">instancetype</span>)shareInstance;<br><br><span class="hljs-keyword">@end</span><br><br><br><span class="hljs-comment">//.m文件</span><br><span class="hljs-meta">#import <span class="hljs-meta-string">&quot;AObject.h&quot;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">@interface</span> <span class="hljs-title">AObject</span> ()</span><br><br><span class="hljs-keyword">@end</span><br><br><span class="hljs-class"><span class="hljs-keyword">@implementation</span> <span class="hljs-title">AObject</span></span><br><br><span class="hljs-keyword">static</span> AObject *instance = <span class="hljs-literal">nil</span>;<br><br>+ (<span class="hljs-keyword">instancetype</span>)shareInstance &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-built_in">dispatch_once_t</span> onceToken;<br>    <span class="hljs-built_in">dispatch_once</span>(&amp;onceToken, ^&#123;<br>        instance = [[<span class="hljs-keyword">super</span> allocWithZone:<span class="hljs-literal">NULL</span>] init];<br>    &#125;);<br>    <span class="hljs-keyword">return</span> instance;<br>&#125;<br><br>- (<span class="hljs-keyword">instancetype</span>)init &#123;<br>    <span class="hljs-keyword">self</span> = [<span class="hljs-keyword">super</span> init];<br>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">self</span>) &#123;<br>        <span class="hljs-comment">//单例的内部逻辑</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">self</span>;<br>&#125;<br><br>+ (<span class="hljs-keyword">instancetype</span>)allocWithZone:(<span class="hljs-keyword">struct</span> _NSZone *)zone &#123;<br>    <span class="hljs-keyword">return</span> [AObject shareInstance];<br>&#125;<br><br>- (<span class="hljs-keyword">id</span>)copyWithZone:(<span class="hljs-built_in">NSZone</span> *)zone &#123;<br>    <span class="hljs-keyword">return</span> [AObject shareInstance];<br>&#125;<br><br>- (<span class="hljs-keyword">id</span>)mutableCopyWithZone:(<span class="hljs-built_in">NSZone</span> *)zone &#123;<br>    <span class="hljs-keyword">return</span> [AObject shareInstance];<br>&#125;<br><br><span class="hljs-keyword">@end</span><br><br></code></pre></td></tr></table></figure>
+              <blockquote>
+<p>从n个正整数中找出满足如下条件的组合数量，满足条件：1个数或者2个数之和，大于等于n，每个数最多组合一次</p>
+<p>例如：输入[3, 7, 1, 5, 9]，n = 8，输出：3</p>
+</blockquote>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs stata"><span class="hljs-comment">/*</span><br><span class="hljs-comment"> </span><br><span class="hljs-comment"> */</span><br>let <span class="hljs-keyword">input</span> = [3, 7, 1, 5, 9]<br><span class="hljs-keyword">print</span>(<span class="hljs-string">&quot;输入：&quot;</span>, <span class="hljs-keyword">input</span>)<br>let <span class="hljs-keyword">n</span> = 8<br><span class="hljs-keyword">print</span>(<span class="hljs-string">&quot;输入：&quot;</span>, <span class="hljs-keyword">n</span>)<br><span class="hljs-comment">// 先从小到大排序</span><br><span class="hljs-keyword">var</span> sInput = <span class="hljs-keyword">input</span>.sorted &#123; e1, e2 <span class="hljs-keyword">in</span><br>    <span class="hljs-keyword">return</span> e1 &gt; e2 ? false : true<br>&#125;<br><span class="hljs-keyword">var</span> <span class="hljs-keyword">count</span> = 0<br><span class="hljs-comment">// 先筛选单个数字满足条件的</span><br><span class="hljs-keyword">var</span> nInput: [Int] = []<br><span class="hljs-keyword">for</span> <span class="hljs-keyword">e</span> <span class="hljs-keyword">in</span> sInput &#123;<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">e</span> &gt;= <span class="hljs-keyword">n</span> &#123;<br>        <span class="hljs-keyword">count</span> += 1<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        nInput.<span class="hljs-keyword">append</span>(<span class="hljs-keyword">e</span>)<br>    &#125;<br>&#125;<br>sInput = nInput;<br><span class="hljs-keyword">while</span> sInput.<span class="hljs-keyword">count</span> &gt;= 2 &#123;<br>    <span class="hljs-comment">// 存储需要剔除的元素索引值</span><br>    <span class="hljs-keyword">var</span> <span class="hljs-keyword">cl</span>: [Int] = []<br>    <span class="hljs-comment">// 使用最大值+最小值进行判断</span><br>    let last = sInput[sInput.<span class="hljs-keyword">count</span> - 1]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> 0 ..&lt; (sInput.<span class="hljs-keyword">count</span> - 1) &#123;<br>        let <span class="hljs-keyword">e</span> = sInput[i];<br>        <span class="hljs-keyword">if</span> (<span class="hljs-keyword">e</span> + last) &gt;= <span class="hljs-keyword">n</span> &#123;<br>            <span class="hljs-keyword">count</span> += 1<br>            <span class="hljs-keyword">cl</span>.<span class="hljs-keyword">append</span>(i);<br>            <span class="hljs-keyword">cl</span>.<span class="hljs-keyword">append</span>(sInput.<span class="hljs-keyword">count</span> - 1);<br>            <span class="hljs-keyword">break</span><br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">cl</span>.<span class="hljs-keyword">append</span>(i);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span> <span class="hljs-keyword">e</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">cl</span>.reversed() &#123;<br>        sInput.remove(at: <span class="hljs-keyword">e</span>)<br>    &#125;<br>&#125;<br><span class="hljs-keyword">print</span>(<span class="hljs-string">&quot;输出：&quot;</span>, <span class="hljs-keyword">count</span>)<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>仿照系统单例类，<code>.h</code>文件中提供<code>shareInstance</code>的创建方法</li>
-<li>使用<code>static</code>修饰词创建静态变量，编译时分配内存，程序结束时释放内存</li>
-<li>推荐使用<code>dispatch_once</code>的线程方法为静态变量赋值，也可以使用<code>@synchronized</code>替代</li>
-</ul>
-<figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs smali">+ (instancetype)shareInstance &#123;<br>   <span class="hljs-built_in"> if </span>(instance == nil) &#123;<br>        @synchronized (self) &#123;<br>           <span class="hljs-built_in"> instance </span>= [[super allocWithZone:NU<span class="hljs-class">LL] init];</span><br>        &#125;<br>    &#125;<br>   <span class="hljs-built_in"> return </span>instance;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入： <span class="hljs-string">[3, 7, 1, 5, 9]</span><br>输入： <span class="hljs-number">8</span><br>输出： <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>为了避免<code>[[AObject alloc] init]</code>、<code>[aObject new]</code>、<code>[aObject copy]</code>、<code>[aObject mutableCopy]</code>的方法创建出其他对象，重写<code>allocWithZone</code>、<code>copyWithZone</code>、<code>mutablecopyWithZone</code>的方法，将其他创建的入口全部导入指定的<code>shareInstance</code>方法中</li>
-<li>由于重写了<code>allocWithZone</code>的方法，所以<code>shareInstance</code>中需要使用<code>[super allocWithZone:NULL]</code>进行内存分配</li>
-<li>重写<code>init</code>方法，实现单例的内部逻辑</li>
-</ul>
 
             </div>
             <hr>
@@ -245,7 +238,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/iOS/">iOS</a>
+                      <a class="hover-with-bg" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
                     
                   </div>
                 
@@ -253,9 +246,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/iOS/">iOS</a>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%8D%95%E4%BE%8B/">单例</a>
+                      <a class="hover-with-bg" href="/tags/%E7%AE%97%E6%B3%95%E9%A2%98/">算法题</a>
                     
                   </div>
                 
@@ -266,18 +257,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2018/09/14/iOS%E5%92%8Chtml%E4%BA%A4%E4%BA%92-UIWebView/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">iOS和html交互-UIWebView</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2018/08/30/iOS%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E5%99%A8%E8%AF%A6%E7%BB%86%E6%B5%8B%E8%AF%95/">
-                        <span class="hidden-mobile">iOS引用计数器详细测试</span>
+                      <a href="/2021/11/02/%E7%AE%97%E6%B3%95%E9%A2%98T3/">
+                        <span class="hidden-mobile">算法题T3</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
