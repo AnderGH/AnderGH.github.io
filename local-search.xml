@@ -20,7 +20,7 @@
     
     <tags>
       
-      <tag>算法题</tag>
+      <tag>算法</tag>
       
     </tags>
     
@@ -45,7 +45,7 @@
     
     <tags>
       
-      <tag>算法题</tag>
+      <tag>算法</tag>
       
     </tags>
     
@@ -70,7 +70,7 @@
     
     <tags>
       
-      <tag>算法题</tag>
+      <tag>算法</tag>
       
     </tags>
     
@@ -95,7 +95,7 @@
     
     <tags>
       
-      <tag>算法题</tag>
+      <tag>算法</tag>
       
     </tags>
     
@@ -108,13 +108,19 @@
     <link href="/2021/04/11/%E5%BC%80%E6%BA%90%E9%95%9C%E5%83%8F%E7%AB%99/"/>
     <url>/2021/04/11/%E5%BC%80%E6%BA%90%E9%95%9C%E5%83%8F%E7%AB%99/</url>
     
-    <content type="html"><![CDATA[<p><a href="https://mirrors.tuna.tsinghua.edu.cn/">清华大学开源软件镜像站：https://mirrors.tuna.tsinghua.edu.cn/</a></p><p><a href="http://mirrors.163.com/">网易开源镜像站：http://mirrors.163.com/</a></p><p><a href="https://mirrors.cloud.tencent.com/">腾讯软件源：https://mirrors.cloud.tencent.com/</a></p><p><a href="https://mirrors.nju.edu.cn/">南京大学开源镜像站：https://mirrors.nju.edu.cn/</a></p>]]></content>
+    <content type="html"><![CDATA[<p><a href="https://gems.ruby-china.com/">Ruby China</a></p><p><a href="https://mirrors.tuna.tsinghua.edu.cn/">清华大学开源软件镜像站：https://mirrors.tuna.tsinghua.edu.cn/</a></p><p><a href="http://mirrors.163.com/">网易开源镜像站：http://mirrors.163.com/</a></p><p><a href="https://mirrors.cloud.tencent.com/">腾讯软件源：https://mirrors.cloud.tencent.com/</a></p><p><a href="https://mirrors.nju.edu.cn/">南京大学开源镜像站：https://mirrors.nju.edu.cn/</a></p>]]></content>
     
+    
+    <categories>
+      
+      <category>开源镜像站</category>
+      
+    </categories>
     
     
     <tags>
       
-      <tag>开源镜像站</tag>
+      <tag>CocoaPods</tag>
       
     </tags>
     
@@ -141,9 +147,9 @@
       
       <tag>iOS</tag>
       
-      <tag>flutter</tag>
-      
       <tag>CocoaPods</tag>
+      
+      <tag>flutter</tag>
       
     </tags>
     
@@ -169,8 +175,6 @@
     <tags>
       
       <tag>Hexo</tag>
-      
-      <tag>fluid</tag>
       
     </tags>
     
@@ -310,8 +314,6 @@
       <tag>flutter</tag>
       
       <tag>捕获报错</tag>
-      
-      <tag>catcher</tag>
       
     </tags>
     
@@ -475,8 +477,6 @@
       
       <tag>学习日记</tag>
       
-      <tag>Route</tag>
-      
     </tags>
     
   </entry>
@@ -527,13 +527,7 @@
     
     <tags>
       
-      <tag>css</tag>
-      
       <tag>Hexo</tag>
-      
-      <tag>javascript</tag>
-      
-      <tag>indigo</tag>
       
     </tags>
     
@@ -670,10 +664,6 @@
       
       <tag>Web</tag>
       
-      <tag>css</tag>
-      
-      <tag>html</tag>
-      
     </tags>
     
   </entry>
@@ -728,10 +718,6 @@
       
       <tag>Web</tag>
       
-      <tag>css</tag>
-      
-      <tag>html</tag>
-      
     </tags>
     
   </entry>
@@ -758,8 +744,6 @@
       <tag>学习日记</tag>
       
       <tag>Web</tag>
-      
-      <tag>html</tag>
       
     </tags>
     
@@ -788,12 +772,6 @@
       
       <tag>Web</tag>
       
-      <tag>javascript</tag>
-      
-      <tag>html</tag>
-      
-      <tag>DOMReady</tag>
-      
     </tags>
     
   </entry>
@@ -820,8 +798,6 @@
       <tag>学习日记</tag>
       
       <tag>Web</tag>
-      
-      <tag>DOM</tag>
       
     </tags>
     
@@ -850,10 +826,6 @@
       
       <tag>Web</tag>
       
-      <tag>css</tag>
-      
-      <tag>html</tag>
-      
     </tags>
     
   </entry>
@@ -880,10 +852,6 @@
       <tag>学习日记</tag>
       
       <tag>Web</tag>
-      
-      <tag>css</tag>
-      
-      <tag>html</tag>
       
     </tags>
     
@@ -960,13 +928,7 @@
     
     <tags>
       
-      <tag>css</tag>
-      
       <tag>Hexo</tag>
-      
-      <tag>fexo</tag>
-      
-      <tag>javascript</tag>
       
     </tags>
     
@@ -993,9 +955,7 @@
       
       <tag>iOS</tag>
       
-      <tag>Cocoapods</tag>
-      
-      <tag>gem</tag>
+      <tag>CocoaPods</tag>
       
     </tags>
     
